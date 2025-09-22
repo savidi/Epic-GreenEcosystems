@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-
+import Nav from '../NavCus/NavCus';
 import './Customer.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -8,8 +8,6 @@ import Footer from '../Footer/Footer';
 import QuotationView from './QuotationView';
 import StatusBadge from '../StatusBadge/StatusBadge.js'; 
 import OrderStatusModal from './OrderStatusModal';
-import NavCus from '../NavCus/NavCus'; // adjust path according to your folder structure
-
 
 function Customer() {
     const navigate = useNavigate();
@@ -146,12 +144,12 @@ function Customer() {
 
     const renderContent = () => {
         if (loading) {
-            return <div className="cust-content-section">Loading...</div>;
+            return <div className="content-section">Loading...</div>;
         }
 
         const renderTable = (items, headers, renderRow) => (
             items.length > 0 ? (
-                <table className="cust-order-history-table">
+                <table className="order-history-table">
                     <thead>
                         <tr>{headers.map((header, index) => <th key={index}>{header}</th>)}</tr>
                     </thead>
@@ -165,25 +163,25 @@ function Customer() {
         switch (activeTab) {
             case 'customerDetails':
                 return (
-                    <div className="cust-content-section">
+                    <div className="content-section">
                         <h2>Customer Details</h2>
-                        <div className="cust-detail-item">
+                        <div className="detail-item">
                             <strong>Name:</strong>
                             {isEditing ? <input type="text" name="name" value={customer.name} onChange={handleInputChange} /> : <span>{customer.name}</span>}
                         </div>
-                        <div className="cust-detail-item">
+                        <div className="detail-item">
                             <strong>Email:</strong>
                             {isEditing ? <input type="email" name="gmail" value={customer.gmail} onChange={handleInputChange} /> : <span>{customer.gmail}</span>}
                         </div>
-                        <div className="cust-detail-item">
+                        <div className="detail-item">
                             <strong>Phone:</strong>
                             {isEditing ? <input type="text" name="phone" value={customer.phone} onChange={handleInputChange} /> : <span>{customer.phone}</span>}
                         </div>
-                        <div className="cust-detail-item">
+                        <div className="detail-item">
                             <strong>Address:</strong>
                             {isEditing ? <input type="text" name="address" value={customer.address} onChange={handleInputChange} /> : <span>{customer.address}</span>}
                         </div>
-                        <div className="cust-button-group">
+                        <div className="button-group">
                             {isEditing ? (
                                 <button onClick={handleUpdate}>Save</button>
                             ) : (
@@ -194,7 +192,7 @@ function Customer() {
                 );
             case 'orderHistory':
                 return (
-                    <div className="cust-content-section">
+                    <div className="content-section">
                         <h2>Order History</h2>
                         {renderTable(data.orders, ['Order ID', 'Date', 'Items', 'Total Price', 'Status', 'Actions'], (order) => (
                             <tr key={order._id}>
@@ -205,7 +203,7 @@ function Customer() {
                                 <td><StatusBadge status={order.orderStatus} /></td>
                                 <td>
                                     <button 
-                                        className="cust-view-status-btn"
+                                        className="view-status-btn"
                                         onClick={() => handleViewStatus(order)}
                                     >
                                         View Status
@@ -217,7 +215,7 @@ function Customer() {
                 );
             case 'paymentHistory':
                 return (
-                    <div className="cust-content-section">
+                    <div className="content-section">
                         <h2>Payment History</h2>
                         {renderTable(data.payments, ['Order ID', 'Amount', 'Date', 'Status'], (payment) => (
                             <tr key={payment._id}>
@@ -247,28 +245,28 @@ function Customer() {
 
     return (
         <div>
-            <NavCus />
-            <div className="cust-header">
-                <div className="cust-profile-image-container">
-                    <img src={userProfileImage} alt="User Profile" className="cust-profile-image" />
+            <Nav />
+            <div className="customer-header">
+                <div className="profile-image-container">
+                    <img src={userProfileImage} alt="User Profile" className="profile-image" />
                 </div>
             </div>
-            <div className="cust-portal-container">
-                <div className="cust-tabs">
-                    <button className={`cust-tab-button ${activeTab === 'customerDetails' ? 'active' : ''}`} onClick={() => setActiveTab('customerDetails')}>
+            <div className="customer-portal-container">
+                <div className="tabs">
+                    <button className={`tab-button ${activeTab === 'customerDetails' ? 'active' : ''}`} onClick={() => setActiveTab('customerDetails')}>
                         Customer Details
                     </button>
-                    <button className={`cust-tab-button ${activeTab === 'orderHistory' ? 'active' : ''}`} onClick={() => setActiveTab('orderHistory')}>
+                    <button className={`tab-button ${activeTab === 'orderHistory' ? 'active' : ''}`} onClick={() => setActiveTab('orderHistory')}>
                         Order History
                     </button>
-                    <button className={`cust-tab-button ${activeTab === 'quotationView' ? 'active' : ''}`} onClick={() => setActiveTab('quotationView')}>
+                    <button className={`tab-button ${activeTab === 'quotationView' ? 'active' : ''}`} onClick={() => setActiveTab('quotationView')}>
                         Quotation View
                     </button>
-                    <button className={`cust-tab-button ${activeTab === 'paymentHistory' ? 'active' : ''}`} onClick={() => setActiveTab('paymentHistory')}>
+                    <button className={`tab-button ${activeTab === 'paymentHistory' ? 'active' : ''}`} onClick={() => setActiveTab('paymentHistory')}>
                         Payment History
                     </button>
                 </div>
-                <div className="cust-tab-content">
+                <div className="tab-content">
                     {renderContent()}
                 </div>
             </div>

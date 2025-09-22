@@ -2,9 +2,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './SalesManager.css';
+import Nav from '../NavCus/NavCus.js';
 import Sidebar from './SideBar.js';
-import Slider from '../Slider/Slider.js'; // Make sure the path is correct
-import '../Slider/slider.css';
 import OrderTable from './SalesOrder.js';
 import QuotationTable from './QuotationTable.js';
 import MonthlySalesChart from './MonthlySalesChart.js';
@@ -177,7 +176,6 @@ function SalesManager() {
                     <header className="dashboard-header">
                         <h1>Dashboard</h1>
                     </header>
-                    <Slider /> {/* Add the Slider component here */}
                     <div className="stats-grid">
                         <div className="stat-block sales">
                             <div className="icon-container">
@@ -338,6 +336,7 @@ function SalesManager() {
 
     return (
         <div className="sales-manager-page">
+            <Nav />
             <div className="sales-manager-container">
                 <Sidebar active={activeTab} onTabClick={handleTabClick} />
                 <div className="main-content">
