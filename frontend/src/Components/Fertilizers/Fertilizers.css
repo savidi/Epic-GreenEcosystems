@@ -50,7 +50,7 @@
 
 /* -------------------- Buttons -------------------- */
 .sup-btn {
-  background: linear-gradient(135deg, #8b5e3c 0%, #a0724e 100%);
+  background: linear-gradient(135deg, #8b5e3c 0%, #c5885a 100%);
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
@@ -84,7 +84,7 @@
 
 .sup-btn-secondary:hover {
   background: linear-gradient(135deg, #c69660 0%, #d4a574 100%);
-  box-shadow: 0 4px 16px rgba(212, 165, 116, 0.35);
+  box-shadow: 0 4px 16px rgba(201, 123, 38, 0.35);
 }
 
 .sup-btn-sm {
@@ -95,7 +95,7 @@
 
 /* -------------------- Table -------------------- */
 .sup-table-container {
-  background: linear-gradient(135deg, #ffffff 0%, #fefcfa 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #d7a777 100%);
   border-radius: 16px;
   padding: 25px;
   box-shadow: 0 4px 20px rgba(101, 67, 33, 0.08);
@@ -154,7 +154,7 @@
   color: #8b5e3c;
   font-style: italic;
   font-size: 16px;
-  background: linear-gradient(135deg, #f9f6f3 0%, #f0ebe6 100%);
+  background: linear-gradient(135deg, #f9f6f3 0%, #9b6c3d 100%);
   border-radius: 12px;
   margin: 20px 0;
 }

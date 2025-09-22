@@ -148,11 +148,13 @@ function Stock() {
   return (
     <div className="sup-page">
       <NavSup />
+
+
       <div className="sup-stock-container">
-        <div className="sup-stock-header">
+        <div className="sup-header">
           <h1>Stock Information</h1>
           <p>Select a date to view spice stock totals</p>
-        </div>
+        
 
         <div className="sup-date-picker">
           <label>Select Date:</label>
@@ -162,6 +164,7 @@ function Stock() {
             onChange={(e) => setSelectedDate(e.target.value)}
           />
         </div>
+         </div>
 
         <div className="sup-card">
           <div className="sup-card-header">

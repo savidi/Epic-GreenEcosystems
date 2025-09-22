@@ -88,11 +88,12 @@ function Payment() {
         <div className="sup-header">
           <h1>Payments</h1>
           <p>Track total payments for fertilizers and suppliers</p>
-        </div>
+         
 
         <div className="sup-date-picker">
           <label>Select Date:</label>
           <input type="date" value={selectedDate} onChange={e=>setSelectedDate(e.target.value)} />
+        </div>
         </div>
 
         <div className="sup-stats-grid">
@@ -163,7 +164,7 @@ function Payment() {
           </table>
         </div>
 
-        <button className="sup-btn sup-btn-secondary" onClick={handleDownloadPdf}>
+        <button className="sup-btn sup-btn-secondary" onClick={handleDownloadPdf} >
           Download PDF
         </button>
       </div>

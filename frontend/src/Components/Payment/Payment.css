@@ -73,11 +73,11 @@
 
 /* ---------------- Buttons ---------------- */
 .sup-btn{
-  background-color:#e6a76b;color:#fff;font-size:14px;font-weight:500;
+  background-color:#9d5614;color:#fff;font-size:14px;font-weight:500;
   padding:8px 16px;border-radius:6px;border:none;cursor:pointer;
   transition:background-color 0.3s;text-decoration:none;display:inline-block;margin-top:20px;
 }
-.sup-btn:hover{background-color:#d99a5f;}
+.sup-btn:hover{background-color:#8c5119;}
 .sup-btn-secondary{background-color:#e74c3c;}
 .sup-btn-secondary:hover{background-color:#c0392b;}
 .sup-btn-sm{padding:6px 12px;font-size:13px;}
