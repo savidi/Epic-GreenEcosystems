@@ -1,0 +1,119 @@
+:root {
+  --primary: #8D4E2A;      
+  --secondary: #A0522D;    
+  --accent1: #CD853F;      
+  --accent2: #DEB887;      
+  --accent3: #F4A460;      
+  --accent4: #D2691E;      
+  --dark: #5D4037;          
+  --light: #EFEBE9;         
+  --success: #689F38;       
+  --gradient1: #8BC34A;    
+  --gradient2: #7CB342;
+}
+
+/* Sidebar container */
+.nav-sidebar {
+  width: 220px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  background-color: var(--primary);
+  color: var(--light);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s;
+  z-index: 1000;
+}
+
+
+.nav-sidebar.collapsed {
+  width: 60px;
+}
+
+.nav-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background: var(--secondary);
+  border-bottom: 1px solid var(--accent2);
+}
+
+.nav-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--light);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.nav-sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.nav-sidebar-links li {
+  transition: background 0.3s ease, padding-left 0.3s ease;
+}
+
+.nav-sidebar-links li a {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: var(--light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-sidebar-links li .nav-icon {
+  font-size: 1.2rem;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-sidebar-links li:hover {
+  background: var(--accent1);
+}
+
+.nav-sidebar-links li.active {
+  background: var(--accent3);
+  border-left: 4px solid var(--gradient1);
+}
+
+.nav-sidebar-links li.active a {
+  font-weight: bold;
+}
+
+
+
+/* Adjust for collapsed sidebar */
+.nav-sidebar.collapsed .nav-sidebar-links li a {
+  justify-content: center;
+  padding: 15px 0;
+}
+
+.nav-sidebar.collapsed .nav-sidebar-links li .nav-icon {
+  margin: 0;
+}
+
+.nav-sidebar.collapsed .nav-sidebar-links li .nav-label {
+  display: none;
+}
+
+/* Content wrapper: push content to the right of sidebar */
+.nav-content-wrapper {
+  margin-left: 220px; /* same as sidebar width */
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+.nav-sidebar.collapsed ~ .nav-content-wrapper {
+  margin-left: 60px;
+}

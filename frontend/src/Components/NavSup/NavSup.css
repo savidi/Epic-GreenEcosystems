@@ -1,0 +1,162 @@
+:root {
+  --primary: #8D4E2A;      
+  --secondary: #A0522D;    
+  --accent1: #CD853F;      
+  --accent2: #DEB887;      
+  --accent3: #F4A460;      
+  --light: #EFEBE9;         
+  --white: #ffffff;
+}
+
+/* Sidebar container */
+.navsup-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: var(--primary);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.25);
+  transition: width 0.3s ease;
+  z-index: 1000;
+}
+
+/* Collapsed */
+.navsup-sidebar.collapsed {
+  width: 72px;
+  align-items: center;
+}
+
+/* Collapse toggle button */
+.navsup-collapse-toggle {
+  position: absolute;
+  top: 12px;
+  right: -12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: var(--secondary);
+  color: var(--white);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+/* Profile section */
+.navsup-profile-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.navsup-profile-pic {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 4px solid var(--accent2);
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+.navsup-profile-name {
+  margin: 5px 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+.navsup-profile-role {
+  font-size: 14px;
+  color: var(--light);
+}
+
+/* Company name */
+.navsup-company-name {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 15px 10px;
+  color: var(--white);
+}
+
+/* Divider */
+.navsup-divider {
+  width: 80%;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 15px 0;
+}
+
+/* Navigation menu */
+.navsup-menu {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+.navsup-menu li {
+  margin: 8px 0;
+}
+.navsup-menu li a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: var(--light);
+  transition: background 0.3s ease, color 0.3s ease;
+  border-radius: 8px;
+}
+.navsup-menu li a .navsup-icon {
+  font-size: 20px;
+  min-width: 20px;
+  margin-right: 12px;
+}
+.navsup-menu li a .navsup-label {
+  font-size: 16px;
+}
+.navsup-menu li.active a,
+.navsup-menu li a:hover {
+  background-color: var(--secondary);
+  color: var(--white);
+}
+
+/* Logout */
+.navsup-logout {
+  margin-top: auto;
+  padding-bottom: 20px;
+}
+.navsup-logout a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: var(--light);
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+.navsup-logout a:hover {
+  background-color: var(--secondary);
+  color: var(--white);
+}
+
+/* Hide labels when collapsed */
+.navsup-sidebar.collapsed .navsup-company-name,
+.navsup-sidebar.collapsed .navsup-profile-name,
+.navsup-sidebar.collapsed .navsup-profile-role,
+.navsup-sidebar.collapsed .navsup-menu li a .navsup-label,
+.navsup-sidebar.collapsed .navsup-divider,
+.navsup-sidebar.collapsed .navsup-logout .navsup-label {
+  display: none;
+}
+
+/* Expand on hover */
+.navsup-sidebar.collapsed:hover {
+  width: 250px;
+}
+.navsup-sidebar.collapsed:hover .navsup-company-name,
+.navsup-sidebar.collapsed:hover .navsup-profile-name,
+.navsup-sidebar.collapsed:hover .navsup-profile-role,
+.navsup-sidebar.collapsed:hover .navsup-menu li a .navsup-label,
+.navsup-sidebar.collapsed:hover .navsup-divider,
+.navsup-sidebar.collapsed:hover .navsup-logout .navsup-label {
+  display: block;
+}

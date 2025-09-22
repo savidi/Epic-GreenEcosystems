@@ -1,0 +1,102 @@
+/* plantationproducts.css */
+
+.stocks-plantation-products-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.stocks-plantation-products-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  font-size: 2.5em;
+}
+
+.stocks-plantation-products-content {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stocks-plantation-products-list,
+.stocks-plantation-products-chart {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  flex: 1;
+  min-width: 400px;
+  margin-bottom: 20px;
+}
+
+.stocks-plantation-products-list h2,
+.stocks-plantation-products-chart h2 {
+  color: #34495e;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 10px;
+}
+
+.stocks-plantation-products-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.stocks-plantation-products-table th,
+.stocks-plantation-products-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.stocks-plantation-products-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  color: #333;
+}
+
+.stocks-plantation-products-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.stocks-plantation-products-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.stocks-plantation-products-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stocks-plantation-products-chart canvas {
+  max-height: 400px;
+  max-width: 100%;
+}
+
+.stocks-plantation-error {
+  color: #e74c3c;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .stocks-plantation-products-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stocks-plantation-products-list,
+  .stocks-plantation-products-chart {
+    min-width: unset;
+    width: 100%;
+  }
+}
+

@@ -1,0 +1,118 @@
+/* Sidebar container */
+.navinv-sidebar {
+  height: 100vh;
+  width: 260px;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  background-color: #6d380c; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  overflow-y: auto; 
+}
+
+/* Company Name */
+.navinv-company-name {
+  text-align: center;
+  color: #ffffff; 
+  font-size: 24px; 
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Profile Section */
+.navinv-profile-section {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #e9820d; 
+  padding-bottom: 20px;
+  width: 80%; 
+}
+
+.navinv-profile-pic {
+  width: 90px; 
+  height: 90px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  border: 3px solid #e9820d; 
+}
+
+.navinv-profile-name {
+  color: #ffffff;
+  font-size: 18px; 
+  margin: 0;
+}
+
+.navinv-profile-role {
+  color: #C8E6C9;
+  font-size: 14px; 
+  margin: 0;
+}
+
+/* Sidebar Links */
+.navinv-sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.navinv-sidebar-links li {
+  width: 100%;
+  border-bottom: none; /* Remove individual link borders */
+}
+
+.navinv-sidebar-links li:last-child {
+  border-bottom: none; /* No line under the last item */
+}
+
+/* Links and Dropdown Headers */
+.navinv-sidebar-links li a,
+.navinv-dropdown > span {
+  display: block; /* Ensures the whole area is clickable */
+  color: #ffffff;
+  padding: 10px 20px; /* Smaller padding */
+  text-decoration: none;
+  font-size: 14px; /* Smaller font size for all links and dropdown headers */
+  cursor: pointer;
+}
+
+.navinv-sidebar-links li a:hover,
+.navinv-dropdown > span:hover,
+.navinv-sidebar-links li a.active {
+  background-color: #d7a039; /* Lighter green on hover/active */
+}
+
+/* Dropdown container */
+.navinv-dropdown {
+  position: relative;
+}
+
+/* Dropdown Content (hidden by default) */
+.navinv-dropdown-content {
+  display: none;
+  flex-direction: column;
+  background-color: #efb343; /* Slightly lighter green for dropdown background */
+  min-width: 100%; /* Full width dropdown */
+}
+
+/* Show the dropdown menu on hover */
+.navinv-products-dropdown:hover .navinv-dropdown-content,
+.navinv-stock-dropdown:hover .navinv-dropdown-content {
+  display: flex;
+}
+
+/* Dropdown links */
+.navinv-dropdown-content a {
+  color: #ffffff;
+  padding: 8px 30px; /* Adjust padding for nested links */
+  text-decoration: none;
+  font-size: 13px; /* Even smaller font size for dropdown items */
+  display: block;
+}
+
+.navinv-dropdown-content a:hover {
+  background-color: #4CAF50; /* Light green on hover for dropdown items */
+}

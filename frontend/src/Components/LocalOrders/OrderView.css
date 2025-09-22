@@ -1,0 +1,324 @@
+/* Container for the entire page content, excluding the navbar */
+.order-view-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    background-color: #f8f8f8; /* Lighter, more professional background */
+    padding: 20px;
+}
+
+/* Main card that holds the product details */
+.product-details-card {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 1000px;
+    width: 100%;
+}
+
+/* For larger screens, align sections side-by-side */
+@media (min-width: 768px) {
+    .product-details-card {
+        flex-direction: row;
+    }
+}
+
+/* Image section on the left */
+.image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: #ece7e0; 
+}
+
+.product-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Details section on the right */
+.details-section {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-name {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #eb651c;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.product-description {
+    font-family: 'Open Sans', sans-serif;
+    color: #666;
+    font-size: 1em;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.product-price {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.price-label {
+    font-weight: 600;
+    color: #555;
+    margin-right: 5px;
+}
+
+.price-value {
+    font-weight: 700;
+    color: #4b4b4b; 
+}
+
+/* Quantity selector styling */
+.quantity-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.quantity-label {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    color: #555;
+    margin-right: 15px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden; /* This is key to making the input and buttons look like a single unit */
+}
+
+/* Styling for the number input field */
+.quantity-input {
+    width: 60px; /* Adjust width as needed */
+    padding: 10px;
+    border: none; /* Remove individual borders */
+    text-align: center;
+    font-size: 1em;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Hide Chrome, Safari, Edge, Opera number input arrows */
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Styling for the increment/decrement buttons */
+.quantity-controls button {
+    background-color: #f0f0f0;
+    color: #555;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-weight: bold;
+}
+
+/* Hover effect for buttons */
+.quantity-controls button:hover {
+    background-color: #e0e0e0;
+}
+
+/* Disabled state for the decrement button */
+.quantity-controls button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.quantity-controls button:disabled:hover {
+    background-color: #f0f0f0; /* Keep background color consistent when disabled */
+}
+
+/* Add to cart button styling */
+.add-to-cart-button {
+    background-color: #964b00; /* A rich, deep brown for elegance */
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    font-size: 1.1em;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.add-to-cart-button:hover {
+    background-color: #8c703c;
+    transform: translateY(-2px);
+}
+
+/* Notification styles for both OrderView and CartItems*/
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #fff;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: fadeInOut 3.5s forwards;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.notification.success {
+    background-color: #28a745;
+}
+
+.notification.error {
+    background-color: #dc3545;
+}
+
+/* CartItems.js section */
+.cart-details-section {
+    background-color: #fcfcfc; /* A soft, elegant off-white */
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    padding: 40px;
+    margin: 30px auto 20px auto; /* Improved vertical and horizontal centering */
+    max-width: 900px;
+    width: 100%;
+}
+
+.cart-details-section h2 {
+    font-family: 'Open Sans', sans-serif;
+    color: #5d4808; /* A rich, brand-consistent brown */
+    font-size: 2.2em; /* Slightly larger for emphasis */
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.cart-item-list {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 15px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0; /* More vertical padding for better spacing */
+    border-bottom: 1px solid #e0e0e0;
+    font-family: 'Open Sans', sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+/* Add a subtle hover effect to individual items */
+.cart-item:hover {
+    background-color: #f9f9f9;
+}
+
+.cart-item-name,
+.cart-item-quantity,
+.cart-item-price {
+    font-size: 1.1em;
+    color: #333; /* Darker text for readability */
+}
+
+.cart-item-name {
+    font-weight: 600;
+}
+
+.cart-total {
+    text-align: right;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #5d4808;
+}
+
+.cart-total h3 {
+    font-family: 'Open Sans', sans-serif;
+    color: #5d4808;
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+.customer-details-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.customer-details-section h3 {
+    font-family: 'Open Sans', sans-serif;
+    color: #5d4808;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+.customer-details-section p {
+    margin: 5px 0;
+    font-weight: 400;
+    color: #666;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.pay-button {
+    background-color: #eb651c; /* Keep this bold orange for CTA */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.pay-button:hover {
+    background-color: #c45d3b;
+    transform: translateY(-2px);
+}
+
+/* Keyframe animation for fade-in and fade-out */
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* For smaller screens, adjust layout for better visibility */
+@media (max-width: 768px) {
+    .product-details-card {
+        flex-direction: column;
+    }
+}
+

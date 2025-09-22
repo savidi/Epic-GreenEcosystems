@@ -1,0 +1,33 @@
+/* QuotationView.css */
+.quotation-view-container {
+    padding: 20px;
+}
+
+.quotation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.quotation-table th, .quotation-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.quotation-table th {
+    background-color: #f2f2f2;
+}
+
+.quotation-table button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.quotation-table button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}

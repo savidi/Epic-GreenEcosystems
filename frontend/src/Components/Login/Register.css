@@ -1,0 +1,140 @@
+/* Container for the entire registration page */
+.reg-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* Pseudo-element for the blurred background and overlay */
+.reg-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay for better text readability */
+    backdrop-filter: blur(8px); /* Blur effect */
+    -webkit-backdrop-filter: blur(8px);
+    z-index: -1;
+}
+
+/* The box containing the registration form */
+.reg-form {
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    margin: 50px 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.reg-form h2 {
+    margin-bottom: 25px;
+    text-align: center;
+    color: #ba7e06;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* Style for each form field group (label and input) */
+.reg-form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.reg-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+
+.reg-form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.reg-form-group input:focus {
+    border-color: #185C03;
+    box-shadow: 0 0 5px rgba(24, 92, 3, 0.3);
+    outline: none;
+}
+
+/* Style for the Register button */
+.reg-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #e0721e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 10px;
+}
+
+.reg-btn:hover {
+    background-color: #e9dcaf;
+    transform: translateY(-2px);
+}
+
+/* Style for the "Already Registered? Login" link */
+.reg-login-link {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.reg-login-link a {
+    color: #b88f2f;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.reg-login-link a:hover {
+    color: #c67e27;
+    text-decoration: underline;
+}
+
+/* Styles for the message container */
+.reg-form-message {
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Styles for a successful message */
+.reg-form-message.success {
+    background-color: #d4edda; /* Light green background */
+    color: #155724; /* Dark green text */
+    border: 1px solid #c3e6cb;
+}
+
+/* Styles for an error message */
+.reg-form-message.error {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+    border: 1px solid #f5c6cb;
+}
+

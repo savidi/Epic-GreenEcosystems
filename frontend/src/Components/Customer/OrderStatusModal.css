@@ -1,0 +1,347 @@
+/* OrderStatusModal.css */
+.orderstatus-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+}
+
+.orderstatus-modal-content {
+    background: #ffffff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    /* Removed max-height and overflow-y to fit all content */
+}
+
+/* Modal Header */
+.orderstatus-modal-header {
+    background: linear-gradient(135deg, #e2984a 0%, #bc8240 100%);
+    color: white;
+    padding: 20px 25px;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.orderstatus-header-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.orderstatus-truck-icon {
+    font-size: 24px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.orderstatus-modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.orderstatus-close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.orderstatus-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Order Info Card */
+.orderstatus-info-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    margin: 20px 25px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+}
+
+.orderstatus-info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.orderstatus-info-icon {
+    font-size: 20px;
+    background: #5b3f1a;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orderstatus-info-item strong {
+    color: #333;
+    font-size: 16px;
+    margin: 0 0 4px 0;
+}
+
+.orderstatus-info-item p {
+    color: #666;
+    margin: 0;
+    font-size: 14px;
+}
+
+.orderstatus-total-amount {
+    background: white;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 2px solid #ec470b;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+}
+
+.orderstatus-track-details-btn {
+    background: #e35b1b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.orderstatus-track-details-btn:hover {
+    background: #357abd;
+}
+
+/* Rejected Status */
+.orderstatus-rejected-status {
+    text-align: center;
+    padding: 40px 25px;
+    color: #721c24;
+}
+
+.orderstatus-rejected-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.orderstatus-rejected-status h3 {
+    color: #721c24;
+    margin: 0 0 10px 0;
+    font-size: 20px;
+}
+
+.orderstatus-rejected-status p {
+    color: #856404;
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Status Timeline */
+.orderstatus-timeline {
+    padding: 30px 25px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* The grey background line */
+.orderstatus-timeline::before {
+    content: '';
+    position: absolute;
+    height: 2px;
+    background: #dee2e6;
+    left: 25px;
+    right: 25px;
+    top: 50px;
+    z-index: 0;
+}
+
+/* The green progress line */
+.orderstatus-timeline::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(to right, #28a745, #20c997);
+    left: 25px;
+    top: 50px;
+    z-index: 1;
+    transition: width 0.5s ease;
+    width: var(--progress-width, 0%);
+}
+
+.orderstatus-timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex-grow: 1; /* Allow steps to expand and fill space */
+    text-align: center;
+}
+
+.orderstatus-timeline-step:last-child {
+    margin-right: 0;
+}
+
+.orderstatus-timeline-icon {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 10px;
+}
+
+.orderstatus-timeline-icon .orderstatus-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+/* Timeline step states */
+.orderstatus-timeline-step.completed .orderstatus-icon {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.orderstatus-timeline-step.active .orderstatus-icon {
+    background: linear-gradient(135deg, #e2a34a 0%, #bd6e35 100%);
+    color: white;
+    box-shadow: 0 2px 12px rgba(74, 144, 226, 0.4);
+}
+
+.orderstatus-timeline-step.pending .orderstatus-icon {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 2px solid #dee2e6;
+}
+
+.orderstatus-timeline-step.rejected .orderstatus-icon {
+    background: #dc3545;
+    color: white;
+}
+
+.orderstatus-timeline-content {
+    padding-top: 8px;
+}
+
+.orderstatus-timeline-content h4 {
+    margin: 0 0 5px 0;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.orderstatus-current-status {
+    color: #e27d4a;
+    font-size: 10px;
+    font-weight: 600;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Order Items */
+.orderstatus-items {
+    padding: 25px;
+    border-top: 1px solid #eee;
+    background: #fafafa;
+}
+
+.orderstatus-items h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.orderstatus-items-list {
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.orderstatus-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.orderstatus-item:last-child {
+    border-bottom: none;
+}
+
+.orderstatus-item-name {
+    flex: 1;
+    color: #333;
+    font-weight: 500;
+}
+
+.orderstatus-item-quantity {
+    color: #666;
+    margin: 0 15px;
+    font-size: 14px;
+}
+
+.orderstatus-item-price {
+    color: #47230c;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .orderstatus-modal-content {
+        max-width: 95%;
+    }
+
+    .orderstatus-timeline {
+        padding-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .orderstatus-modal-content {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        max-height: 100vh;
+    }
+    .orderstatus-modal-header {
+        border-radius: 0;
+    }
+}

@@ -1,0 +1,80 @@
+
+.stocks-order-page-container {
+  padding: 20px 40px;
+  background-color: #f8f9fb;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.stocks-order-page-container h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.stocks-order-spices-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.stocks-order-spices-table thead {
+  background: #2c3e50;
+  color: #ffffff;
+}
+
+.stocks-order-spices-table th {
+  padding: 1px 18px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  
+}
+
+.stocks-order-spices-table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s ease;
+}
+
+.stocks-order-spices-table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+.stocks-order-spices-table td {
+  padding: 12px 18px;
+  font-size: 14px;
+  color: #444;
+  vertical-align: top;
+}
+
+
+.stocks-order-spices-table td:nth-child(5) {
+  font-weight: 600;
+  color: #27ae60; 
+}
+
+.stocks-order-spices-table td:nth-child(6) {
+  color: #2980b9; 
+}
+
+.stocks-order-spices-table td:nth-child(7) {
+  font-weight: 600;
+  color: #e67e22; 
+}
+
+.stocks-order-page-container p {
+  margin-top: 16px;
+  font-size: 15px;
+  color: #777;
+  text-align: center;
+}
+
+
+
+
+

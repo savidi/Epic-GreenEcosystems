@@ -1,0 +1,114 @@
+/* Main Content Styles - Matches Dashboard */
+.addsupplier-main-content {
+  padding: 2rem;
+  background: #f5f7f3;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Header */
+.addsupplier-header {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #8a6d3b;
+}
+
+.addsupplier-header h1 {
+  color: #4a6b3f;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.addsupplier-header p {
+  color: #718096;
+  font-size: 1rem;
+}
+
+/* Card */
+.addsupplier-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-top: 3px solid #8a6d3b;
+}
+
+.addsupplier-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+/* Form Group */
+.addsupplier-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.addsupplier-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.addsupplier-form-group input,
+.addsupplier-form-group select,
+.addsupplier-form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.addsupplier-form-group input:focus,
+.addsupplier-form-group select:focus,
+.addsupplier-form-group textarea:focus {
+  outline: none;
+  border-color: #4a6b3f;
+  box-shadow: 0 0 0 3px rgba(74, 107, 63, 0.1);
+}
+
+/* Modal Actions */
+.addsupplier-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+/* Button */
+.addsupplier-btn {
+  background: #4a6b3f;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.addsupplier-btn:hover {
+  background: #5a7c4f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(74, 107, 63, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .addsupplier-modal-actions {
+    flex-direction: column;
+  }
+  .addsupplier-btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,133 @@
+/*
+ * General Styles
+ * Set a consistent, professional font for the entire body.
+ */
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* * Footer Container
+ * The main container for the entire footer.
+ */
+.footer-footer-container {
+  background-color: #1a232f;
+  color: #e0e0e0;
+  padding-top: 50px;
+  position: relative;
+  overflow: hidden;
+  border-top: 4px solid #bfa15c;
+}
+
+/* * Footer Content
+ * Flexbox layout for the main sections.
+ */
+.footer-footer-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 0 50px 30px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/*
+ * Footer Sections
+ * Styling for individual content blocks (About, Links, Contact, Follow).
+ */
+.footer-footer-section {
+  flex: 1;
+  min-width: 220px;
+  margin: 20px;
+}
+
+/*
+ * Section Headings
+ * Bold and slightly larger font for section titles.
+ */
+.footer-footer-section h4 {
+  font-family: 'Open Sans', sans-serif; /* Consistent font */
+  font-size: 18px;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin-bottom: 20px;
+}
+
+/*
+ * Text and Links
+ * Standard styles for paragraphs and list items.
+ */
+.footer-footer-section p,
+.footer-footer-section ul {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #b0b0b0;
+}
+
+.footer-footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-footer-section ul li a {
+  font-family: 'Open Sans', sans-serif; /* Consistent font */
+  color: #b0b0b0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  padding: 5px 0;
+  display: inline-block;
+}
+
+/*
+ * Hover Effect
+ * Change link color on hover for better user feedback.
+ */
+.footer-footer-section ul li a:hover {
+  color: #bfa15c;
+}
+
+/*
+ * Logo
+ * Placeholder for logo styling.
+ */
+.footer-footer-logo {
+  width: 150px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+/*
+ * Social Icons
+ * Container and icon styling.
+ */
+.footer-social-icons {
+  display: flex;
+  gap: 20px; /* Increased gap for better spacing */
+  margin-top: 10px;
+}
+
+.footer-social-icons a {
+  color: #e0e0e0;
+  font-size: 24px; /* Slightly larger icons */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-social-icons a:hover {
+  color: #bfa15c;
+  transform: scale(1.1);
+}
+
+/*
+ * Footer Bottom Section
+ * Copyright notice styling.
+ */
+.footer-footer-bottom {
+  background-color: #e0e0c0;
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+  color: #1a232f;
+  font-family: 'Open Sans', sans-serif; /* Consistent font */
+}

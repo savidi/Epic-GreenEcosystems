@@ -1,0 +1,262 @@
+
+.homen-page-header {
+  text-align: center;
+  padding: 20px 0;
+  margin-bottom: 30px;
+}
+
+.homen-page-header h1 {
+  color: #2c3e50;
+  font-size: 2.5rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.homen-stats-cards-wrapper {
+  margin-left: 30px;
+  display: flex; /* Added for horizontal layout */
+  flex-wrap: wrap; /* Allow cards to wrap to the next line */
+  gap: 20px; /* Space between cards */
+}
+
+.homen-stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.homen-stat-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin: 10px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.25s ease;
+  cursor: pointer;
+  border: 2px solid #10b981; 
+}
+
+.homen-stat-card:hover {
+  transform: scale(1.05); /* Pop up effect */
+  box-shadow: 0 6px 15px rgba(0, 128, 0, 0.3); /* Green glow */
+}
+
+.homen-spice-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.homen-spice-card img:hover {
+  transform: scale(1.08); /* Slightly larger pop-up for image */
+  box-shadow: 0 8px 16px rgba(0, 128, 0, 0.4); /* Stronger green glow */
+}
+
+
+.homen-lowstock-card .homen-stat-icon {
+  color: #a90505; /* Red */
+  
+}
+
+
+/* Low stock list container */
+.homen-low-stock-list-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 1rem auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-left: 5px solid #ef4444;
+}
+
+.homen-list-title {
+  font-size: 1.5rem;
+  color: #c0392b;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.homen-low-stock-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.homen-low-stock-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.homen-item-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.homen-item-stock {
+  font-weight: 700;
+  color: #ef4444;
+}
+
+.homen-no-low-stock {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+/* --- Stat Card --- */
+.homen-stat-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin: 10px 0; /* Reverted to original margin */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.homen-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.homen-lowstock-card {
+  border-left: 6px solid #e74c3c; /* red accent for low stock */
+}
+
+.homen-stat-icon {
+  font-size: 26px;
+  color: #e74c3c;
+  margin-right: 14px;
+}
+
+.homen-stat-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.homen-stat-label {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.homen-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #222;
+  margin-top: 2px;
+}
+
+/* --- Low Stock List --- */
+.homen-low-stock-list-container {
+  background: #fff;
+  border-radius: 12px;
+  margin-top: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.homen-list-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+.homen-low-stock-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.homen-low-stock-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: #fafafa;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.homen-low-stock-item:hover {
+  background: #f1f1f1;
+}
+
+.homen-item-name {
+  font-weight: 600;
+  color: #444;
+}
+
+.homen-item-stock {
+  font-weight: 600;
+  color: #e74c3c;
+}
+
+.homen-no-low-stock {
+  font-size: 14px;
+  color: #777;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.homen-dashboard-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  padding-bottom: 30px;
+}
+
+.homen-add-button {
+  background-color: #27ae60;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.homen-add-button:hover {
+  background-color: #219150;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

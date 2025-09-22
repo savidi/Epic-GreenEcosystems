@@ -1,0 +1,856 @@
+
+:root {
+  --white-color:                  #ffffff;
+  --primary-color:                #84430b;
+  --secondary-color:              #754a18;
+  --section-bg-color:             #b78752;
+  --custom-btn-bg-color:          #793e0bf0;
+  --custom-btn-bg-hover-color:    #DDA15E;
+  --dark-color:                   #000000;
+  --p-color:                      #717275;
+  --rating-color:                 #E76F51;
+  --border-color:                 #7fffd4;
+  --link-hover-color:             #E76F51;
+
+  --body-font-family:             'Playfair Display', serif;
+
+  --h1-font-size:                 68px;
+  --h2-font-size:                 46px;
+  --h3-font-size:                 32px;
+  --h4-font-size:                 28px;
+  --h5-font-size:                 24px;
+  --h6-font-size:                 22px;
+  --p-font-size:                  20px;
+  --btn-font-size:                16px;
+  --form-btn-font-size:           18px;
+  --menu-font-size:               16px;
+
+  --border-radius-large:          100px;
+  --border-radius-medium:         20px;
+  --border-radius-small:          10px;
+
+  --font-weight-thin:             200;
+  --font-weight-light:            300;
+  --font-weight-normal:           400;
+  --font-weight-bold:             700;
+}
+
+/* ===== Home Page Styles - Barista Cafe Theme ===== */
+.cushome-container {
+  font-family: var(--body-font-family);
+  color: var(--p-color);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===== Hero Section ===== */
+.cushome-hero-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cushome-hero-content {
+  text-align: left;
+  max-width: 900px;
+  padding: 3rem 2rem;
+  z-index: 2;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cushome-small-text {
+  color: var(--white-color);
+  font-size: 0.875rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  display: block;
+  margin-bottom: 1.5rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.hero-content h1 {
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--white-color);
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+}
+
+.cushome-hero-subtitle {
+  font-size: 1rem;
+  color: var(--white-color);
+  margin-bottom: 3rem;
+  font-weight: 300;
+  line-height: 1.8;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  font-family: 'Montserrat', sans-serif;
+  max-width: 600px;
+}
+
+.cushome-hero-subtitle em {
+  font-style: normal;
+  color: var(--secondary-color);
+  font-weight: 400;
+}
+
+.cushome-hero-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.cushome-hero-slides {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.cushome-hero-video::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%
+}
+
+.cushome-hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1.9;
+  background: rgba(0, 0, 0, 0.4);
+  
+}
+
+/* ===== Button Styles ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+}
+
+.cushome-custom-btn {
+  background: var(--custom-btn-bg-color);
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-large);
+  color: var(--white-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: normal;
+  transition: all 0.3s;
+  padding: 14px 32px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.cushome-custom-btn:hover {
+  background: var(--custom-btn-bg-hover-color);
+  color: var(--white-color);
+}
+
+.cushome-custom-border-btn {
+  background: transparent;
+  border: 2px solid var(--white-color);
+  color: var(--white-color);
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.cushome-custom-border-btn:hover {
+  background: var(--white-color);
+  color: var(--secondary-color);
+}
+
+/* ===== About Section ===== */
+.cushome-about-section {
+  padding: 5rem 0;
+  background-color: var(--secondary-color);
+  position: relative;
+}
+
+.cushome-section-overlay {
+  background-color: var(--dark-color);
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+}
+
+.cushome-about-video-container {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cushome-about-video-container.cushome-hero-slides {
+  width: 100%;
+  height: 100%;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.cushome-about-video-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cushome-about-video-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: white;
+  padding: 2rem;
+}
+
+.cushome-about-video-info h4 {
+  margin: 0;
+  font-weight: var(--font-weight-bold);
+  color: var(--white-color);
+}
+
+/* ===== Team Section ===== */
+
+.cushome-team-section {
+  padding: 5rem 0;
+  background-color:var(--section-bg-color);
+}
+
+.cushome-section-padding {
+  padding: 5rem 0;
+}
+
+.cushome-section-bg {
+  background-color: rgba(30, 20, 10, 0.9);
+}
+
+.cushome-team-block-wrap {
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius-medium);
+  position: relative;
+  overflow: hidden;
+  max-height: 450px;
+  cursor: pointer;
+  height: 100%;
+}
+
+.cushome-team-block-wrap:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.cushome-team-block-info {
+  padding: 1.5rem;
+  min-height: 120px;
+}
+
+.cushome-team-block-image-wrap {
+  height: 200px;
+  overflow: hidden;
+}
+
+.cushome-team-block-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.cushome-team-block-wrap:hover .cushome-team-block-image {
+  transform: scale(1.1);
+}
+
+.cushome-badge {
+  background-color: var(--primary-color);
+  font-size: 12px;
+  position: relative;
+  bottom: 4px;
+  padding-bottom: 6px;
+  color: var(--white-color);
+  border-radius: var(--border-radius-small);
+  font-weight: var(--font-weight-medium);
+}
+
+.cushome-badge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -5px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid var(--primary-color);
+}
+
+/* ===== Menu Section ===== */
+.cushome-menu-section {
+  padding: 5rem 0;
+  background-image: linear-gradient(rgba(182, 97, 43, 0.7), rgba(126, 73, 45, 0.7)), url('./spice_back.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.cushome-menu-block-wrap {
+  background: rgba(0, 0, 0, 0.65);
+  border-radius: var(--border-radius-medium);
+  padding: 45px;
+}
+
+.cushome-menu-block {
+  margin-bottom: 1rem;
+}
+
+.cushome-menu-block .border-top {
+  border-top-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.cushome-menu-block h6 {
+  color: var(--white-color);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  font-size: var(--menu-font-size);
+}
+
+.cushome-menu-block .underline {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+  margin: 0 1rem;
+  align-self: center;
+}
+
+.cushome-menu-block strong {
+  color: var(--secondary-color);
+  font-weight: var(--font-weight-bold);
+}
+
+.cushome-menu-block small {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: var(--btn-font-size);
+}
+
+/* ===== Testimonials Section ===== */
+.cushome-reviews-section {
+  padding: 5rem 0;
+  background-color: rgba(30, 20, 10, 0.9);
+}
+
+.cushome-timeline {
+  position: relative;
+  padding: 2rem 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #ed5407;
+  transform: translateX(-50%);
+}
+
+.cushome-timeline-container {
+  position: relative;
+  width: 50%;
+  padding: 0 2rem;
+}
+
+.cushome-timeline-container-left {
+  left: 0;
+}
+
+.cushome-timeline-container-right {
+  left: 50%;
+}
+
+.cushome-timeline-content {
+  padding: 20px;
+  background-color: rgb(225, 208, 177);
+  position: relative;
+  border-radius: var(--border-radius-medium);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cushome-timeline-container-left .cushome-timeline-content {
+  margin-left: auto;
+  text-align: right;
+}
+
+.cushome-timeline-container-right .cushome-timeline-content {
+  margin-right: auto;
+  text-align: left;
+}
+
+.cushome-reviews-block-image-wrap {
+  margin-bottom: 1rem;
+}
+
+.cushome-reviews-block-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+
+.cushome-timeline-container-left .cushome-reviews-block-image-wrap {
+  justify-content: flex-end;
+}
+
+.cushome-timeline-container-left .cushome-reviews-block-image {
+  margin-right: 0;
+  margin-left: 1rem;
+  order: 2;
+}
+
+.cushome-timeline-container-left h6,
+.cushome-timeline-container-left em {
+  color: var(--dark-color);
+}
+
+.cushome-timeline-container-right h6,
+.cushome-timeline-container-right em {
+  color: var(--dark-color);
+}
+
+.cushome-reviews-block-info p {
+  font-size: var(--btn-font-size);
+  font-style: italic;
+  color: var(--p-color);
+  margin-bottom: 1rem;
+}
+
+.cushome-reviews-group {
+  display: flex;
+  gap: 0.25rem;
+}
+
+
+.cushome-reviews-group i {
+  color: var(--primary-color);
+}
+
+.cushome-star-filled {
+  color: var(--secondary-color);
+}
+
+.cushome-star-empty {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Contact Section ===== */
+.cushome-contact-section {
+  padding: 5rem 0;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(188, 108, 37, 1)), url('../Images/young-female-barista-wear-face-mask-serving-take-away-hot-coffee-paper-cup-consumer-cafe.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.cushome-contact-form {
+  background-color: rgba(0, 0, 0, 0.65);
+  border-radius: var(--border-radius-medium);
+  padding: 2rem;
+}
+
+.cushome-form-label {
+  color: var(--white-color);
+  font-style: italic;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 15px;
+}
+
+.cushome-form-control {
+  color: var(--p-color);
+  border-radius: var(--border-radius-small);
+  margin-bottom: 30px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  box-shadow: none;
+  outline: none;
+  transition: all 0.3s;
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.cushome-form-control:hover,
+.cushome-form-control:focus {
+  background: var(--primary-color);
+  border-color: transparent;
+  color: var(--white-color);
+}
+
+.cushome-form-control::placeholder {
+  color: var(--white-color);
+}
+
+.cushome-contact-form button {
+  background: var(--custom-btn-bg-color);
+  border: none;
+  border-radius: var(--border-radius-large);
+  color: var(--white-color);
+  font-size: var(--form-btn-font-size);
+  font-weight: var(--font-weight-bold);
+  transition: all 0.3s;
+  margin-bottom: 0;
+  padding: 12px 28px;
+}
+
+.cushome-contact-form button:hover,
+.cushome-contact-form button:focus {
+  background: var(--white-color);
+  border-color: transparent;
+  color: var(--primary-color);
+}
+
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  .cushome-hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .cushome-hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .cushome-hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cushome-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .cushome-timeline::before {
+    left: 2rem;
+  }
+
+  .cushome-timeline-container {
+    width: 100%;
+    left: 0 !important;
+    padding-left: 4rem;
+    padding-right: 1rem;
+  }
+
+  .cushome-timeline-container-left .cushome-timeline-content,
+  .cushome-timeline-container-right .cushome-timeline-content {
+    text-align: left;
+  }
+
+  .cushome-timeline-container-left .cushome-reviews-block-image-wrap {
+    justify-content: flex-start;
+  }
+
+  .cushome-timeline-container-left .cushome-reviews-block-image {
+    margin-right: 1rem;
+    margin-left: 0;
+    order: 1;
+  }
+
+  .cushome-team-block-image-wrap {
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cushome-hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .cushome-hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .cushome-section-padding {
+    padding: 3rem 0;
+  }
+
+  .cushome-menu-block-wrap,
+  .cushome-contact-form {
+    padding: 1.5rem;
+  }
+
+  .cushome-timeline-container {
+    padding-left: 3rem;
+  }
+}
+
+/* ===== Smooth Scroll ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== Container ===== */
+.cushome-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ===== Row and Column Styles ===== */
+.cushome-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -1rem;
+}
+
+.cushome-col-lg-12, .cushome-col-lg-6, .cushome-col-lg-5, .cushome-col-lg-4, .cushome-col-lg-3,
+.cushome-col-md-6, .cushome-col-12 {
+  position: relative;
+  padding: 0 1rem;
+}
+
+.cushome-col-lg-12 { flex: 0 0 100%; max-width: 100%; }
+.cushome-col-lg-6 { flex: 0 0 50%; max-width: 50%; }
+.cushome-col-lg-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
+.cushome-col-lg-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+.cushome-col-lg-3 { flex: 0 0 25%; max-width: 25%; }
+
+@media (max-width: 992px) {
+  .cushome-col-lg-12, .cushome-col-lg-6, .cushome-col-lg-5, .cushome-col-lg-4, .cushome-col-lg-3 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .cushome-col-md-6 { flex: 0 0 50%; max-width: 50%; }
+}
+
+@media (max-width: 576px) {
+  .cushome-col-md-6, .cushome-col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* ===== Text Alignment ===== */
+.cushome-text-center { text-align: center; }
+.cushome-text-white { 
+  color: white;
+ }
+
+/* ===== Margin and Padding Utilities ===== */
+.mb-4 { margin-bottom: 1.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-0 { margin-bottom: 0 !important; }
+.mt-4 { margin-top: 1.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-0 { margin-top: 0 !important; }
+.ms-2 { margin-left: 0.5rem; }
+.ms-3 { margin-left: 1rem; }
+.ms-4 { margin-left: 1.5rem; }
+.me-2 { margin-right: 0.5rem; }
+.me-3 { margin-right: 1rem; }
+.me-4 { margin-right: 1.5rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.pb-lg-2 { padding-bottom: 0.5rem; }
+.cushome-ratio-16x9::before { padding-top: 56.25%; }
+
+/* ===== Display Utilities ===== */
+.cushome-d-flex { display: flex; }
+.cushome-d-block { display: block; }
+
+/* ===== Flex Utilities ===== */
+.cushome-align-items-center { align-items: center; }
+.cushome-justify-content-center { justify-content: center; }
+.cushome-justify-content-between { justify-content: space-between; }
+.cushome-flex-column { flex-direction: column; }
+.cushome-flex-wrap { flex-wrap: wrap; }
+
+/* ===== Position Utilities ===== */
+.cushome-position-relative { position: relative; }
+.cushome-position-absolute { position: absolute; }
+
+/* ===== Border Utilities ===== */
+.cushome-border-top { border-top: 1px solid #dee2e6; }
+.cushome-border-0 { border: 0 !important; }
+
+/* ===== Background Utilities ===== */
+.cushome-bg-transparent { background-color: transparent !important; }
+
+/* ===== Image Utilities ===== */
+.cushome-img-fluid { max-width: 100%; height: auto; }
+
+/* ===== Text Utilities ===== */
+.cushome-text-danger { color: #dc3545 !important; }
+
+/* ===== Form Utilities ===== */
+.cushome-form-control {
+  display: block;
+  width: 100%;
+}
+
+/* ===== Ratio Utilities ===== */
+.cushome-ratio {
+  position: relative;
+  width: 100%;
+}
+
+.cushome-ratio::before {
+  display: block;
+  padding-top: 100%;
+  content: "";
+}
+
+.cushome-ratio > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== Gallery Section ===== */
+.cushome-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+  height: 600px;
+}
+
+.cushome-gallery-item {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.cushome-gallery-item:hover {
+  transform: translateY(-5px);
+}
+
+.cushome-gallery-item.large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.cushome-gallery-item.wide {
+  grid-column: span 2;
+}
+
+.cushome-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.cushome-gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+/* ===== Showcase Section ===== */
+.showcase-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  margin-top: 30px;
+  height: 600px;
+}
+
+.cushome-showcase-item {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.cushome-showcase-item:hover {
+  transform: scale(1.02);
+}
+
+.cushome-showcase-item.featured {
+  grid-row: span 2;
+}
+
+.cushome-showcase-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.cushome-showcase-item:hover img {
+  transform: scale(1.1);
+}
+
+.cushome-showcase-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  padding: 20px;
+  color: white;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.cushome-showcase-item:hover .cushome-showcase-overlay {
+  transform: translateY(0);
+}
+
+.cushome-showcase-overlay h3,
+.cushome-showcase-overlay h4 {
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.cushome-showcase-overlay p {
+  margin: 5px 0 0 0;
+  opacity: 0.9;
+}

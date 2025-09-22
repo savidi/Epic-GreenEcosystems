@@ -1,0 +1,299 @@
+:root {
+  --primary: #8D4E2A;      
+  --secondary: #e59b57;    
+  --accent1: #7A4A2C;      
+  --accent2: #8B5A3C;      
+  --accent3: #9C6A4C;      
+  --accent4: #AD7A5C;      
+  --dark: #1A0F08;          
+  --light: #F5F0E8;         
+  --success: #689F38;       
+  --gradient1: #5D3A1A;    
+  --gradient2: #7A4A2C;
+}
+
+/* Sidebar container */
+.navfield-sidebar {
+  width: 220px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  background-color: var(--primary);
+  color: var(--light);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s;
+  z-index: 1000;
+}
+
+.navfield-sidebar.collapsed {
+  width: 60px;
+}
+
+.navfield-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--secondary);
+  border-bottom: 2px solid var(--accent1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navfield-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--light);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.navfield-sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  padding-top: 12px;
+}
+
+.navfield-sidebar-links li {
+  transition: background 0.3s ease, padding-left 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  margin: 2px 0;
+}
+
+.navfield-sidebar-links li:last-child {
+  border-bottom: none;
+}
+
+.navfield-sidebar-links li a {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  color: var(--light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  margin: 0 8px;
+}
+
+.navfield-sidebar-links li .navfield-icon {
+  font-size: 1.2rem;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  opacity: 0.9;
+}
+
+.navfield-sidebar-links li:hover {
+  background: var(--accent1);
+  border-left: 4px solid var(--gradient1);
+  padding-left: 16px;
+}
+
+.navfield-sidebar-links li.active {
+  background: var(--accent2);
+  border-left: 4px solid var(--gradient1);
+  padding-left: 16px;
+}
+
+.navfield-sidebar-links li.active a {
+  font-weight: bold;
+  color: var(--dark);
+}
+
+.navfield-sidebar-links li a .navfield-label {
+  color: var(--light);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Adjust for collapsed sidebar */
+.navfield-sidebar.collapsed .navfield-sidebar-links li a {
+  justify-content: center;
+  padding: 16px 0;
+  margin: 0;
+}
+
+.navfield-sidebar.collapsed .navfield-sidebar-links li .navfield-icon {
+  margin: 0;
+}
+
+.navfield-sidebar.collapsed .navfield-sidebar-links li .navfield-label {
+  display: none;
+}
+
+/* Social Media Footer */
+.navfield-sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--secondary);
+}
+
+.navfield-social-links {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.navfield-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--light);
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  width: 36px;
+  height: 36px;
+}
+
+.navfield-social-link:hover {
+  background: var(--accent1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navfield-social-link .navfield-icon {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+
+/* Adjust for collapsed sidebar */
+.navfield-sidebar.collapsed .navfield-sidebar-footer {
+  padding: 12px 8px;
+}
+
+.navfield-sidebar.collapsed .navfield-social-links {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.navfield-sidebar.collapsed .navfield-social-link {
+  justify-content: center;
+  padding: 8px;
+}
+
+.navfield-sidebar.collapsed .navfield-social-link .navfield-icon {
+  margin: 0;
+}
+
+
+.navfield-sidebar.collapsed .navfield-sidebar-links li:hover {
+  background: none;
+}
+
+/* Content wrapper: push content to the right of sidebar */
+.navfield-content-wrapper {
+  margin-left: 220px; /* same as sidebar width */
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+.navfield-sidebar.collapsed ~ .navfield-content-wrapper {
+  margin-left: 60px;
+}
+
+/* Profile section */
+.navfield-profile-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.navfield-profile-pic {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 4px solid #a0522d; /* light cinnamon brown */
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.navfield-profile-name {
+  margin: 5px 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.navfield-profile-role {
+  font-size: 14px;
+  color: #f5e6d3; /* light cinnamon beige */
+}
+
+/* Divider */
+.navfield-divider {
+  width: 80%;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 15px 0;
+}
+
+/* Navigation menu */
+.navfield-menu {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.navfield-menu li {
+  margin: 8px 0;
+}
+
+.navfield-menu li a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: #f5e6d3;
+  transition: background 0.3s ease, color 0.3s ease;
+  border-radius: 8px;
+}
+
+.navfield-menu li a .navfield-icon {
+  font-size: 20px;
+  margin-right: 12px;
+}
+
+.navfield-menu li a span {
+  font-size: 16px;
+}
+
+/* Hover effect */
+.navfield-menu li a:hover {
+  background-color: #8b4513;
+  color: #ffffff;
+}
+
+.navfield-company-name {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 15px 10px;
+  color: #ffffff; 
+}
+
+
+.navfield-social-links {
+  margin-top: auto; /* pushes to bottom */
+  text-align: center;
+  padding: 15px;
+}
+
+.navfield-social-links a {
+  margin: 0 10px;
+  color: #a0522d; 
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.navfield-social-links a:hover {
+  color: #d2691e; /* lighter cinnamon on hover */
+}
