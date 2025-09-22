@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import './navfield.css';
 import { FaHome, FaLeaf, FaChartBar, FaUserCog, FaBars, FaInstagram, FaFacebook } from 'react-icons/fa';
+import Elogo from '../Images/Elogo.png';
 
 function Nav() {
   const location = useLocation();
@@ -13,8 +14,15 @@ function Nav() {
 
   const toggleSidebar = () => {
     setCollapsed((prev) => {
-      localStorage.setItem("sidebar-collapsed", JSON.stringify(!prev));
-      return !prev;
+      const newState = !prev;
+      localStorage.setItem("sidebar-collapsed", JSON.stringify(newState));
+      
+      // Dispatch custom event to notify other components
+      window.dispatchEvent(new CustomEvent('sidebarStateChanged', {
+        detail: { collapsed: newState }
+      }));
+      
+      return newState;
     });
   };
 
@@ -33,7 +41,7 @@ function Nav() {
   return (
     <aside className={`navfield-sidebar ${collapsed ? "collapsed" : ""}`}>
       <div className="navfield-sidebar-header">
-        {!collapsed && <h2>EPIC Green</h2>}
+        {!collapsed && <img src={Elogo} alt="EPIC Green Logo" className="navfield-logo" />}
         <button className="navfield-toggle-btn" onClick={toggleSidebar}>
           <FaBars />
         </button>

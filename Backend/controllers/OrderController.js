@@ -23,12 +23,13 @@ const getPendingOrder = async (req, res) => {
 
 // Add a new item or update an existing one in the pending order
 // Corrected addOrUpdateOrderItem function
+// Corrected addOrUpdateOrderItem function
 const addOrUpdateOrderItem = async (req, res) => {
     try {
         const userId = req.userId;
         const { spiceId, quantity, price } = req.body;
 
-        const filter = { customer: userId, orderStatus: 'pending' };
+        const filter = { customer: userId, orderStatus: 'pending', orderType: 'Local' }; // Add orderType to filter
         
         let order = await Order.findOne(filter);
         
@@ -44,9 +45,8 @@ const addOrUpdateOrderItem = async (req, res) => {
             // Check if the item already exists in the order
             const existingItem = order.items.find(item => item.spice.toString() === spiceId);
             if (existingItem) {
-                // If it exists, update its quantity and price
-                existingItem.quantity = quantity;
-                existingItem.price = price;
+                // Corrected line: Add the new quantity to the existing one
+                existingItem.quantity += quantity;
             } else {
                 // If not, push the new item
                 order.items.push({ spice: spiceId, quantity, price });
@@ -129,10 +129,33 @@ const getOrderHistory = async (req, res) => {
     }
 };
 
+const getOrderById = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const orderId = req.params.orderId; // Get order ID from URL params
+
+        // Find the order by its ID and ensure it belongs to the authenticated user
+        const order = await Order.findOne({ 
+            _id: orderId, 
+            customer: userId 
+        }).populate('items.spice'); // Populate spice details
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found or not owned by user' });
+        }
+        
+        res.status(200).json({ order });
+    } catch (error) {
+        console.error("Error fetching order by ID:", error);
+        res.status(500).json({ message: 'Server error', error });
+    }
+};
+
 module.exports = {
     getPendingOrder,
     addOrUpdateOrderItem,
     deleteOrderItem,
     deleteOrder,
     getOrderHistory,
+    getOrderById,
 };

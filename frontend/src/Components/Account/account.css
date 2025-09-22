@@ -1,7 +1,7 @@
 /* Account Page - Modern Professional Design */
 .account-page {
     min-height: 100vh;
-    background: linear-gradient(135deg, #f8f5f2 0%, #e8ddd4 100%);
+    background: linear-gradient(135deg, #c08b56 0%, #e8ddd4 100%);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
 }
@@ -34,6 +34,7 @@
     padding: 2rem;
     min-height: calc(100vh - 80px);
     display: flex;
+    color: #5d4037;
     flex-direction: column;
     position: relative;
     z-index: 2;

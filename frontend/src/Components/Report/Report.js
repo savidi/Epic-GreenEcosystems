@@ -411,6 +411,90 @@ function Report() {
             actual: r.actualHarvest
         }));
 
+    // Handle sidebar collapse state
+    useEffect(() => {
+        const handleSidebarState = () => {
+            // Multiple ways to detect sidebar state
+            const isCollapsedFromStorage = localStorage.getItem('sidebar-collapsed') === 'true';
+            const sidebarElement = document.querySelector('.navfield-sidebar');
+            const isCollapsedFromDOM = sidebarElement && sidebarElement.classList.contains('collapsed');
+            
+            // Use the most reliable method
+            const isCollapsed = isCollapsedFromDOM || isCollapsedFromStorage;
+            
+            const contentWrappers = document.querySelectorAll('.report-report-content');
+            
+            contentWrappers.forEach(wrapper => {
+                if (isCollapsed) {
+                    // Add collapsed class
+                    wrapper.classList.add('sidebar-collapsed');
+                    
+                    // Set data attribute for CSS targeting
+                    wrapper.setAttribute('data-sidebar-collapsed', 'true');
+                    
+                    // Set CSS custom properties
+                    wrapper.style.setProperty('--sidebar-width', '60px');
+                    
+                    // Fallback inline styles
+                    wrapper.style.marginLeft = '60px';
+                    wrapper.style.width = 'calc(100% - 60px)';
+                } else {
+                    // Remove collapsed class
+                    wrapper.classList.remove('sidebar-collapsed');
+                    
+                    // Remove data attribute
+                    wrapper.setAttribute('data-sidebar-collapsed', 'false');
+                    
+                    // Set CSS custom properties
+                    wrapper.style.setProperty('--sidebar-width', '220px');
+                    
+                    // Fallback inline styles
+                    wrapper.style.marginLeft = '220px';
+                    wrapper.style.width = 'calc(100% - 220px)';
+                }
+            });
+        };
+
+        // Initial setup
+        handleSidebarState();
+
+        // Listen for storage changes (when sidebar is toggled)
+        window.addEventListener('storage', handleSidebarState);
+        
+        // Listen for custom event (more reliable for same-page updates)
+        window.addEventListener('sidebarStateChanged', handleSidebarState);
+        
+        // Also listen for DOM changes as a fallback
+        const observer = new MutationObserver((mutations) => {
+            // Check if any mutation involves the sidebar
+            const hasSidebarChange = mutations.some(mutation => {
+                return Array.from(mutation.addedNodes).some(node => 
+                    node.classList && node.classList.contains('navfield-sidebar')
+                ) || Array.from(mutation.removedNodes).some(node => 
+                    node.classList && node.classList.contains('navfield-sidebar')
+                ) || (mutation.target.classList && mutation.target.classList.contains('navfield-sidebar'));
+            });
+            
+            if (hasSidebarChange) {
+                handleSidebarState();
+            }
+        });
+        
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ['class'],
+            subtree: true,
+            childList: true
+        });
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('storage', handleSidebarState);
+            window.removeEventListener('sidebarStateChanged', handleSidebarState);
+            observer.disconnect();
+        };
+    }, []);
+
     if (loading) {
         return (
             <div>

@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../model/Order'); 
-const { getPendingOrder, addOrUpdateOrderItem, getOrderHistory, deleteOrderItem, deleteOrder } = require('../controllers/OrderController');
+const { getPendingOrder, addOrUpdateOrderItem, getOrderHistory, deleteOrderItem, deleteOrder,getOrderById } = require('../controllers/OrderController');
 const auth = require('../Middleware/auth');
 
 // All routes are for authenticated customers
@@ -11,6 +11,9 @@ router.get('/history', auth, getOrderHistory);
 router.post('/', auth, addOrUpdateOrderItem); // Corrected: removed '/orders'
 router.delete('/:orderId/:itemId', auth, deleteOrderItem);
 router.delete('/:orderId', auth, deleteOrder);
+
+router.get('/:orderId', auth, getOrderById); // Add this line
+
 router.put('/clear-cart', auth, async (req, res) => {
     try {
         const userId = req.userId;

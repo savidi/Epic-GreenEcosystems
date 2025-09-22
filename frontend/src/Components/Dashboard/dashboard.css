@@ -1,11 +1,86 @@
+/* Dashboard Page Styles - Brown Theme */
+:root {
+  /* Primary Brown Colors */
+  --light-tan: #F5E6D3;          /* Very Light Tan */
+  --sand-brown: #E6D2B5;         /* Soft Sand */
+  --caramel: #D4A574;            /* Warm Caramel */
+  --cinnamon: #C19A6B;           /* Cinnamon */
+  --chestnut: #A67C52;           /* Chestnut */
+  --chocolate: #8B6F47;          /* Milk Chocolate */
+  
+  /* Background Colors */
+  --bg-cream: #FFF8DC;           /* Cornsilk */
+  --bg-light: #FAF0E6;          /* Linen */
+  --bg-white: #FFFFFF;
+  
+  /* Text Colors */
+  --text-dark: #8B4513;          /* Saddle Brown */
+  --text-medium: #A0522D;        /* Sienna */
+  --text-light: #CD853F;         /* Peru */
+  --text-white: #FFFFFF;         /* White */
+  
+  /* Accent Colors */
+  --accent-green: #228B22;       /* Forest Green - for fresh herbs */
+  --accent-gold: #FFD700;        /* Gold - for premium spices */
+  
+  /* Status Colors */
+  --success: #32CD32;            /* Lime Green */
+  --warning: #FF6347;            /* Tomato */
+  --error: #DC143C;              /* Crimson */
+}
+
 /* ===== Dashboard Layout ===== */
 .dash-container {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  background-color: #f5e6d3;
+  background: linear-gradient(135deg, var(--light-tan) 0%, var(--sand-brown) 100%);
   min-height: 100vh;
   padding: 0; /* remove global outer padding */
-  color: #6b4423;
+  color: var(--text-dark);
   line-height: 1.5;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ===== Dashboard Content Sidebar Handling ===== */
+.dash-content {
+  margin-left: 220px;
+  transition: margin-left 0.3s ease;
+  min-height: 100vh;
+  width: calc(100% - 220px);
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+/* Handle collapsed sidebar state - JavaScript-based approach */
+.dash-content.sidebar-collapsed {
+  margin-left: 60px !important;
+  width: calc(100% - 60px) !important;
+}
+
+/* Handle when sidebar inside wrapper is collapsed */
+.dash-container:has(.navfield-sidebar.collapsed) .dash-content {
+  margin-left: 60px !important;
+  width: calc(100% - 60px) !important;
+}
+
+/* Global sidebar state handling - when any sidebar is collapsed */
+body .navfield-sidebar.collapsed ~ .dash-content,
+body .navfield-sidebar.collapsed + .dash-content,
+body:has(.navfield-sidebar.collapsed) .dash-content {
+  margin-left: 60px !important;
+  width: calc(100% - 60px) !important;
+}
+
+/* Fallback: Check localStorage via CSS custom properties */
+.dash-content {
+  margin-left: var(--sidebar-width, 220px);
+  width: calc(100% - var(--sidebar-width, 220px));
+}
+
+/* Force override for collapsed state */
+.dash-content[data-sidebar-collapsed="true"] {
+  margin-left: 60px !important;
+  width: calc(100% - 60px) !important;
 }
 
 
@@ -17,10 +92,11 @@
 .dash-section h2 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #6b4423;
+  color: var(--chocolate);
   margin-bottom: 1.5rem;
   position: relative;
   padding-bottom: 0.75rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .dash-section h2::after {
@@ -30,7 +106,7 @@
   left: 0;
   width: 60px;
   height: 3px;
-  background: #8b4513;
+  background: var(--caramel);
   border-radius: 3px;
 }
 
@@ -40,22 +116,23 @@
   padding: 0;         /* no inner padding */
 }
 
-.dash-slider-section .dash-slider-container {
+.dash-slider-section .slider-container {
   position: relative;
   width: 100%;
   height: 360px;       /* expanded hero */
   margin: 0;           /* no side spacing */
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(107, 68, 35, 0.15);
+  box-shadow: 0 10px 30px rgba(139, 111, 71, 0.2);
+  border: 1px solid var(--chestnut);
 }
 
 @media (max-width: 768px) {
-  .dash-slider-section .dash-slider-container { height: 280px; }
+  .dash-slider-section .slider-container { height: 280px; }
 }
 
 @media (max-width: 480px) {
-  .dash-slider-section .dash-slider-container { height: 220px; }
+  .dash-slider-section .slider-container { height: 220px; }
 }
 
 /* ===== Stats Section ===== */
@@ -69,29 +146,29 @@
 }
 
 .dash-stat-card {
-  background: white;
+  background: var(--light-tan);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(139, 111, 71, 0.1);
+  border: 1px solid var(--chestnut);
   transition: all 0.2s ease;
 }
 
 .dash-stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(139, 111, 71, 0.2);
+  border-color: var(--cinnamon);
 }
 
 .dash-stat-card h3 {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--chocolate);
   margin: 0 0 0.5rem 0;
 }
 
 .dash-stat-card p {
-  color: #64748b;
+  color: var(--text-medium);
   margin: 0;
   font-size: 0.95rem;
 }
@@ -105,10 +182,10 @@
 }
 
 .dash-spice-card {
-  background: #fff;
+  background: var(--light-tan);
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(139, 111, 71, 0.1);
+  border: 1px solid var(--chestnut);
   text-decoration: none;
   color: inherit;
   overflow: hidden;
@@ -117,15 +194,15 @@
 
 .dash-spice-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border-color: #cbd5e1;
+  box-shadow: 0 4px 15px rgba(139, 111, 71, 0.2);
+  border-color: var(--cinnamon);
 }
 
 .dash-spice-img {
   width: 100%;
   height: 180px;
   object-fit: cover;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--caramel);
 }
 
 .dash-spice-info {
@@ -136,12 +213,12 @@
   margin: 0 0 0.5rem 0;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--chocolate);
 }
 
 .dash-spice-info p {
   margin: 0;
-  color: #64748b;
+  color: var(--text-medium);
   font-size: 0.9rem;
   line-height: 1.5;
   display: -webkit-box;
@@ -153,11 +230,11 @@
 
 /* ===== Map Section ===== */
 .dash-map-section {
-  background: #fff;
+  background: var(--light-tan);
   border-radius: 12px;
   padding: 1.25rem;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--chestnut);
+  box-shadow: 0 4px 6px -1px rgba(139, 111, 71, 0.1), 0 2px 4px -1px rgba(139, 111, 71, 0.05);
   margin: 1.5rem 0; /* tighter */
   box-sizing: border-box;
   width: 100%;
@@ -166,10 +243,11 @@
 .dash-map-section h2 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--chocolate);
   margin: 0 0 1.5rem 0;
   padding-bottom: 0.75rem;
   position: relative;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .dash-map-section h2::after {
@@ -179,7 +257,7 @@
   left: 0;
   width: 60px;
   height: 3px;
-  background: #3b82f6;
+  background: var(--caramel);
   border-radius: 3px;
 }
 
@@ -188,8 +266,66 @@
   height: 360px;
   border-radius: 8px;
   object-fit: cover;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--chestnut);
+  box-shadow: 0 1px 2px rgba(139, 111, 71, 0.1);
+}
+
+.map-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(139, 111, 71, 0.2);
+  border: 1px solid var(--chestnut);
+  background: var(--sand-brown);
+}
+
+.back-button {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, var(--caramel) 0%, var(--cinnamon) 100%);
+  color: var(--text-white);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 1px solid var(--chestnut);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.back-button:hover {
+  background: linear-gradient(135deg, var(--cinnamon) 0%, var(--chestnut) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(139, 111, 71, 0.4);
+  border-color: var(--chocolate);
+}
+
+/* Leaflet map styling to match brown theme */
+.leaflet-popup-content-wrapper {
+  background: linear-gradient(135deg, rgba(139, 69, 19, 0.95) 0%, rgba(160, 82, 45, 0.9) 100%);
+  border-radius: 12px;
+  border: 1px solid var(--caramel);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.leaflet-popup-content {
+  color: var(--text-white);
+  margin: 16px;
+  line-height: 1.4;
+}
+
+.leaflet-popup-tip {
+  background: rgba(139, 69, 19, 0.95);
+  border: 1px solid var(--caramel);
+}
+
+.leaflet-tooltip {
+  background: linear-gradient(135deg, rgba(139, 69, 19, 0.95) 0%, rgba(160, 82, 45, 0.9) 100%);
+  border: 1px solid var(--caramel);
+  border-radius: 8px;
+  color: var(--text-white);
+  font-size: 12px;
+  padding: 8px 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* ===== Dashboard Grid Layout ===== */

@@ -1,6 +1,6 @@
 :root {
-    --primary-color: #9f702f;
-    --secondary-color: #c87b51;
+    --primary-color: #6f4f21;
+    --secondary-color: #945d3f;
     --background-color: #f5e6d3;
     --text-color-dark: #1a232f;
     --text-color-light: #fff;
@@ -15,15 +15,15 @@ body {
     
 }
 
-.salesmanager-sales-manager-container {
+.sales-manager-container {
     display: flex;
     min-height: 100vh;
 }
 
 /* Sidebar Styling  */
-.salesmanager-sidebar {
+.sidebar {
     width: 250px;
-    background-color: var(--primary-color);
+    background-color: rgb(117, 79, 30);
     color: var(--text-color-light);
     padding: 20px;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -31,17 +31,17 @@ body {
     flex-direction: column;
 }
 
-.salesmanager-sidebar-header {
+.sidebar-header {
     text-align: center;
     padding-bottom: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.salesmanager-profile-section {
+.profile-section {
     padding-top: 20px;
 }
 
-.salesmanager-profile-image {
+.profile-image {
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -49,36 +49,36 @@ body {
     object-fit: cover;
 }
 
-.salesmanager-profile-section h3 {
+.profile-section h3 {
     margin: 10px 0 0;
     font-size: 1.2em;
     font-weight: 600;
     color: var(--text-color-light);
 }
 
-.salesmanager-profile-section p {
+.profile-section p {
     margin: 5px 0 0;
     font-size: 0.9em;
     color: var(--background-color);
     font-weight: 600;
 }
 
-.salesmanager-sidebar-nav {
+.sidebar-nav {
     flex-grow: 1;
     margin-top: 30px;
 }
 
-.salesmanager-sidebar-nav ul {
+.sidebar-nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.salesmanager-sidebar-nav li {
+.sidebar-nav li {
     margin-bottom: 8px;
 }
 
-.salesmanager-sidebar-nav a {
+.sidebar-nav a {
     display: flex;
     align-items: center;
     padding: 15px 20px;
@@ -89,43 +89,43 @@ body {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.salesmanager-sidebar-icon {
+.sidebar-icon {
     margin-right: 15px;
     font-size: 1.2em;
 }
 
-.salesmanager-sidebar-nav li.active a {
+.sidebar-nav li.active a {
     background-color: var(--secondary-color);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.salesmanager-sidebar-nav a:hover {
+.sidebar-nav a:hover {
     background-color: var(--secondary-color);
     transform: translateX(5px);
 }
 
 /* Main Content Styling */
-.salesmanager-main-content {
+.main-content {
     flex-grow: 1;
     padding: 40px;
     background-color: var(--background-color);
 }
 
-.salesmanager-dashboard-header {
+.dashboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
 
-.salesmanager-dashboard-header h1 {
+.dashboard-header h1 {
     font-size: 2.2em;
     color: var(--text-color-dark);
     font-weight: 700;
 }
 
 /* Adjustments for the stats grid */
-.salesmanager-stats-grid {
+.stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Set to 4 columns */
     gap: 25px;
@@ -133,18 +133,18 @@ body {
 }
 
 @media (max-width: 1200px) {
-    .salesmanager-stats-grid {
+    .stats-grid {
         grid-template-columns: repeat(2, 1fr); /* Adjust for smaller screens */
     }
 }
 
 @media (max-width: 768px) {
-    .salesmanager-stats-grid {
+    .stats-grid {
         grid-template-columns: 1fr; /* Stack columns on small devices */
     }
 }
 
-.salesmanager-stat-block {
+.stat-block {
     background-color: var(--card-background);
     padding: 20px; /* Reduced padding */
     border-radius: 15px;
@@ -154,12 +154,12 @@ body {
     transition: transform 0.3s ease;
 }
 
-.salesmanager-stat-block:hover {
+.stat-block:hover {
     transform: translateY(-8px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-.salesmanager-icon-container {
+.icon-container {
     background-color: #e3dbd4;
     padding: 15px; /* Reduced padding */
     border-radius: 50%;
@@ -169,32 +169,32 @@ body {
     justify-content: center;
 }
 
-.salesmanager-stat-icon {
+.stat-icon {
     font-size: 25px; /* Reduced icon size */
     color:#0fafdc;
 }
 
-.salesmanager-stat-icon1 {
+.stat-icon1 {
     font-size: 25px; /* Reduced icon size */
    color:#e31010;
 }
-.salesmanager-stat-icon2 {
+.stat-icon2 {
     font-size: 25px; /* Reduced icon size */
    color:#e37e0a;
 }
-.salesmanager-stat-icon3 {
+.stat-icon3 {
     font-size: 25px; /* Reduced icon size */
    color:#10e330;
 }
 
-.salesmanager-stat-block .info h3 {
+.stat-block .info h3 {
     margin: 0;
     font-size: 16px; /* Reduced font size */
     color: #555;
     font-weight: 500;
 }
 
-.salesmanager-stat-block .info p {
+.stat-block .info p {
     margin: 5px 0 0;
     font-size: 20px; /* Reduced font size */
     font-weight: 700;
@@ -202,7 +202,7 @@ body {
     
 }
 
-.salesmanager-graph-placeholder {
+.graph-placeholder {
     background-color: var(--card-background);
     padding: 30px;
     border-radius: 15px;
@@ -215,14 +215,14 @@ body {
     align-items: center;
 }
 
-.salesmanager-graph-placeholder h2 {
+.graph-placeholder h2 {
     font-size: 1.5em;
     font-weight: 600;
     color: #444;
 }
 
 /* Search and Tab Styles */
-.salesmanager-search-bar {
+.search-bar {
     display: flex;
     align-items: center;
     border: 1px solid #ccc;
@@ -232,12 +232,12 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.salesmanager-search-icon {
+.search-icon {
     margin-right: 10px;
     color: var(--primary-color);
 }
 
-.salesmanager-search-bar input {
+.search-bar input {
     border: none;
     outline: none;
     background-color: transparent;
@@ -245,13 +245,13 @@ body {
     width: 50px;
 }
 
-.salesmanager-tab-navigation {
+.tab-navigation {
     display: flex;
     border-bottom: 2px solid #ddd;
     margin-bottom: 20px;
 }
 
-.salesmanager-tab {
+.tab {
     background-color: transparent;
     border: none;
     padding: 10px 20px;
@@ -261,18 +261,18 @@ body {
     transition: all 0.3s ease;
 }
 
-.salesmanager-tab:hover {
+.tab:hover {
     color: var(--primary-color);
 }
 
-.salesmanager-tab.active {
+.tab.active {
     border-bottom: 3px solid var(--primary-color);
     color: var(--primary-color);
     font-weight: bold;
 }
 
 /* Table Container Styles */
-.salesmanager-order-table-container {
+.order-table-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -281,56 +281,56 @@ body {
 }
 
 /* Table Header Controls */
-.salesmanager-table-header-controls {
+.table-header-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.salesmanager-table-header-controls h3 {
+.table-header-controls h3 {
     margin: 0;
     color: #333;
     font-size: 1.5em;
 }
 
 /* Table Styles */
-.salesmanager-order-table, .salesmanager-quotation-table {
+.order-table, .quotation-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
 }
 
-.salesmanager-order-table th,
-.salesmanager-order-table td,
-.salesmanager-quotation-table th,
-.salesmanager-quotation-table td{
+.order-table th,
+.order-table td,
+.quotation-table th,
+.quotation-table td{
     border: 1px solid #ddd;
     padding: 12px;
     text-align: left;
 }
 
-.salesmanager-order-table th, .salesmanager-quotation-table th{
+.order-table th, .quotation-table th{
     background-color: #e1c2af;
     color: #624416;
     font-size: 0.9em;
     font-weight: bold;
 }
 
-.salesmanager-order-table td, .salesmanager-quotation-table td {
+.order-table td, .quotation-table td {
     font-size: 14px;
 }
 
-.salesmanager-order-table tr:nth-child(even) {
+.order-table tr:nth-child(even) {
     background-color: #F5DEB3;
 }
 
-.salesmanager-order-table tr:hover {
+.order-table tr:hover {
     background-color: rgb(179, 164, 155);
 }
 
 /* Status Select Styling */
-.salesmanager-status-select {
+.status-select {
     padding: 6px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -340,14 +340,14 @@ body {
     max-width: 150px;
 }
 
-.salesmanager-status-select:focus {
+.status-select:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(237, 118, 34, 0.2);
 }
 
 /* Button Styles */
-.salesmanager-update-button {
+.update-button {
     background-color: var(--primary-color);
     color: var(--text-color-light);
     border: none;
@@ -358,21 +358,21 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.salesmanager-update-button:hover {
+.update-button:hover {
     background-color: var(--secondary-color);
 }
 
-.salesmanager-update-button:disabled {
+.update-button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
 
-.salesmanager-update-button:disabled:hover {
+.update-button:disabled:hover {
     background-color: #ccc;
 }
 
 /* No Data Message */
-.salesmanager-no-data-message {
+.no-data-message {
     text-align: center;
     padding: 50px;
     color: #888;
@@ -384,77 +384,77 @@ body {
 }
 
 /* Export PDF Button (already styled inline but adding class for consistency) */
-.salesmanager-export-pdf-button {
+.export-pdf-button {
     transition: background-color 0.3s ease;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .salesmanager-order-table-container {
+    .order-table-container {
         padding: 15px;
     }
     
-    .salesmanager-table-header-controls {
+    .table-header-controls {
         flex-direction: column;
         gap: 15px;
         align-items: flex-start;
     }
     
-    .salesmanager-table-header-controls h3 {
+    .table-header-controls h3 {
         font-size: 1.3em;
     }
     
-    .salesmanager-order-table {
+    .order-table {
         font-size: 12px;
     }
     
-    .salesmanager-order-table th,
-    .salesmanager-order-table td {
+    .order-table th,
+    .order-table td {
         padding: 8px;
     }
     
-    .salesmanager-status-select {
+    .status-select {
         max-width: 120px;
         font-size: 12px;
     }
     
-    .salesmanager-update-button {
+    .update-button {
         padding: 6px 12px;
         font-size: 0.8em;
     }
 }
 
 @media (max-width: 480px) {
-    .salesmanager-order-table-container {
+    .order-table-container {
         padding: 10px;
         margin: 10px 0;
     }
     
-    .salesmanager-order-table {
+    .order-table {
         font-size: 11px;
     }
     
-    .salesmanager-order-table th,
-    .salesmanager-order-table td {
+    .order-table th,
+    .order-table td {
         padding: 6px;
     }
     
-    .salesmanager-table-header-controls h3 {
+    .table-header-controls h3 {
         font-size: 1.2em;
     }
     
     /* Stack table cells on very small screens */
-    .salesmanager-order-table-container {
+    .order-table-container {
         overflow-x: auto;
     }
     
-    .salesmanager-order-table {
+    .order-table {
         min-width: 600px;
     }
 }
 
 /* Quotation Form Styles */
-.salesmanager-quotation-form-container {
+.quotation-form-container {
     background-color: var(--card-background);
     padding: 30px;
     border-radius: 15px;
@@ -465,7 +465,7 @@ body {
     overflow: hidden;
 }
 
-.salesmanager-quotation-form-container::before {
+.quotation-form-container::before {
     content: '';
     position: absolute;
     top: 0;
@@ -480,12 +480,12 @@ body {
     z-index: 0;
 }
 
-.salesmanager-quotation-form-container > * {
+.quotation-form-container > * {
     position: relative;
     z-index: 1; /* Ensures content is above the background image */
 }
 
-.salesmanager-quotation-form-container h2 {
+.quotation-form-container h2 {
     color: var(--primary-color);
     font-size: 2.5em;
     font-weight: 700;
@@ -495,8 +495,8 @@ body {
     border-bottom: 3px solid var(--secondary-color);
 }
 
-.salesmanager-customer-details,
-.salesmanager-staff-form {
+.customer-details,
+.staff-form {
     background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white background for readability */
     padding: 25px;
     border-radius: 12px;
@@ -504,8 +504,8 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-.salesmanager-customer-details h3,
-.salesmanager-staff-form h3 {
+.customer-details h3,
+.staff-form h3 {
     color: #444;
     font-size: 1.8em;
     font-weight: 600;
@@ -514,30 +514,30 @@ body {
     padding-bottom: 10px;
 }
 
-.salesmanager-customer-details p {
+.customer-details p {
     margin: 10px 0;
     font-size: 1em;
     color: #555;
 }
 
-.salesmanager-customer-details p strong {
+.customer-details p strong {
     color: var(--text-color-dark);
 }
 
-.salesmanager-staff-form .salesmanager-form-group {
+.staff-form .form-group {
     margin-bottom: 25px;
 }
 
-.salesmanager-staff-form label {
+.staff-form label {
     font-weight: 700;
     margin-bottom: 10px;
     color: var(--text-color-dark);
     font-size: 1em;
 }
 
-.salesmanager-staff-form input,
-.salesmanager-staff-form textarea,
-.salesmanager-staff-form select {
+.staff-form input,
+.staff-form textarea,
+.staff-form select {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -547,23 +547,23 @@ body {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.salesmanager-staff-form input:focus,
-.salesmanager-staff-form textarea:focus,
-.salesmanager-staff-form select:focus {
+.staff-form input:focus,
+.staff-form textarea:focus,
+.staff-form select:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 5px rgba(159, 112, 47, 0.5);
 }
 
-.salesmanager-staff-form input[disabled],
-.salesmanager-staff-form textarea[disabled],
-.salesmanager-staff-form select[disabled] {
+.staff-form input[disabled],
+.staff-form textarea[disabled],
+.staff-form select[disabled] {
     background-color: #f0f0f0;
     cursor: not-allowed;
     color: #888;
 }
 
-.salesmanager-submit-button {
+.submit-button {
     background-color: var(--primary-color);
     color: var(--text-color-light);
     border: none;
@@ -576,18 +576,18 @@ body {
     width: 100%;
 }
 
-.salesmanager-submit-button:hover {
+.submit-button:hover {
     background-color: var(--secondary-color);
     transform: translateY(-2px);
 }
 
-.salesmanager-submit-button:disabled {
+.submit-button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
     transform: none;
 }
 
-.salesmanager-chart-header {
+.chart-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -596,12 +596,12 @@ body {
     margin-bottom: 15px; /* Slightly reduced margin for a tighter layout */
 }
 
-.salesmanager-chart-toggle-buttons {
+.chart-toggle-buttons {
     display: flex;
     gap: 10px;
 }
 
-.salesmanager-toggle-button {
+.toggle-button {
     background-color: transparent;
     border: 1px solid var(--primary-color);
     color: var(--primary-color);
@@ -612,18 +612,18 @@ body {
     transition: all 0.3s ease;
 }
 
-.salesmanager-toggle-button:hover {
+.toggle-button:hover {
     background-color: var(--primary-color);
     color: var(--text-color-light);
 }
 
-.salesmanager-toggle-button.active {
+.toggle-button.active {
     background-color: var(--primary-color);
     color: var(--text-color-light);
     font-weight: bold;
 }
 
-.salesmanager-top-spices-chart-container {
+.top-spices-chart-container {
     background-color: var(--card-background);
     padding: 20px;
     border-radius: 15px;
@@ -634,13 +634,13 @@ body {
     min-height: 100px; 
 }
 
-.salesmanager-top-spices-chart-container h2{
+.top-spices-chart-container h2{
     font-size: 1.5em;
     font-weight: 600;
     color: #444;
 }
 
-.salesmanager-charts-container {
+.charts-container {
     display: flex; /* This is the key. It enables flexbox layout. */
     justify-content: space-around; /* Distributes space evenly between and around the items. */
     align-items: flex-start; /* Aligns items to the top of the container. */
@@ -649,8 +649,8 @@ body {
     gap: 20px; /* Provides consistent spacing between the charts. */
 }
 
-.salesmanager-order-type-chart-container,
-.salesmanager-order-status-chart-container {
+.order-type-chart-container,
+.order-status-chart-container {
     padding: 20px;
     background-color: #fff;
     border-radius: 12px;
@@ -663,7 +663,7 @@ body {
     margin-left: 55px;
 } 
 
-.salesmanager-dashboard-charts-container {
+.dashboard-charts-container {
     display: flex; /* Enables Flexbox layout */
     justify-content: space-between; /* Distributes space between the items */
     gap: 20px; /* Adds space between the charts */
@@ -671,7 +671,7 @@ body {
     margin-top: 40px;
 }
 
-.salesmanager-chart-wrapper {
+.chart-wrapper {
     flex: 1; /* Allows each chart to grow and fill an equal amount of space */
     min-width: 45%; /* Ensures charts don't get too small */
     background-color: #fff;
@@ -680,23 +680,23 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.salesmanager-chart-header h2{
+.chart-header h2{
     color:#693a16;
 }
 
-.salesmanager-order-type-chart-container h2 {
+.order-type-chart-container h2 {
     font-size: 1.5rem;
     color:#693a16;
     margin-bottom: 20px;
 }
 
-.salesmanager-order-status-chart-container h2 {
+.order-status-chart-container h2 {
     font-size: 1.5rem;
     color:#693a16;
     margin-bottom: 20px;
 }
 
-.salesmanager-export-pdf-button {
+.export-pdf-button {
     margin-top: 20px;
     padding: 10px 15px;
     background-color:  rgb(185, 154, 121);
@@ -708,12 +708,12 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.salesmanager-export-pdf-button:hover {
+.export-pdf-button:hover {
     background-color: rgb(196, 167, 137); /* A darker shade for hover effect */
 }
 
 /* Status Cards Container */
-.salesmanager-status-cards-container {
+.status-cards-container {
     display: flex;
     justify-content: space-around;
     gap: 20px;
@@ -722,7 +722,7 @@ body {
 
 /* Individual Status Card */
 /* Status Cards Container */
-.salesmanager-status-cards-container {
+.status-cards-container {
     display: flex;
     justify-content: space-around;
     gap: 20px;
@@ -730,7 +730,7 @@ body {
 }
 
 /* Individual Status Card */
-.salesmanager-status-card {
+.status-card {
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
@@ -739,56 +739,15 @@ body {
     text-align: center;
 }
 
-.salesmanager-status-card h4 {
+.status-card h4 {
     margin-top: 0;
     font-size: 1.2em;
     color: #555;
 }
 
-.salesmanager-status-card .salesmanager-status-count {
+.status-card .status-count {
     font-size: 2.5em;
     font-weight: bold;
     color: #ed7622ff;
     margin: 0;
-}
-
-/* Error Notification Styles */
-.salesmanager-error-notification {
-    background-color: #fff3cd;
-    border: 1px solid #ffeaa7;
-    color: #856404;
-    padding: 12px 16px;
-    margin: 20px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.salesmanager-error-notification span {
-    flex: 1;
-    font-size: 14px;
-}
-
-.salesmanager-dismiss-button {
-    background: none;
-    border: none;
-    color: #856404;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 0;
-    margin-left: 12px;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease;
-}
-
-.salesmanager-dismiss-button:hover {
-    background-color: rgba(133, 100, 4, 0.1);
 }
