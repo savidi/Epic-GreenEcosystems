@@ -1,79 +1,124 @@
-
-.stocks-order-page-container {
-  padding: 20px 40px;
-  background-color: #f8f9fb;
+ /* -------------------- Layout -------------------- */
+.inv-layout {
+  display: flex;
+  background-color: #fff9f0;
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.stocks-order-page-container h1 {
-  font-size: 28px;
-  font-weight: 700;
   color: #333;
-  margin-bottom: 20px;
 }
 
-.stocks-order-spices-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #ffffff;
+.inv-main-content {
+  flex: 1;
+  margin-left: 220px; /* Space for NavInv */
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+/* -------------------- Header -------------------- */
+.inv-header {
+  background: #fff;
+  padding: 20px 25px;
   border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-}
-
-.stocks-order-spices-table thead {
-  background: #2c3e50;
-  color: #ffffff;
-}
-
-.stocks-order-spices-table th {
-  padding: 1px 18px;
-  text-align: left;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  
-}
-
-.stocks-order-spices-table tbody tr {
-  border-bottom: 1px solid #eee;
-  transition: background 0.2s ease;
-}
-
-.stocks-order-spices-table tbody tr:hover {
-  background: #f9f9f9;
-}
-
-.stocks-order-spices-table td {
-  padding: 12px 18px;
-  font-size: 14px;
-  color: #444;
-  vertical-align: top;
-}
-
-
-.stocks-order-spices-table td:nth-child(5) {
-  font-weight: 600;
-  color: #27ae60; 
-}
-
-.stocks-order-spices-table td:nth-child(6) {
-  color: #2980b9; 
-}
-
-.stocks-order-spices-table td:nth-child(7) {
-  font-weight: 600;
-  color: #e67e22; 
-}
-
-.stocks-order-page-container p {
-  margin-top: 16px;
-  font-size: 15px;
-  color: #777;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  margin-bottom: 25px;
   text-align: center;
 }
 
+.inv-header h1 {
+  font-size: 26px;
+  color: #e6a76b;
+  margin-bottom: 8px;
+}
+
+.inv-header p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* -------------------- Table -------------------- */
+.inv-table-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  overflow-x: auto;
+}
+
+.inv-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inv-table th,
+.inv-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 14px;
+}
+
+.inv-table th {
+  background-color: #fff5e9;
+  font-weight: 600;
+  color: #333;
+}
+
+.inv-table tr:nth-child(even) {
+  background: #fffdf8;
+}
+
+.inv-table tr:nth-child(odd) {
+  background: #fff;
+}
+
+.inv-info {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+  font-style: italic;
+}
+
+.inv-error {
+  text-align: center;
+  padding: 20px;
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+/* -------------------- Buttons (if needed) -------------------- */
+.inv-btn {
+  background-color: #e6a76b;
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin: 3px;
+  transition: background 0.3s;
+}
+
+.inv-btn:hover {
+  background-color: #d99a5f;
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 768px) {
+  .inv-main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .inv-header {
+    padding: 15px;
+  }
+
+  .inv-table th,
+  .inv-table td {
+    padding: 10px;
+    font-size: 13px;
+  }
+}
 
 
 

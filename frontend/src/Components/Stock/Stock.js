@@ -77,14 +77,14 @@ function Stock() {
     const maxValue = Math.max(...stockData.map((item) => item.total), 1);
     const barWidth = chartWidth / stockData.length - 10;
     const colors = [
-      "#4CAF50",
-      "#8BC34A",
+      "#a49a3fff",
+      "#bcc778ff",
       "#FFC107",
-      "#FF5722",
-      "#009688",
-      "#795548",
-      "#9C27B0",
-      "#03A9F4",
+      "#c4741aff",
+      "#c4b519ff",
+      "#c6995eff",
+      "#705e2bff",
+      "#d29806ff",
     ];
 
     stockData.forEach((item, index) => {

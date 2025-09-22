@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavInv from "../NavInv/NavInv";
 import AddFertilizer from "./AddFertilizerInv";
-import './products.css'; 
+import './Products.css'; 
 
 function Fertilizer() {
   const [fertilizers, setFertilizers] = useState([]);
@@ -47,6 +47,8 @@ function Fertilizer() {
       <AddFertilizer onFertilizerAdded={handleFertilizerAdded} />
 
       <div className="fertilizerinv-content">
+
+      <div className="inv-main-content">
         <div className="fertilizerinv-table-section">
           <h1>Fertilizer Details</h1>
           {/* Removed fertilizer-filter div */}
@@ -69,7 +71,7 @@ function Fertilizer() {
                     <td>{fertilizer.price}</td>
                     <td>{fertilizer.quantity}</td>
                     <td>
-                      <button onClick={() => onDelete(fertilizer._id)} className='fertilizerinv-delete-button'>
+                      <button onClick={() => onDelete(fertilizer._id)} className='fertilizerinv-btn'>
                         Delete
                       </button>
                     </td>
@@ -81,6 +83,7 @@ function Fertilizer() {
             <p>No fertilizers found. Add one above!</p>
           )}
         </div>
+      </div>
       </div>
     </div>
   );

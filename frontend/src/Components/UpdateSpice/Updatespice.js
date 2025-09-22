@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import '../Products/products.css';
+import '../Products/Products.css';
 
 function Updatespice() {
   const { id } = useParams();

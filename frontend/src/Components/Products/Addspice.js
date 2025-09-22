@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import NavInv from '../NavInv/NavInv';
-import './products.css';
-
+//import './Products.css';
+import './Addspice.css';
+//import './AddFertilizerInv.css'
 function Addspice({ onSpiceAdded }) {
     const navigate = useNavigate();
     const [inputs, setInputs] = useState({ 
@@ -166,6 +167,7 @@ function Addspice({ onSpiceAdded }) {
             <div className="addspice-products-container">
                 <NavInv />
                 <div className="addspice-products-content">
+                    
                     <div className="addspice-loading">
                         <div className="addspice-loading-spinner"></div>
                         <p>Loading spices...</p>
@@ -194,6 +196,7 @@ function Addspice({ onSpiceAdded }) {
 
                 <div className="addspice-main-spice-content">
                     {/* Statistics Cards */}
+                    <div className="inv-main-content">
                     <div className="addspice-stats-container">
                         <div className="stat-card">
                             <h3>Total Spices&nbsp; </h3>
@@ -292,6 +295,7 @@ function Addspice({ onSpiceAdded }) {
 
                             <button type="submit">ADD SPICE</button>
                         </form>
+                    </div>
                     </div>
                 </div>
                 

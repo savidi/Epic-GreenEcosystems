@@ -1,102 +1,536 @@
-
-
-.stocks-supplier-products-container {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  max-width: 1200px;
-  margin: 0 auto;
+/* -------------------- Reset & Base -------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.stocks-supplier-products-title {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #2c3e50;
-  font-size: 2.5em;
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f4f0;
+  color: #333;
+  line-height: 1.6;
 }
 
-.stocks-supplier-products-content {
+/* -------------------- Layout -------------------- */
+.inv-layout {
   display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.stocks-supplier-products-list,
-.stocks-supplier-products-chart {
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 25px;
-  flex: 1;
-  min-width: 400px;
-  margin-bottom: 20px;
-}
-
-.stocks-supplier-products-list h2,
-.stocks-supplier-products-chart h2 {
-  color: #34495e;
-  margin-bottom: 20px;
-  font-size: 1.8em;
-  border-bottom: 2px solid #ecf0f1;
-  padding-bottom: 10px;
-}
-
-.stocks-supplier-products-table {
+  min-height: 100vh;
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
 }
 
-.stocks-supplier-products-table th,
-.stocks-supplier-products-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
+/* -------------------- Sidebar -------------------- */
+.inv-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background-color: #8B4513;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
 }
 
-.stocks-supplier-products-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
+/* -------------------- Main Content -------------------- */
+.inv-main-content {
+  flex: 1;
+  margin-left: 240px;
+  padding: 0;
+  background-color: #f8f4f0;
+  min-height: 100vh;
+  width: calc(100% - 240px);
+}
+
+/* -------------------- Page Header -------------------- */
+.inv-page-header {
+  background: white;
+  padding: 20px 30px;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.inv-page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #8B4513;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+/* -------------------- Content Container -------------------- */
+.inv-content {
+  padding: 30px;
+  width: 100%;
+  max-width: none;
+}
+
+/* -------------------- Full Width Single Column Layout -------------------- */
+.inv-single-column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+}
+
+/* -------------------- Table Section - Full Width -------------------- */
+.inv-table-section {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  width: 100%;
+}
+
+.inv-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.inv-table-title {
+  font-size: 22px;
+  font-weight: 600;
   color: #333;
 }
 
-.stocks-supplier-products-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+.inv-search-box {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 300px;
+  font-size: 14px;
+  background: #f9f9f9;
 }
 
-.stocks-supplier-products-table tr:hover {
-  background-color: #f1f1f1;
+.inv-table-container {
+  overflow-x: auto;
+  width: 100%;
 }
 
-.stocks-supplier-products-chart {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.inv-table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  margin-bottom: 15px;
 }
 
-.stocks-supplier-products-chart canvas {
-  max-height: 400px;
-  max-width: 100%;
+.inv-table th,
+.inv-table td {
+  padding: 15px 20px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
 }
 
-.stocks-supplier-error {
-  color: #e74c3c;
+.inv-table th {
+  background-color: #f8f4f0;
+  font-weight: 600;
+  color: #8B4513;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.inv-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.inv-table tbody tr:hover {
+  background-color: #fffef9;
+}
+
+.inv-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.inv-no-data {
   text-align: center;
-  font-size: 1.2em;
+  padding: 60px 20px;
+  color: #999;
+  font-style: italic;
+  font-size: 16px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .stocks-supplier-products-content {
-    flex-direction: column;
-    align-items: center;
-  }
+/* -------------------- Chart Section - Full Width -------------------- */
+.inv-chart-section {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  width: 100%;
+}
 
-  .stocks-supplier-products-list,
-  .stocks-supplier-products-chart {
-    min-width: unset;
+.inv-chart-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.inv-chart-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.inv-chart-subtitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #8B4513;
+  margin-bottom: 20px;
+}
+
+.inv-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  width: 100%;
+}
+
+/* -------------------- Chart Legend -------------------- */
+.inv-chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.inv-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inv-legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+}
+
+.inv-legend-text {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* -------------------- Two Column Layout (when needed) -------------------- */
+.inv-two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  width: 100%;
+}
+
+/* -------------------- Stats Cards -------------------- */
+.inv-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.inv-stat-card {
+  background: linear-gradient(135deg, #f8f4f0 0%, #fff5e9 100%);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid #f0f0f0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.inv-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #e6a76b, #d99a5f);
+}
+
+.inv-stat-title {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inv-stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #8B4513;
+  margin-bottom: 5px;
+}
+
+.inv-stat-subtitle {
+  font-size: 12px;
+  color: #888;
+  font-weight: 400;
+}
+
+/* -------------------- Buttons -------------------- */
+.inv-btn {
+  background-color: #e6a76b;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inv-btn:hover {
+  background-color: #d99a5f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.inv-btn:active {
+  transform: translateY(0);
+}
+
+.inv-btn-primary {
+  background-color: #8B4513;
+}
+
+.inv-btn-primary:hover {
+  background-color: #6B3410;
+}
+
+.inv-btn-secondary {
+  background-color: #e74c3c;
+}
+
+.inv-btn-secondary:hover {
+  background-color: #c0392b;
+}
+
+.inv-btn-export {
+  background-color: #27ae60;
+}
+
+.inv-btn-export:hover {
+  background-color: #229954;
+}
+
+/* -------------------- Action Buttons -------------------- */
+.inv-action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+/* -------------------- Error & Loading States -------------------- */
+.inv-error {
+  background-color: #fee;
+  color: #c33;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #e74c3c;
+  margin: 10px 0;
+}
+
+.inv-loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  font-size: 16px;
+}
+
+/* -------------------- Responsive Design -------------------- */
+@media (max-width: 1400px) {
+  .inv-table th,
+  .inv-table td {
+    padding: 12px 15px;
+    font-size: 13px;
+  }
+  
+  .inv-chart-container {
+    min-height: 350px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .inv-content {
+    padding: 20px;
+  }
+  
+  .inv-two-column {
+    grid-template-columns: 1fr;
+  }
+  
+  .inv-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .inv-sidebar {
+    width: 200px;
+  }
+  
+  .inv-main-content {
+    margin-left: 200px;
+    width: calc(100% - 200px);
+  }
+  
+  .inv-content {
+    padding: 15px;
+  }
+  
+  .inv-page-header {
+    padding: 15px 20px;
+  }
+  
+  .inv-page-title {
+    font-size: 24px;
+  }
+  
+  .inv-table-section,
+  .inv-chart-section {
+    padding: 20px;
+  }
+  
+  .inv-search-box {
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  .inv-table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .inv-table th,
+  .inv-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  
+  .inv-chart-container {
+    min-height: 300px;
+  }
+  
+  .inv-chart-legend {
+    gap: 15px;
+  }
+  
+  .inv-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 640px) {
+  .inv-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  
+  .inv-main-content {
+    margin-left: 0;
     width: 100%;
   }
+  
+  .inv-content {
+    padding: 10px;
+  }
+  
+  .inv-page-header {
+    padding: 10px 15px;
+  }
+  
+  .inv-page-title {
+    font-size: 20px;
+  }
+  
+  .inv-table-section,
+  .inv-chart-section {
+    padding: 15px;
+  }
+  
+  .inv-table {
+    min-width: 500px;
+  }
+  
+  .inv-table th,
+  .inv-table td {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+  
+  .inv-chart-container {
+    min-height: 250px;
+  }
+  
+  .inv-chart-title {
+    font-size: 18px;
+  }
+  
+  .inv-chart-subtitle {
+    font-size: 22px;
+  }
+  
+  .inv-chart-legend {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .inv-action-buttons {
+    justify-content: center;
+  }
 }
 
+/* -------------------- Print Styles -------------------- */
+@media print {
+  .inv-sidebar {
+    display: none;
+  }
+  
+  .inv-main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .inv-content {
+    padding: 0;
+  }
+  
+  .inv-chart-container {
+    min-height: auto;
+  }
+}
+
+/* -------------------- Utility Classes -------------------- */
+.inv-text-center { text-align: center; }
+.inv-text-right { text-align: right; }
+.inv-text-left { text-align: left; }
+.inv-mb-10 { margin-bottom: 10px; }
+.inv-mb-15 { margin-bottom: 15px; }
+.inv-mb-20 { margin-bottom: 20px; }
+.inv-mb-30 { margin-bottom: 30px; }
+.inv-mt-10 { margin-top: 10px; }
+.inv-mt-15 { margin-top: 15px; }
+.inv-mt-20 { margin-top: 20px; }
+.inv-mt-30 { margin-top: 30px; }
+.inv-full-width { width: 100% !important; }

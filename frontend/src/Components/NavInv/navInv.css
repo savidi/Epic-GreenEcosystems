@@ -1,118 +1,141 @@
+:root {
+  --primary: #6d380c;
+  --secondary: #8b5a2b;
+  --accent1: #cd853f;
+  --accent2: #deb887;
+  --accent3: #f4a460;
+  --light: #ffffff;
+  --hover: #d7a039;
+  --muted: #c8e6c9;
+}
+
 /* Sidebar container */
 .navinv-sidebar {
-  height: 100vh;
-  width: 260px;
-  position: fixed; 
-  top: 0;
+  width: 240px;
+  position: fixed;
   left: 0;
-  background-color: #6d380c; 
+  top: 0;
+  height: 100vh;
+  background-color: var(--primary);
+  color: var(--light);
   display: flex;
   flex-direction: column;
+  transition: width 0.3s;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.navinv-sidebar.collapsed {
+  width: 70px;
+}
+
+/* Header */
+.navinv-header {
+  display: flex;
   align-items: center;
-  padding-top: 20px;
-  overflow-y: auto; 
+  justify-content: space-between;
+  background: var(--secondary);
+  padding: 15px;
+  border-bottom: 1px solid var(--accent2);
 }
 
-/* Company Name */
-.navinv-company-name {
-  text-align: center;
-  color: #ffffff; 
-  font-size: 24px; 
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-/* Profile Section */
-.navinv-profile-section {
-  text-align: center;
-  margin-bottom: 30px;
-  border-bottom: 1px solid #e9820d; 
-  padding-bottom: 20px;
-  width: 80%; 
-}
-
-.navinv-profile-pic {
-  width: 90px; 
-  height: 90px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  border: 3px solid #e9820d; 
-}
-
-.navinv-profile-name {
-  color: #ffffff;
-  font-size: 18px; 
+.navinv-header h2 {
   margin: 0;
+  font-size: 1.2rem;
 }
 
-.navinv-profile-role {
-  color: #C8E6C9;
-  font-size: 14px; 
-  margin: 0;
-}
-
-/* Sidebar Links */
-.navinv-sidebar-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-}
-
-.navinv-sidebar-links li {
-  width: 100%;
-  border-bottom: none; /* Remove individual link borders */
-}
-
-.navinv-sidebar-links li:last-child {
-  border-bottom: none; /* No line under the last item */
-}
-
-/* Links and Dropdown Headers */
-.navinv-sidebar-links li a,
-.navinv-dropdown > span {
-  display: block; /* Ensures the whole area is clickable */
-  color: #ffffff;
-  padding: 10px 20px; /* Smaller padding */
-  text-decoration: none;
-  font-size: 14px; /* Smaller font size for all links and dropdown headers */
+.navinv-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--light);
+  font-size: 1.2rem;
   cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+.navinv-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.navinv-sidebar-links li a:hover,
-.navinv-dropdown > span:hover,
-.navinv-sidebar-links li a.active {
-  background-color: #d7a039; /* Lighter green on hover/active */
+/* Profile */
+.navinv-profile {
+  text-align: center;
+  padding: 20px 10px;
+  border-bottom: 1px solid var(--accent1);
+}
+.navinv-profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--accent1);
+  margin-bottom: 10px;
+}
+.navinv-profile-name {
+  margin: 0;
+  font-size: 16px;
+}
+.navinv-profile-role {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
 }
 
-/* Dropdown container */
-.navinv-dropdown {
-  position: relative;
+/* Links */
+.navinv-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  overflow-y: auto;
 }
 
-/* Dropdown Content (hidden by default) */
-.navinv-dropdown-content {
-  display: none;
-  flex-direction: column;
-  background-color: #efb343; /* Slightly lighter green for dropdown background */
-  min-width: 100%; /* Full width dropdown */
+.navinv-links li {
+  transition: background 0.3s;
 }
 
-/* Show the dropdown menu on hover */
-.navinv-products-dropdown:hover .navinv-dropdown-content,
-.navinv-stock-dropdown:hover .navinv-dropdown-content {
+.navinv-links li a {
   display: flex;
-}
-
-/* Dropdown links */
-.navinv-dropdown-content a {
-  color: #ffffff;
-  padding: 8px 30px; /* Adjust padding for nested links */
+  align-items: center;
+  padding: 14px 18px;
+  color: var(--light);
   text-decoration: none;
-  font-size: 13px; /* Even smaller font size for dropdown items */
-  display: block;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: background 0.3s ease;
 }
 
-.navinv-dropdown-content a:hover {
-  background-color: #4CAF50; /* Light green on hover for dropdown items */
+.navinv-links li .navinv-icon {
+  font-size: 1.2rem;
+  margin-right: 12px;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.navinv-links li:hover {
+  background: var(--accent1);
+}
+
+.navinv-links li.active {
+  background: var(--accent3);
+  border-left: 4px solid var(--hover);
+}
+
+.navinv-links li.active a {
+  font-weight: bold;
+}
+
+/* Collapsed state */
+.navinv-sidebar.collapsed .navinv-header h2,
+.navinv-sidebar.collapsed .navinv-profile,
+.navinv-sidebar.collapsed .navinv-label {
+  display: none;
+}
+.navinv-sidebar.collapsed .navinv-links li a {
+  justify-content: center;
+  padding: 15px;
+}
+.navinv-sidebar.collapsed .navinv-icon {
+  margin: 0;
 }

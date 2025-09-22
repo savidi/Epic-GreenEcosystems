@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import '../../App.css';
+ import React, { useState } from 'react';
+import './AddFertilizerInv.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function AddFertilizer({ onFertilizerAdded }) {
+function AddFertilizerInv({ onFertilizerAdded }) {
   const [fertilizerName, setName] = useState('');
   const [fType, setType] = useState('');
   const [price, setPrice] = useState('');
@@ -27,7 +27,7 @@ function AddFertilizer({ onFertilizerAdded }) {
       if (onFertilizerAdded) {
         onFertilizerAdded();
       } else {
-        navigate('/fertilizerInv'); // Navigate to the fertilizer list page if no prop is provided
+        navigate('/fertilizerInv');
       }
     } catch (err) {
       alert(err.message);
@@ -35,65 +35,64 @@ function AddFertilizer({ onFertilizerAdded }) {
   };
 
   return (
-    <div className='addfertilizerinv-form-container'>
-      <form onSubmit={handleSubmit}>
-        <h2>Add New Fertilizer</h2>
-        <div className='addfertilizerinv-form-fields'>
-          <div className='addfertilizerinv-field'>
+    <div className="inv-layout">
+      <div className="inv-main-content">
+        <div className="inv-header">
+          <h1>Add New Fertilizer</h1>
+          <p>Fill out the form to add a fertilizer to the inventory</p>
+        </div>
+
+        <form className="inv-form" onSubmit={handleSubmit}>
+          <div className="inv-form-field">
             <label>Fertilizer Name</label>
-             <input
-              type='text'
-              placeholder='Enter Name'
-              name='name'
+            <input
+              type="text"
+              placeholder="Enter Name"
               value={fertilizerName}
               onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
 
-          <div className='addfertilizerinv-field'>
+          <div className="inv-form-field">
             <label>Fertilizer Type</label>
-             <input
-              type='text'
-              placeholder='Enter Type'
-              name='type'
+            <input
+              type="text"
+              placeholder="Enter Type"
               value={fType}
               onChange={(e) => setType(e.target.value)}
               required
             />
           </div>
 
-          <div className='addfertilizerinv-field'>
+          <div className="inv-form-field">
             <label>Price</label>
             <input
-              type='text'
-              placeholder='Enter Price'
-              name='price'
+              type="text"
+              placeholder="Enter Price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               required
             />
           </div>
 
-          <div className='addfertilizerinv-field'>
+          <div className="inv-form-field">
             <label>Quantity</label>
             <input
-              type='text'
-              placeholder='Enter Quantity'
-              name='quantity'
+              type="text"
+              placeholder="Enter Quantity"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
               required
             />
           </div>
-        </div>
 
-        <button type='submit'>
-          Add Fertilizer
-        </button>
-      </form>
+          <button type="submit" className="inv-btn">Add Fertilizer</button>
+        </form>
+      </div>
     </div>
   );
 }
 
-export default AddFertilizer;
+export default AddFertilizerInv;
+

@@ -1,340 +1,205 @@
-/* Global styles */
-body, div, input, select, button {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  box-sizing: border-box;
-}
-
-/* Page titles */
-h1 {
-  text-align: center;
-  margin: 25px 0;
-  color: #2c3e50;
-  font-size: 20px;
-}
-
-/* ==== Form Styling (Addspice & Updatespice) ==== */
-form {
-  width: 70%;
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.addspice-form-fields {
+ /* -------------------- Layout -------------------- */
+.addspice-products-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px; 
-  margin-bottom: 15px;
-}
-
-.addspice-form-fields .field {
-  flex: 1 1 calc(50% - 10px); 
-  min-width: 200px; 
-  margin-bottom: 0; 
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-}
-
-label {
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #34495e;
-}
-
-input, select {
-  padding: 10px;
-  border: 1px solid #dcdcdc;
-  border-radius: 6px;
-  font-size: 15px;
-  transition: border 0.2s ease-in-out;
-}
-
-input:focus, select:focus {
-  border-color: #27ae60;
-  outline: none;
-  box-shadow: 0 0 4px rgba(39, 174, 96, 0.4);
-}
-
-.row {
-  display: flex;
-  gap: 20px;
-}
-
-/* Buttons */
-button {
-  background-color: #27ae60;
-  color: #fff;
-  font-weight: 600;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s ease-in-out;
-}
-
-button:hover {
-  background-color: #219150;
-}
-
-:root {
-  /* Primary Colors */
-  --primary-red: #D2691E;      /* Cinnamon */
-  --primary-orange: #FF8C00;     /* Paprika */
-  --primary-yellow: #DAA520;     /* Turmeric */
-  
-  /* Background Colors */
-  --bg-cream: #FFF8DC;        /* Cornsilk */
-  --bg-light: #FAF0E6;       /* Linen */
-  --bg-white: #FFFFFF;
-  
-  /* Text Colors */
-  --text-dark: #8B4513;        /* Saddle Brown */
-  --text-medium: #A0522D;        /* Sienna */
-  --text-light: #CD853F;      /* Peru */
-  
-  /* Accent Colors */
-  --accent-green: #228B22;      /* Forest Green */
-  --accent-gold: #FFD700;      /* Gold */
-  
-  /* Status Colors */
-  --success: #32CD32;          /* Lime Green */
-  --warning: #FF6347;          /* Tomato */
-  --error: #DC143C;            /* Crimson */
-}
-
-/* Form section */
-.form-section {
-  background-color: var(--bg-white);
-  border-radius: 12px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.1);
-  border: 1px solid var(--primary-yellow);
-  flex: 2 1 400px;
-}
-
-.form-section h2 {
-  color: var(--text-dark);
-  margin-bottom: 1.5rem;
-  font-weight: 600;
-  border-bottom: 2px solid var(--primary-yellow);
-  padding-bottom: 0.5rem;
-}
-
-/* Form styling to match Report theme */
-.field {
-  margin-bottom: 1rem;
-}
-
-.field label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--text-dark);
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.field label span {
-  color: var(--error);
-}
-
-.field input,
-.field select {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #d9d9d9;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-.field input:focus,
-.field select:focus {
-  outline: none;
-  border-color: var(--primary-yellow);
-  box-shadow: 0 0 0 2px rgba(218, 165, 32, 0.2);
-}
-
-.field input[readonly] {
-  background-color: #e9e9e9;
-  cursor: not-allowed;
-  color: #666;
-}
-
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-button[type="submit"] {
-  background-color: var(--primary-orange);
-  border: none;
-  color: white;
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  margin-top: 1rem;
-}
-
-button[type="submit"]:hover {
-  background-color: var(--primary-red);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(210, 105, 30, 0.3);
-}
-
-/* Products Page specific styles */
-.products-page-container {
-  display: flex;
-  flex-direction: column;
+  flex-direction: row;
   min-height: 100vh;
+  background-color: #fff9f0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
-.products-content {
-  display: flex;
-  flex-direction: column; 
-  align-items: center;
-  gap: 20px; 
-}
-
-.products-table-section {
-  flex: 3;
-  min-width: 450px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.addspice-products-content {
+  flex: 1;
   padding: 20px;
-  overflow-x: auto; 
+}
+.addspice-main-spice-content {
+ width: 100%;
+  margin: 0 auto;
 }
 
-.spices-table,
-.totals-table {
-  width: 100%; 
-  border-collapse: collapse;
-  margin-top: 20px;
-  min-width: 600px; 
+/* -------------------- Alerts -------------------- */
+.addspice-alert {
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
 }
 
-.overall-spice-distribution-section {
-  flex: 1; /* Less flexible than the table, but can grow */
-  min-width: 300px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  padding: 20px;
+.addspice-alert-error {
+  background-color: #ffe2e2;
+  color: #c0392b;
+  border: 1px solid #e0b4b4;
+}
+
+/* -------------------- Loading -------------------- */
+.addspice-loading {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 40px;
 }
 
-.overall-spice-distribution-section h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #34495e;
-  font-size: 1.8em;
-  border-bottom: 2px solid #ecf0f1;
-  padding-bottom: 10px;
-  width: 100%;
-}
-
-.spice-quantities-list {
-  margin-top: 15px;
-  text-align: center;
-}
-
-.spice-quantities-list p {
-  font-size: 1.1em;
-  color: #555;
-  margin-bottom: 5px;
-}
-
-.overall-spice-chart {
-  margin-top: 20px;
-  margin-left: 120px;
-  margin-bottom: 20px;
-  max-height: 350px;
-  max-width: 100%;
-}
-
-.search-bar-container {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.spice-search-input {
-  padding: 10px;
-  width: 50%;
-  max-width: 400px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.selected-spice-details {
-  margin-top: 20px;
-  padding: 20px;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  text-align: center;
-}
-
-.selected-spice-details h2 {
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.spice-detail-image {
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 5px;
+.addspice-loading-spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #e6a76b;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
   margin-bottom: 15px;
 }
 
-.selected-spice-details p {
-  color: #555;
-  line-height: 1.6;
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.download-report-button {
-  background-color: #28a745; /* Green */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+/* -------------------- Stats -------------------- */
+.addspice-stats-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.stat-card {
+  flex: 1;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.stat-card h3 {
   font-size: 16px;
-  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.stat-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.addspice-value {
+  font-size: 22px;
+  font-weight: bold;
+  color: #e6a76b;
+}
+
+.addspice-unit {
+  font-size: 13px;
+  color: #555;
+}
+
+/* -------------------- Form -------------------- */
+.addspice-form-section {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.addspice-form-section h2 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #e6a76b;
+  text-align: center;
+}
+
+.addspice-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.addspice-field label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.addspice-field input,
+.addspice-field select {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: border 0.3s ease;
+}
+
+.addspice-field input:focus,
+.addspice-field select:focus {
+  border-color: #e6a76b;
+  outline: none;
+}
+
+.addspice-row {
+  display: flex;
+  gap: 20px;
+}
+
+/* -------------------- Button -------------------- */
+.addspice-form-section button {
+  background-color: #e6a76b;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
   transition: background-color 0.3s ease;
 }
 
-.download-report-button:hover {
-  background-color: #218838;
+.addspice-form-section button:hover {
+  background-color: #d99a5f;
 }
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
-  .products-content {
-      flex-direction: column;
-      align-items: center;
-  }
-
-  .products-table-section,
-  .overall-spice-distribution-section {
-      min-width: unset;
-      width: 100%;
-  }
+/* -------------------- Quality Highlight -------------------- */
+.high-quality-row {
+  background-color: #f9fff5;
+  width:100%;
 }
 
+.low-quality-row {
+  background-color: #fff5f5;
+}
+
+.quality-high {
+  color: green;
+  font-weight: 600;
+}
+
+.quality-low {
+  color: red;
+  font-weight: 600;
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 768px) {
+  .addspice-stats-container {
+    flex-direction: column;
+  }
+
+  .addspice-row {
+    flex-direction: column;
+  }
+
+  .addspice-products-content {
+    padding: 15px;
+  }
+
+  .addspice-form-section {
+    padding: 20px;
+  }
+
+  .addspice-form-section h2 {
+    font-size: 20px;
+  }
+}

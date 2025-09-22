@@ -1,16 +1,12 @@
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Newhome.css";
 import NavSup from "../NavSup/NavSup";
 
-// Import images directly
-import CinnamonImg from '../Images/Cinnamon.png';
-import CardamomImg from '../Images/Cardomom.png';
-import TurmericImg from '../Images/Turmeric.png';
-import PepperImg from '../Images/Pepper.png';
-import CbackgroundImg from '../Images/Cbackground.png';
-import RedChilliImg from '../Images/RedChilli.png';
+// ✅ Import the external Slider
+import Slider from "../Slider/Slider";
+import "../Slider/slider.css"; // Make sure slider CSS is included
 
 // ✅ Import icons from lucide-react
 import { BarChart3, Building } from "lucide-react";
@@ -41,64 +37,6 @@ const getTodayTotalPrice = async () => {
     const recordDate = f.date ? f.date.split("T")[0] : null;
     return recordDate === today ? sum + qty * price : sum;
   }, 0);
-};
-
-/* -------------------- Slider Component -------------------- */
-const Slider = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const slides = [
-    { title: "CINNAMON", description: "Premium cinnamon cultivation with traditional farming methods.", image: CinnamonImg },
-    { title: "CARDAMOM", description: "Queen of spices grown in perfect climate conditions.", image: CardamomImg },
-    { title: "TURMERIC", description: "Golden turmeric with exceptional quality and color.", image: TurmericImg },
-    { title: "PEPPER", description: "King of spices cultivated with care and expertise.", image: PepperImg },
-    { title: "RED CHILI", description: "Premium red chili cultivation with rich flavor.", image: RedChilliImg },
-    { title: "SPICES", description: "Diverse spice ecosystem in perfect harmony.", image: CbackgroundImg }
-  ];
-
-  const nextSlide = () => setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-  const prevSlide = () => setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
-
-  useEffect(() => {
-    const interval = setInterval(nextSlide, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="slider-container">
-      <div className="slides-wrapper">
-        {slides.map((slide, index) => (
-          <div
-            key={index}
-            className={`slide-item ${index === currentIndex ? 'active' : ''}`}
-            style={{
-              backgroundImage: `linear-gradient(rgba(61, 41, 20, 0.4), rgba(61, 41, 20, 0.6)), url(${slide.image})`,
-            }}
-          >
-            <div className="slide-content">
-              <h2 className="slide-title">{slide.title}</h2>
-              <p className="slide-description">{slide.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-      
-      {/* Navigation Buttons */}
-      <button className="slider-btn prev-btn" onClick={prevSlide}>‹</button>
-      <button className="slider-btn next-btn" onClick={nextSlide}>›</button>
-      
-      {/* Dots Indicator */}
-      <div className="slider-dots">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            className={`dot ${index === currentIndex ? 'active' : ''}`}
-            onClick={() => setCurrentIndex(index)}
-          />
-        ))}
-      </div>
-    </div>
-  );
 };
 
 /* -------------------- Main Home Component -------------------- */
@@ -214,18 +152,18 @@ function Newhome() {
       </div>
 
       <div className="sup-main-content">
-        {/* Slider Section */}
+        {/* ---------------- Slider Section ---------------- */}
         <div className="sup-slider-section">
           <Slider />
-         
-          {/* Header */}
-          <div className="sup-header">
-            <h1>Welcome back, Supplier Coordinator!</h1>
-            <p>Manage suppliers and fertilizers efficiently for your spices management system</p>
-          </div>
         </div>
 
-        {/* Stats Section */}
+        {/* ---------------- Header ---------------- */}
+        <div className="sup-header">
+          <h1>Welcome back, Supplier Coordinator!</h1>
+          <p>Manage suppliers and fertilizers efficiently for your spices management system</p>
+        </div>
+
+        {/* ---------------- Stats Section ---------------- */}
         <div className="sup-stats-grid">
           {statCards.map((card, idx) => (
             <div key={idx} className={`sup-stat-card ${card.highlight ? 'sup-highlight' : ''}`}>
@@ -239,7 +177,7 @@ function Newhome() {
           ))}
         </div>
 
-        {/* Quick Action Cards Section */}
+        {/* ---------------- Quick Action Cards Section ---------------- */}
         <div className="sup-cards-grid">
           {quickActionCards.map((card, idx) => (
             <div key={idx} className="sup-card">
@@ -269,4 +207,3 @@ function Newhome() {
 }
 
 export default Newhome;
-
