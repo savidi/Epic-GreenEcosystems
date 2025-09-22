@@ -1,4 +1,4 @@
- /* -------------------- Layout -------------------- */
+/* -------------------- Layout -------------------- */
 .sup-layout {
   display: flex;
   background-color: #fff9f0;
@@ -36,6 +36,10 @@
   margin-bottom: 15px;
 }
 
+.sup-header .sup-btn {
+  margin-top: 10px;
+}
+
 /* -------------------- Buttons -------------------- */
 .sup-btn {
   background-color: #e6a76b;
@@ -49,7 +53,6 @@
   transition: background-color 0.3s ease;
   text-decoration: none;
   display: inline-block;
-  margin: 3px;
 }
 
 .sup-btn:hover {
@@ -62,6 +65,11 @@
 
 .sup-btn-secondary:hover {
   background-color: #c0392b;
+}
+
+.sup-btn-sm {
+  padding: 6px 12px;
+  font-size: 13px;
 }
 
 /* -------------------- Table -------------------- */
@@ -92,14 +100,6 @@
   font-weight: 600;
 }
 
-.sup-row-light {
-  background: #fff;
-}
-
-.sup-row-dark {
-  background: #fffdf8;
-}
-
 .sup-no-data {
   text-align: center;
   padding: 20px;
@@ -112,11 +112,6 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-}
-
-/* -------------------- Stats Row -------------------- */
-.sup-stats-row {
-  margin-bottom: 20px;
 }
 
 /* -------------------- Responsive -------------------- */

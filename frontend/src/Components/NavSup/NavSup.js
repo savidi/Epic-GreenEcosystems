@@ -37,7 +37,7 @@ function NavSup() {
       {/* Profile section */}
       <div className="navsup-profile-section">
         <img
-          src="https://via.placeholder.com/150"
+          src="../Components/NavSup/pngtree-man-avatar-image-for-profile-png-image_13001877.png"
           alt="Profile"
           className="navsup-profile-pic"
         />

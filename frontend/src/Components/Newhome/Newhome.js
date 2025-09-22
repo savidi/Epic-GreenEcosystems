@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import './Newhome.css';
+ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./Newhome.css"; // updated CSS
 import NavSup from "../NavSup/NavSup";
 
 const API = {
@@ -9,7 +9,7 @@ const API = {
   FERTILIZERS: "http://localhost:5000/fertilizers"
 };
 
-// Generic fetch function
+/* -------------------- Helper Functions -------------------- */
 const fetchData = async (url, key) => {
   try {
     const res = await axios.get(url);
@@ -20,10 +20,10 @@ const fetchData = async (url, key) => {
   }
 };
 
-// Get today's total price
 const getTodayTotalPrice = async () => {
   const fertilizers = await fetchData(API.FERTILIZERS, 'fertilizers');
   const today = new Date().toISOString().split("T")[0];
+
   return fertilizers.reduce((sum, f) => {
     const qty = Number(f.quantity) || 0;
     const price = Number(f.price) || 0;
@@ -31,8 +31,9 @@ const getTodayTotalPrice = async () => {
     return recordDate === today ? sum + qty * price : sum;
   }, 0);
 };
+/* ---------------------------------------------------------- */
 
-function Newhome() {
+function Home() {
   const navigate = useNavigate();
   const [stats, setStats] = useState({
     totalSuppliers: 0,
@@ -48,15 +49,7 @@ function Newhome() {
     price: true
   });
 
-  // Modal states
-  const [modals, setModals] = useState({
-    supplier: false,
-    fertilizer: false,
-    payment: false,
-    stock: false
-  });
-
-  // Load all stats
+  /* -------------------- Load Stats -------------------- */
   useEffect(() => {
     const loadStats = async () => {
       try {
@@ -81,19 +74,19 @@ function Newhome() {
 
     loadStats();
   }, []);
+  /* ---------------------------------------------------- */
 
   const statCards = [
-    { label: 'Total Suppliers', value: stats.totalSuppliers, loading: loading.suppliers, iconClass: 'suppliers-stat', highlight: true },
-    { label: 'Active Fertilizers', value: stats.activeFertilizers, loading: loading.fertilizers, iconClass: 'fertilizers-stat', highlight: true },
-    { label: "Total Value (Today)", value: `Rs. ${stats.todayTotalPrice.toLocaleString()}`, loading: loading.price, iconClass: 'price-stat', highlight: true },
-    { label: "Low Stock Alerts", value: stats.lowStockAlerts, iconClass: 'alerts-stat' }
+    { label: 'Total Suppliers', value: stats.totalSuppliers, loading: loading.suppliers, highlight: true },
+    { label: 'Active Fertilizers', value: stats.activeFertilizers, loading: loading.fertilizers, highlight: true },
+    { label: "Total Value (Today)", value: `Rs. ${stats.todayTotalPrice.toLocaleString()}`, loading: loading.price, highlight: true },
+    { label: "Low Stock Alerts", value: stats.lowStockAlerts }
   ];
 
   const quickActionCards = [
     {
       title: 'Supplier Management',
       description: 'Add new suppliers, update contact info, and manage spice supply relationships.',
-      iconClass: 'supplier-card-icon',
       actions: [
         { label: 'Add Supplier', onClick: () => navigate("/Addsup"), primary: true },
         { label: 'View All Suppliers', onClick: () => navigate("/Supdet") }
@@ -103,7 +96,6 @@ function Newhome() {
     {
       title: 'Fertilizer Management',
       description: 'Track fertilizer inventory, manage stock levels, and coordinate with suppliers.',
-      iconClass: 'fertilizer-card-icon',
       actions: [
         { label: 'Add Fertilizer', onClick: () => navigate("/addfertilizers"), primary: true },
         { label: 'View Fertilizers', onClick: () => navigate("/fertilizers") }
@@ -113,7 +105,6 @@ function Newhome() {
     {
       title: 'Payment Management',
       description: 'Record and track payments to suppliers and manage financial transactions.',
-      iconClass: 'payments-card-icon',
       actions: [
         { label: 'View Payments', onClick: () => navigate("/payments") }
       ]
@@ -121,7 +112,6 @@ function Newhome() {
     {
       title: 'Stock Information',
       description: 'Monitor current stock levels, update inventory records, and track spice quantities.',
-      iconClass: 'stock-card-icon',
       actions: [
         { label: 'View Stock Info', onClick: () => navigate("/stock") }
       ]
@@ -129,7 +119,6 @@ function Newhome() {
     {
       title: 'Performance and Reviews',
       description: 'Generate reports on supplier performance for better decision-making.',
-      iconClass: 'analytics-card-icon',
       actions: [
         { label: 'Supplier Performance', onClick: () => navigate("/pdfdownloadsp") }
       ]
@@ -137,7 +126,6 @@ function Newhome() {
     {
       title: 'Alerts & Notifications',
       description: 'Monitor low stock alerts, supplier delivery schedules, and system notifications.',
-      iconClass: 'alerts-card-icon',
       actions: [
         { label: 'View Alerts', onClick: () => {} },
         { label: 'Settings', onClick: () => {} }
@@ -146,61 +134,60 @@ function Newhome() {
   ];
 
   return (
-
-<div className="Nav">
-            <NavSup /> {/* Sidebar */}
-
-    <div className="content-section">
-      <div className="header">
-        <h1>Welcome back, Supplier Coordinator!</h1>
-        <p>Manage suppliers and fertilizers efficiently for your spices management system</p>
+    <div className="sup-app">
+      <div className="sup-sidebar">
+        <NavSup />
       </div>
 
-      <div className="stats-grid">
-        {statCards.map((card, idx) => (
-          <div key={idx} className={`stat-card ${card.highlight ? 'highlight-card' : ''}`}>
-            <div className={`stat-icon ${card.iconClass}`}></div>
-            <div className="stat-content">
-              <div className="stat-number">{card.loading ? '...' : card.value}</div>
-              <div className="stat-label">{card.label}</div>
-              {card.loading && <div className="stat-status">Loading...</div>}
-            </div>
-          </div>
-        ))}
-      </div>
+      <div className="sup-main-content">
+        {/* Header */}
+        <div className="sup-header">
+          <h1>Welcome back, Supplier Coordinator!</h1>
+          <p>Manage suppliers and fertilizers efficiently for your spices management system</p>
+        </div>
 
-      <div className="cards-grid">
-        {quickActionCards.map((card, idx) => (
-          <div key={idx} className="card">
-            <div className="card-header">
-              <div className={`card-icon ${card.iconClass}`}></div>
-              <h3 className="card-title">{card.title}</h3>
+        {/* Stats Section */}
+        <div className="sup-stats-grid">
+          {statCards.map((card, idx) => (
+            <div key={idx} className={`sup-stat-card ${card.highlight ? 'sup-highlight' : ''}`}>
+              <div className="sup-stat-icon"> </div>
+              <div className="sup-stat-content">
+                <div className="sup-stat-number">{card.loading ? '...' : card.value}</div>
+                <div className="sup-stat-label">{card.label}</div>
+                {card.loading && <div className="sup-stat-status">Loading...</div>}
+              </div>
             </div>
-            <p className="card-description">{card.description}</p>
-            {card.stat && <div className="card-stat"><strong>{card.stat}</strong></div>}
-            <div className="card-actions">
-              {card.actions.map((btn, bIdx) => (
-                <button
-                  key={bIdx}
-                  className={`btn ${btn.primary ? '' : 'btn-secondary'}`}
-                  onClick={btn.onClick}
-                >
-                  {btn.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* Modal placeholders */}
-      {modals.supplier && <div className="modal">Supplier Modal</div>}
-      {modals.fertilizer && <div className="modal">Fertilizer Modal</div>}
-      {modals.payment && <div className="modal">Payment Modal</div>}
-      {modals.stock && <div className="modal">Stock Modal</div>}
-    </div>
+        {/* Quick Action Cards Section */}
+        <div className="sup-cards-grid">
+          {quickActionCards.map((card, idx) => (
+            <div key={idx} className="sup-card">
+              <div className="sup-card-header">
+                <div className="sup-card-icon"> </div>
+                <h3 className="sup-card-title">{card.title}</h3>
+              </div>
+              <p className="sup-card-description">{card.description}</p>
+              {card.stat && <div className="sup-card-stat"><strong>{card.stat}</strong></div>}
+              <div className="sup-card-actions">
+                {card.actions.map((btn, bIdx) => (
+                  <button
+                    key={bIdx}
+                    className={`sup-btn ${btn.primary ? '' : 'sup-btn-secondary'} sup-btn-sm`}
+                    onClick={btn.onClick}
+                  >
+                    {btn.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
-export default Newhome;
+export default Home;
+

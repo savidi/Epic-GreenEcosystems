@@ -1,114 +1,120 @@
-/* Main Content Styles - Matches Dashboard */
-.addsupplier-main-content {
-  padding: 2rem;
-  background: #f5f7f3;
+/* -------------------- Page Container -------------------- */
+.sup-page {
+  display: flex;
+  background-color: #FFF9F0;
   min-height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
 }
 
-/* Header */
-.addsupplier-header {
-  background: white;
-  padding: 1.5rem 2rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  border-left: 4px solid #8a6d3b;
+/* Prevent Nav from overlapping */
+.sup-main-content {
+  flex: 1;
+  padding: 30px;
+  margin-left: 220px; /* adjust to NavSup width */
 }
 
-.addsupplier-header h1 {
-  color: #4a6b3f;
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+/* -------------------- Header -------------------- */
+.sup-header {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.addsupplier-header p {
-  color: #718096;
-  font-size: 1rem;
+.sup-header h1 {
+  color: #E6A76B;
+  font-size: 26px;
+  margin-bottom: 8px;
 }
 
-/* Card */
-.addsupplier-card {
-  background: white;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  border-top: 3px solid #8a6d3b;
+.sup-header p {
+  color: #555;
+  font-size: 15px;
 }
 
-.addsupplier-card-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin-bottom: 1rem;
+/* -------------------- Form Card -------------------- */
+.sup-form-card {
+  background-color: #fff;
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-/* Form Group */
-.addsupplier-form-group {
-  margin-bottom: 1.5rem;
-}
-
-.addsupplier-form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #4a5568;
-}
-
-.addsupplier-form-group input,
-.addsupplier-form-group select,
-.addsupplier-form-group textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.addsupplier-form-group input:focus,
-.addsupplier-form-group select:focus,
-.addsupplier-form-group textarea:focus {
-  outline: none;
-  border-color: #4a6b3f;
-  box-shadow: 0 0 0 3px rgba(74, 107, 63, 0.1);
-}
-
-/* Modal Actions */
-.addsupplier-modal-actions {
+/* -------------------- Form -------------------- */
+.sup-form {
   display: flex;
-  justify-content: flex-end;
-  gap: 0.8rem;
-  margin-top: 1.5rem;
+  flex-direction: column;
+  gap: 18px;
 }
 
-/* Button */
-.addsupplier-btn {
-  background: #4a6b3f;
-  color: white;
-  border: none;
-  padding: 0.7rem 1.2rem;
-  border-radius: 6px;
-  cursor: pointer;
+.sup-form-group label {
   font-weight: 500;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
+  margin-bottom: 6px;
+  color: #333;
+  display: block;
 }
 
-.addsupplier-btn:hover {
-  background: #5a7c4f;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(74, 107, 63, 0.3);
+.sup-form-group input,
+.sup-form-group select,
+.sup-form-group textarea {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
-/* Responsive */
+.sup-form-group input:focus,
+.sup-form-group select:focus,
+.sup-form-group textarea:focus {
+  outline: none;
+  border-color: #E6A76B;
+}
+
+/* -------------------- Error -------------------- */
+.sup-error-input {
+  border-color: #E74C3C !important;
+}
+
+.sup-error-message {
+  color: #E74C3C;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* -------------------- Button -------------------- */
+.sup-actions {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.sup-btn {
+  background-color: #E6A76B;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sup-btn:hover {
+  background-color: #d99a5f;
+}
+
+/* -------------------- Responsive -------------------- */
 @media (max-width: 768px) {
-  .addsupplier-modal-actions {
-    flex-direction: column;
+  .sup-main-content {
+    margin-left: 0;
+    padding: 20px;
   }
-  .addsupplier-btn {
-    width: 100%;
+  .sup-form-card {
+    margin: 10px;
+    padding: 20px;
   }
 }
