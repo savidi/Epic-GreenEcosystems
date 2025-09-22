@@ -7,6 +7,40 @@
   color: #6b4423;
   line-height: 1.5;
 }
+.dash-content {
+  max-width: 1400px; /* Big container width */
+  margin: 0 auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  min-height: calc(100vh - 4rem);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add a subtle background pattern */
+.dash-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(139, 69, 19, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(210, 105, 30, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(160, 82, 45, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ensure content stays above background */
+.dash-content > * {
+  position: relative;
+  z-index: 2;
+}
 
 
 /* ===== Section Headers ===== */
