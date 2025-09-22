@@ -1,4 +1,4 @@
-// CustomerTable.js
+// CustomerTable.js (Revised)
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
@@ -10,35 +10,22 @@ const CustomerTable = () => {
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
 
-    const handleApiError = useCallback((err) => {
-        console.error("API Error:", err);
-        if (err.response) {
-            setError(`Error: ${err.response.data.message || 'Server error'}`);
-        } else {
-            setError("Error: Unable to connect to the server.");
-        }
-    }, []);
+    // Removed the handleApiError function
 
     const fetchCustomers = useCallback(async (term = '') => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                setError('No authentication token found. Please log in again.');
-                setLoading(false);
-                return;
-            }
-            
-            const response = await axios.get(`http://localhost:5000/api/sales/customers?search=${term}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            // Removed token check and redirect
+            // Removed the headers object from the axios call
+            const response = await axios.get(`http://localhost:5000/api/sales/customers?search=${term}`);
             setCustomers(response.data);
         } catch (err) {
-            handleApiError(err);
+            console.error("API Error:", err);
+            setError("Error: Unable to connect to the server or fetch data.");
         } finally {
             setLoading(false);
         }
-    }, [handleApiError]);
+    }, []); // Removed handleApiError from dependencies
 
     useEffect(() => {
         fetchCustomers(searchTerm);
@@ -54,7 +41,7 @@ const CustomerTable = () => {
         }
 
         if (error) {
-            return <div className="salesmanager-error-message">{error}</div>;
+            return <div className="error-message">{error}</div>;
         }
 
         if (customers.length === 0) {
@@ -62,8 +49,8 @@ const CustomerTable = () => {
         }
 
         return (
-            <div className="salesmanager-table-container">
-                <table className="salesmanager-quotation-table">
+            <div className="table-container">
+                <table className="quotation-table">
                     <thead>
                         <tr>
                             <th>Customer ID</th>
@@ -90,11 +77,11 @@ const CustomerTable = () => {
     };
 
     return (
-        <div className="salesmanager-customer-table-container">
-            <header className="salesmanager-dashboard-header">
+        <div className="customer-table-container">
+            <header className="dashboard-header">
                 <h1>Customer List</h1>
-                <div className="salesmanager-search-bar">
-                    <FaSearch className="salesmanager-search-icon" />
+                <div className="search-bar">
+                    <FaSearch className="search-icon" />
                     <input
                         type="text"
                         placeholder="Search by customer ID or name..."

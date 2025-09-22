@@ -165,23 +165,15 @@ function App() {
           />
           
           {/* This is the protected route for the sales manager dashboard */}
-          <Route 
+         <Route 
             path="/sales-manager" 
-            element={
-              <ProtectedRoute>
-                <SalesManager/>
-              </ProtectedRoute>
-            }
+           element={<SalesManager />}
           />
           
-          {/* This is the new route for the quotation form */}
+          {/* Change this route to remove the ProtectedRoute wrapper */}
           <Route 
             path="/sales-manager/quotations/:quotationId" 
-            element={
-              <ProtectedRoute>
-                <QuotationForm />
-              </ProtectedRoute>
-            } 
+            element={<QuotationForm />}
           />
           
           <Route path ="/HomeN" element={<HomeN/>}/>

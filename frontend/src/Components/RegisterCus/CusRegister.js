@@ -77,7 +77,7 @@ function Register() {
         setMessage("Registered Successfully");
         setMessageType("success");
         setTimeout(() => {
-          history("/mainhome");
+          history("/local-orders");
         }, 1500);
       } catch (err) {
         if (err.response && err.response.data && err.response.data.message) {
