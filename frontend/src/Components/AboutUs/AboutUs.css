@@ -21,7 +21,7 @@ body {
   height: 40vh;
   min-height: 300px;
   background: linear-gradient(135deg, #ffcc80 0%, #d84315 100%);
-  background-image: url('F:\ITP\Project\frontend\src\Components\Images\Lucid_Origin_A_vibrant_and_diverse_still_life_arrangement_of_n_3.jpg');
+  background-image: url('/Users/dilinamacbookair/Epic-GreenEcosystems/Epic-GreenEcosystems/frontend/src/Components/Images/Lucid_Origin_A_vibrant_and_diverse_still_life_arrangement_of_n_3.jpg');
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,7 +86,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('F:\ITP\Project\frontend\src\Components\Images\WhatsApp Image 2025-09-20 at 21.31.17.jpg');
+  background-image: url('/Users/dilinamacbookair/Epic-GreenEcosystems/Epic-GreenEcosystems/frontend/src/Components/Images/WhatsApp Image 2025-09-20 at 21.31.17.jpg');
   background-size: cover;
   background-position: center;
 }

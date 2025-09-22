@@ -103,13 +103,18 @@ function OrderView() {
         return <div>Spice not found.</div>;
     }
 
-    // Correct image URL handling: Build the full URL from the filename
-    const imageSrc = spice.imageUrl
-        ? spice.imageUrl.startsWith('http')
-            ? spice.imageUrl
-            : `http://localhost:5000/images/${spice.imageUrl}`
-        : '/placeholder.png'; // Use a placeholder if no URL is available
-
+     // Improved image URL handling
+     const imageSrc = spice.imageUrl
+     ? spice.imageUrl.startsWith('http')
+         ? spice.imageUrl
+         : spice.imageUrl.startsWith('/')
+             ? `http://localhost:5000${spice.imageUrl}`
+             : `http://localhost:5000/images/${spice.imageUrl}`
+     : '/placeholder.png';
+ 
+ // Debug log to check image URL
+ console.log('Image URL:', spice.imageUrl);
+ console.log('Constructed imageSrc:', imageSrc);
     return (
         <div>
             <Nav cartUpdateTrigger={cartUpdateTrigger} />

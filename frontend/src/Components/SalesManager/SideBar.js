@@ -36,8 +36,8 @@ const Sidebar = ({ active, onTabClick }) => {
                             <FaUsers className="sidebar-icon" /> Customers
                         </a>
                     </li>
-                    <li className={active === 'profile' ? 'active' : ''}>
-                        <a href="#profile" onClick={() => onTabClick('profile')}>
+                    <li className={active === 'Account' ? 'active' : ''}>
+                        <a href="#Account" onClick={() => onTabClick('Account')}>
                             <FaUserCircle className="sidebar-icon" /> Profile
                         </a>
                     </li>

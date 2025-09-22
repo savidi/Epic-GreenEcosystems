@@ -73,11 +73,7 @@ function Home() {
                     <p className="hero-subtitle">
                         Handpicked with love in Matale. Embrace Timeless Essences: Elevating Culinary Delights with Exquisite Flavours of Asia
                     </p>
-                    <div className="hero-buttons">
-                        <Link to="#section_2" className="btn custom-btn custom-border-btn smoothscroll">
-                            Our Story
-                        </Link>
-                    </div>
+                    
                 </div>
                 <div className="hero-slides">
                     <video autoPlay muted loop className="hero-video">

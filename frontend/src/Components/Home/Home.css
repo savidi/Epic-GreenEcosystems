@@ -1,29 +1,59 @@
 /* Home.css - Styles for the Home component */
 
+/* Main container for home page */
+.hr-home-container {
+  margin-left: 220px; /* Account for sidebar width */
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+  min-height: 100vh;
+}
 
+/* Adjust when sidebar is collapsed */
+.hr-nav-sidebar.hr-collapsed ~ * .hr-home-container,
+.hr-home-container.hr-sidebar-collapsed {
+  margin-left: 60px; /* collapsed sidebar width */
+}
 
-.home-content-wrapper {
+/* Slider section at the top */
+.hr-home-slider-section {
+  width: 100%;
+  height: 50vh; /* adjust height as you like */
+  margin-bottom: 20px;
+}
+
+/* Charts wrapper */
+.hr-home-content-wrapper {
   display: flex;
   gap: 20px;
   justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 20px;
-  box-sizing: border-box;
-}
-.sidebar.collapsed ~ .home-content-wrapper {
-  margin-left: 60px; /* collapsed sidebar */
+  flex-wrap: wrap; /* responsive */
 }
 
-.home-chart-section {
+/* Each chart column */
+.hr-home-chart-column {
+  flex: 1;
+  min-width: 300px;   /* ensures they don't shrink too much */
+  max-width: 32%;     /* 3 per row */
+  display: flex;
+  justify-content: center;
+}
+
+.hr-home-chart-column > * {
+  width: 100%;
+  height: 400px;       /* consistent height for all */
+}
+
+/* Individual chart containers */
+.hr-home-chart-section {
   flex: 1;
   max-width: 700px;
 }
 
-.home-quick-links-section {
+.hr-home-quick-links-section {
   flex: 1;
 }
 
-.home-chart-container-small {
+.hr-home-chart-container-small {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -31,26 +61,26 @@
   margin-bottom: 20px;
 }
 
-.home-chart-header {
+.hr-home-chart-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
 }
 
-.home-chart-header h3 {
+.hr-home-chart-header h3 {
   color: #444;
   margin: 0;
   font-size: 16px;
 }
 
-.home-month-navigation {
+.hr-home-month-navigation {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.home-nav-btn {
+.hr-home-nav-btn {
   background-color: #f0f0f0;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -63,23 +93,23 @@
   font-weight: bold;
 }
 
-.home-nav-btn:hover:not(:disabled) {
-  background-color: #e0e0e0;
+.hr-home-nav-btn:hover:not(:disabled) {
+  background-color: #f0f0f0;
 }
 
-.home-nav-btn:disabled {
+.hr-home-nav-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.home-current-month {
+.hr-home-current-month {
   font-weight: 600;
   font-size: 14px;
   min-width: 120px;
   text-align: center;
 }
 
-.home-current-month-btn {
+.hr-home-current-month-btn {
   background-color: #2196F3;
   color: white;
   border: none;
@@ -89,30 +119,30 @@
   cursor: pointer;
 }
 
-.home-current-month-btn:hover {
-  background-color: #0b7dda;
+.hr-home-current-month-btn:hover {
+  background-color: #2196F3;
 }
 
-.home-chart-wrapper {
+.hr-home-chart-wrapper {
   height: 300px;
   width: 100%;
 }
 
-.home-chart-footer {
+.hr-home-chart-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
 }
 
-.home-data-info {
+.hr-home-data-info {
   font-size: 12px;
   color: #666;
 }
 
-.home-chart-loading, 
-.home-chart-error, 
-.home-no-data {
+.hr-home-chart-loading, 
+.hr-home-chart-error, 
+.hr-home-no-data {
   text-align: center;
   padding: 20px;
   color: #666;
@@ -123,12 +153,12 @@
   align-items: center;
 }
 
-.home-chart-error {
+.hr-home-chart-error {
   color: #d32f2f;
 }
 
-.home-retry-btn, 
-.home-refresh-btn {
+.hr-home-retry-btn, 
+.hr-home-refresh-btn {
   background-color: #2196F3;
   color: white;
   border: none;
@@ -139,12 +169,12 @@
   font-size: 12px;
 }
 
-.home-retry-btn:hover, 
-.home-refresh-btn:hover {
-  background-color: #0b7dda;
+.hr-home-retry-btn:hover, 
+.hr-home-refresh-btn:hover {
+  background-color: #2196F3;
 }
 
-.home-quick-links {
+.hr-home-quick-links {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -152,19 +182,19 @@
   text-align: center;
 }
 
-.home-quick-links h2 {
+.hr-home-quick-links h2 {
   color: #444;
   margin-top: 0;
 }
 
-.home-link-buttons {
+.hr-home-link-buttons {
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin-top: 15px;
 }
 
-.home-action-link {
+.hr-home-action-link {
   display: inline-block;
   padding: 12px 20px;
   background-color: #4CAF50;
@@ -176,54 +206,20 @@
   text-align: center;
 }
 
-.home-action-link:hover {
-  background-color: #45a049;
+.hr-home-action-link:hover {
+  background-color: #4CAF50;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .home-container {
-    padding: 15px;
-  }
-  
-  .home-content-wrapper {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .home-chart-section {
-    max-width: 100%;
-  }
-  
-  .home-chart-header {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  
-  .home-month-navigation {
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  .home-link-buttons {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .home-chart-wrapper {
-    height: 220px;
-  }
-}/* src/Components/Home/AttendanceChart.css */
-.attendance-chart-container {
+/* Attendance Chart Styles */
+.hr-attendance-chart-container {
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.attendance-chart-container h3 {
+.hr-attendance-chart-container h3 {
   margin-top: 0;
   margin-bottom: 20px;
   text-align: center;
@@ -231,38 +227,54 @@
   font-size: 1.2rem;
 }
 
-.attendance-chart-container p {
+.hr-attendance-chart-container p {
   text-align: center;
   color: #666;
   margin-top: 50px;
 }
 
-
-/* Make slider occupy full width under Nav */
-.home-slider-section {
-  width: 100%;
-  height: 50vh; /* adjust height as you like */
-  margin-bottom: 20px;
-}
-
-/* Charts wrapper */
-.home-content-wrapper {
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
-  flex-wrap: wrap; /* responsive */
-}
-
-/* Each chart */
-.home-chart-column {
-  flex: 1;
-  min-width: 300px;   /* ensures they don’t shrink too much */
-  max-width: 32%;     /* 3 per row */
-  display: flex;
-  justify-content: center;
-}
-
-.home-chart-column > * {
-  width: 100%;
-  height: 400px;       /* consistent height for all */
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hr-home-container {
+    margin-left: 0;
+    padding: 15px;
+  }
+  
+  .hr-home-content-wrapper {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .hr-home-chart-column {
+    max-width: 100%;
+    min-width: auto;
+  }
+  
+  .hr-home-chart-section {
+    max-width: 100%;
+  }
+  
+  .hr-home-chart-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  
+  .hr-home-month-navigation {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .hr-home-link-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .hr-home-chart-wrapper {
+    height: 220px;
+  }
+  
+  .hr-home-slider-section {
+    height: 30vh;
+  }
 }

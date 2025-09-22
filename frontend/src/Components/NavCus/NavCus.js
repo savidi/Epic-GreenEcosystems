@@ -71,7 +71,7 @@ function Nav({ cartUpdateTrigger }) {
     <div className="navcus-navbar">
       <div className="navcus-logo">
         <img src={Elogo} alt="Epic Green Logo" className="navcus-elogo" />
-        Epic Green
+        
       </div>
 
       <ul className="navcus-nav-links">

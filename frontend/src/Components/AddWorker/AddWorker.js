@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AddWorker.css'; 
@@ -7,28 +7,32 @@ import Nav from "../Nav/Nav";
 function AddWorker() {
   const navigate = useNavigate();
 
+  // ✅ Get today's date in local timezone (YYYY-MM-DD)
+  const getTodayDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months 0-11
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  // ✅ Get current time in HH:MM
+  const getCurrentTime = () => {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
   const [inputs, setInputs] = useState({
     name: "",
     nationalid: "",
     age: "",
     gender: "",
-    date: "",
-    arrivaltime: "",
+    date: getTodayDate(),        // ✅ defaults to today in local time
+    arrivaltime: getCurrentTime(),
     paymentstatus: "Pending"
   });
-
-  // ✅ Set current date and time on component mount
-  useEffect(() => {
-    const now = new Date();
-    const currentDate = now.toISOString().split("T")[0];
-    const currentTime = now.toTimeString().split(":").slice(0, 2).join(":");
-
-    setInputs((prev) => ({
-      ...prev,
-      date: currentDate,
-      arrivaltime: currentTime,
-    }));
-  }, []);
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -39,7 +43,6 @@ function AddWorker() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting:", inputs);
     sendRequest().then(() => navigate('/mainFWorker'));
   };
 
@@ -50,7 +53,7 @@ function AddWorker() {
         nationalid: String(inputs.nationalid),
         age: Number(inputs.age),
         gender: String(inputs.gender),
-        date: new Date(inputs.date),
+        date: inputs.date,       // ✅ local date string
         arrivaltime: inputs.arrivaltime,
         departuretime: "",
         workedhoures: 0,
@@ -65,7 +68,7 @@ function AddWorker() {
 
   return (
     <div className="addworker-staff-management-page">
-      <Nav /> {/* Sidebar */}
+      <Nav />
 
       <div className="addworker-form-container">
         <h1>Add Worker</h1>
@@ -77,7 +80,7 @@ function AddWorker() {
           <input type="text" name="nationalid" onChange={handleChange} value={inputs.nationalid} required />
 
           <label>Age</label>
-          <input type="number" name="age" onChange={handleChange} min="16" max="100" value={inputs.age} required />
+          <input type="number" name="age" min="16" max="100" onChange={handleChange} value={inputs.age} required />
 
           <label>Gender</label>
           <select name="gender" onChange={handleChange} value={inputs.gender} required>

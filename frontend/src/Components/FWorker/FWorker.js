@@ -9,11 +9,16 @@ import "./FWorker.css";
 
 const URL = "http://localhost:5000/fieldworkers";
 
+// ✅ Helper: always return local YYYY-MM-DD
+const getCurrentDate = () => {
+  return new Date().toLocaleDateString("en-CA");
+};
+
 const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);
 };
 
-// Worker Row component with Update/Delete buttons
+// Worker Row component
 const WorkerRow = ({ user, onDelete }) => {
   const navigate = useNavigate();
   const {
@@ -80,11 +85,15 @@ const WorkerRow = ({ user, onDelete }) => {
 };
 
 function FWorker() {
-  const todayDate = new Date().toISOString().split("T")[0];
+  const todayDate = getCurrentDate(); // ✅ use helper
+
   const [fworkers, setWorkers] = useState([]);
   const [searchNid, setSearchNid] = useState("");
-  const [searchDate, setSearchDate] = useState(todayDate);
+  const [searchDate, setSearchDate] = useState(todayDate); // default today
   const [filteredWorkers, setFilteredWorkers] = useState([]);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() =>
+    JSON.parse(localStorage.getItem("sidebar-collapsed")) || false
+  );
   const [paymentSummary, setPaymentSummary] = useState({
     totalPayments: 0,
     paidAmount: 0,
@@ -94,15 +103,44 @@ function FWorker() {
     totalHours: 0,
   });
 
+  // Sidebar collapse listener
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const collapsed =
+        JSON.parse(localStorage.getItem("sidebar-collapsed")) || false;
+      setSidebarCollapsed(collapsed);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    const interval = setInterval(() => {
+      const collapsed =
+        JSON.parse(localStorage.getItem("sidebar-collapsed")) || false;
+      if (collapsed !== sidebarCollapsed) {
+        setSidebarCollapsed(collapsed);
+      }
+    }, 100);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      clearInterval(interval);
+    };
+  }, [sidebarCollapsed]);
+
+  // Fetch workers
   useEffect(() => {
     const getWorkers = async () => {
       try {
         const response = await fetchHandler();
         const data = response.data || response;
         setWorkers(data || []);
-        const todayWorkers = (data || []).filter(
-          (w) => new Date(w.date).toISOString().split("T")[0] === todayDate
-        );
+
+        // ✅ Compare using YYYY-MM-DD part only
+        const todayWorkers = (data || []).filter((w) => {
+          const workerDate = w.date ? w.date.split("T")[0] : "";
+          return workerDate === todayDate;
+        });
+
         setFilteredWorkers(todayWorkers);
         setPaymentSummary(calculatePaymentSummary(todayWorkers));
       } catch (error) {
@@ -153,6 +191,7 @@ function FWorker() {
     );
   };
 
+  // Filter by search
   useEffect(() => {
     let filtered = fworkers || [];
     if (searchNid.trim())
@@ -160,9 +199,11 @@ function FWorker() {
         w.nationalid?.toLowerCase().includes(searchNid.toLowerCase())
       );
     if (searchDate.trim())
-      filtered = filtered.filter(
-        (w) => new Date(w.date).toISOString().split("T")[0] === searchDate
-      );
+      filtered = filtered.filter((w) => {
+        const workerDate = w.date ? w.date.split("T")[0] : "";
+        return workerDate === searchDate;
+      });
+
     setFilteredWorkers(filtered);
     setPaymentSummary(calculatePaymentSummary(filtered));
   }, [searchNid, searchDate, fworkers]);
@@ -229,12 +270,12 @@ function FWorker() {
     ]);
 
     doc.autoTable({
-      head: [tableColumn],
+       head: [tableColumn],
       body: tableRows,
-      startY: 70,
+      startY: 110,
       theme: "striped",
       styles: { fontSize: 10, cellPadding: 6 },
-      headStyles: { fillColor: [230, 167, 107], textColor: 0 },
+      headStyles: { fillColor: [41, 128, 185], textColor: 255 },
       alternateRowStyles: { fillColor: [245, 245, 245] },
       didParseCell: (data) => {
         if (data.row.index === tableRows.length - 1) {
@@ -244,20 +285,23 @@ function FWorker() {
         }
       },
       margin: { left: 40, right: 40 },
-      tableWidth: "auto",
     });
 
     doc.save("Field_Workers_Report.pdf");
   };
 
   return (
-    <div className="fworker-fworker-page">
+    <div>
       <Nav />
-      <div className="fworker-fworker-content">
-        <h1 className="fworker-page-title">Field Workers</h1>
+      <div
+        className={`fworker-fworker-page ${
+          sidebarCollapsed ? "sidebar-collapsed" : ""
+        }`}
+      >
+        <div className="fworker-fworker-content">
+          <h1 className="fworker-page-title">Field Workers</h1>
 
-        <div className="fworker-search-section">
-          <div className="fworker-search-inputs">
+          <div className="fworker-search-section">
             <label>Search by National ID:</label>
             <input
               type="text"
@@ -271,117 +315,127 @@ function FWorker() {
               value={searchDate}
               onChange={(e) => setSearchDate(e.target.value)}
             />
+
+            <div className="fworker-action-buttons">
+              <button
+                onClick={handleViewAll}
+                className="fworker-btn fworker-view-all-btn"
+              >
+                View All
+              </button>
+              <Link
+                to="/mainAddWorker"
+                className="fworker-btn fworker-add-worker-btn"
+              >
+                Add Worker
+              </Link>
+              <button
+                onClick={generatePDF}
+                className="fworker-btn fworker-download-btn"
+              >
+                Download PDF
+              </button>
+            </div>
           </div>
 
-          <div className="fworker-action-buttons">
-            <button
-              onClick={handleViewAll}
-              className="fworker-btn fworker-view-all-btn"
-            >
-              View All
-            </button>
-            <Link to="/mainAddWorker" className="fworker-btn fworker-add-worker-btn">
-              Add Worker
-            </Link>
-            <button
-              onClick={generatePDF}
-              className="fworker-btn fworker-download-btn"
-            >
-              Download PDF
-            </button>
-          </div>
-        </div>
+          {filteredWorkers.length > 0 ? (
+            <>
+              <div className="fworker-table-container">
+                <table className="fworker-workers-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>National ID</th>
+                      <th>Age</th>
+                      <th>Gender</th>
+                      <th>Date</th>
+                      <th>Arrival Time</th>
+                      <th>Departure Time</th>
+                      <th>Worked Hours</th>
+                      <th>Salary</th>
+                      <th>Payment Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredWorkers.map((w, i) => (
+                      <WorkerRow key={w._id || i} user={w} onDelete={handleDelete} />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
-        {filteredWorkers.length > 0 ? (
-          <>
-            <table className="fworker-workers-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>National ID</th>
-                  <th>Age</th>
-                  <th>Gender</th>
-                  <th>Date</th>
-                  <th>Arrival Time</th>
-                  <th>Departure Time</th>
-                  <th>Worked Hours</th>
-                  <th>Salary</th>
-                  <th>Payment Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredWorkers.map((w, i) => (
-                  <WorkerRow key={w._id || i} user={w} onDelete={handleDelete} />
-                ))}
-              </tbody>
-            </table>
-
-            <div className="fworker-payment-summary-section">
-              <h2>
-                {searchDate
-                  ? `Payment Summary for ${new Date(searchDate).toLocaleDateString()}`
-                  : "Payment Summary"}
-              </h2>
-              <div className="fworker-summary-cards">
-                <div className="fworker-summary-card total">
-                  <h3>Total Payments</h3>
-                  <p className="fworker-amount">
-                    {formatCurrency(paymentSummary.totalPayments)}
-                  </p>
-                  <span>{paymentSummary.totalWorkers} workers</span>
-                </div>
-                <div className="fworker-summary-card paid">
-                  <h3>Paid</h3>
-                  <p className="fworker-amount">
-                    {formatCurrency(paymentSummary.paidAmount)}
-                  </p>
-                  <span>
-                    {paymentSummary.totalPayments > 0
-                      ? `${(
-                          (paymentSummary.paidAmount /
-                            paymentSummary.totalPayments) *
-                          100
-                        ).toFixed(1)}%`
-                      : "0%"}
-                  </span>
-                </div>
-                <div className="fworker-summary-card pending">
-                  <h3>Pending</h3>
-                  <p className="fworker-amount">
-                    {formatCurrency(paymentSummary.pendingAmount)}
-                  </p>
-                  <span>
-                    {paymentSummary.totalPayments > 0
-                      ? `${(
-                          (paymentSummary.pendingAmount /
-                            paymentSummary.totalPayments) *
-                          100
-                        ).toFixed(1)}%`
-                      : "0%"}
-                  </span>
-                </div>
-                <div className="fworker-summary-card hours">
-                  <h3>Total Hours</h3>
-                  <p className="fworker-amount">
-                    {paymentSummary.totalHours.toFixed(1)} hrs
-                  </p>
-                  <span>
-                    Avg:{" "}
-                    {paymentSummary.totalWorkers > 0
-                      ? (paymentSummary.totalHours / paymentSummary.totalWorkers).toFixed(1)
-                      : "0"}{" "}
-                    hrs/worker
-                  </span>
+              <div className="fworker-payment-summary-section">
+                <h2>
+                  {searchDate
+                    ? `Payment Summary for ${new Date(
+                        searchDate
+                      ).toLocaleDateString()}`
+                    : "Payment Summary"}
+                </h2>
+                <div className="fworker-summary-cards">
+                  <div className="fworker-summary-card total">
+                    <h3>Total Payments</h3>
+                    <p className="fworker-amount">
+                      {formatCurrency(paymentSummary.totalPayments)}
+                    </p>
+                    <span>{paymentSummary.totalWorkers} workers</span>
+                  </div>
+                  <div className="fworker-summary-card paid">
+                    <h3>Paid</h3>
+                    <p className="fworker-amount">
+                      {formatCurrency(paymentSummary.paidAmount)}
+                    </p>
+                    <span>
+                      {paymentSummary.totalPayments > 0
+                        ? `${(
+                            (paymentSummary.paidAmount /
+                              paymentSummary.totalPayments) *
+                            100
+                          ).toFixed(1)}%`
+                        : "0%"}
+                    </span>
+                  </div>
+                  <div className="fworker-summary-card pending">
+                    <h3>Pending</h3>
+                    <p className="fworker-amount">
+                      {formatCurrency(paymentSummary.pendingAmount)}
+                    </p>
+                    <span>
+                      {paymentSummary.totalPayments > 0
+                        ? `${(
+                            (paymentSummary.pendingAmount /
+                              paymentSummary.totalPayments) *
+                            100
+                          ).toFixed(1)}%`
+                        : "0%"}
+                    </span>
+                  </div>
+                  <div className="fworker-summary-card hours">
+                    <h3>Total Hours</h3>
+                    <p className="fworker-amount">
+                      {paymentSummary.totalHours.toFixed(1)} hrs
+                    </p>
+                    <span>
+                      Avg:{" "}
+                      {paymentSummary.totalWorkers > 0
+                        ? (
+                            paymentSummary.totalHours /
+                            paymentSummary.totalWorkers
+                          ).toFixed(1)
+                        : "0"}{" "}
+                      hrs/worker
+                    </span>
+                  </div>
                 </div>
               </div>
+            </>
+          ) : (
+            <div className="fworker-no-results">
+              <p>No workers found</p>
             </div>
-          </>
-        ) : (
-          <div className="fworker-no-results">
-            <p>No workers found</p>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
