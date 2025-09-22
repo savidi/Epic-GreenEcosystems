@@ -12,9 +12,8 @@ import Nav from "../Nav/Nav";
 function StaffManagement() {
   const [staffList, setStaffList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [staffTypeQuery, setStaffTypeQuery] = useState(""); 
+  const [staffTypeQuery, setStaffTypeQuery] = useState("");
   const [filteredStaff, setFilteredStaff] = useState([]);
-
   const [previewStaff, setPreviewStaff] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const idCardRef = useRef();
@@ -39,7 +38,6 @@ function StaffManagement() {
 
   const filterStaff = () => {
     let filtered = staffList;
-
     if (searchQuery.trim()) {
       const query = searchQuery.trim().toLowerCase();
       filtered = filtered.filter(
@@ -48,7 +46,6 @@ function StaffManagement() {
           staff.nationalId.toLowerCase().includes(query)
       );
     }
-
     if (staffTypeQuery.trim()) {
       filtered = filtered.filter(
         (staff) =>
@@ -56,7 +53,6 @@ function StaffManagement() {
           staff.staffType.toLowerCase() === staffTypeQuery.toLowerCase()
       );
     }
-
     setFilteredStaff(filtered);
   };
 
@@ -82,7 +78,6 @@ function StaffManagement() {
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = () => {
       setPreviewStaff({ ...previewStaff, photo: reader.result });
@@ -107,13 +102,17 @@ function StaffManagement() {
     return acc;
   }, {});
 
-  const uniqueStaffTypes = [...new Set(staffList.map((s) => s.staffType).filter(Boolean))];
+  const uniqueStaffTypes = [
+    ...new Set(staffList.map((s) => s.staffType).filter(Boolean)),
+  ];
 
-  // PDF Generation for Staff Table
   const generatePDF = () => {
     if (!filteredStaff.length) return alert("No staff to export!");
-
-    const doc = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
+    const doc = new jsPDF({
+      orientation: "landscape",
+      unit: "pt",
+      format: "a4",
+    });
     doc.setFontSize(18);
     doc.text("Staff Report", 40, 40);
 
@@ -127,7 +126,7 @@ function StaffManagement() {
       "AccountNo",
       "Department",
       "Position",
-      "QR Code"
+      "QR Code",
     ];
 
     const tableRows = filteredStaff.map((staff, index) => [
@@ -140,7 +139,7 @@ function StaffManagement() {
       staff.accountNo,
       staff.staffType,
       staff.position,
-      staff.qrCode ? "Yes" : "N/A"
+      staff.qrCode ? "Yes" : "N/A",
     ]);
 
     autoTable(doc, {
@@ -155,7 +154,6 @@ function StaffManagement() {
       tableWidth: "auto",
     });
 
-    // Summary below the table
     let finalY = doc.lastAutoTable.finalY + 20;
     doc.setFontSize(14);
     doc.text(`Total Staff: ${staffList.length}`, 40, finalY);
@@ -163,72 +161,75 @@ function StaffManagement() {
     let offsetY = finalY + 20;
     Object.entries(staffTypeCounts).forEach(([type, count]) => {
       doc.text(`${type}: ${count}`, 40, offsetY);
-      offsetY += 16; // vertical spacing
+      offsetY += 16;
     });
 
     doc.save("Staff_Report.pdf");
   };
 
   return (
-<div className="Add-worker-page">
-            <Nav /> {/* Sidebar */}
-
     <div className="staffmanagement-page">
       <Nav />
-
       <div className="staffmanagement-container">
         <h2>Staff Management</h2>
-
         <div className="staffmanagement-top-bar">
           <div className="staffmanagement-search-container">
-            <label htmlFor="nationalIdSearch" className="staffmanagement-filter-label">
+            <label className="staffmanagement-filter-label">
               Search by National ID:
-              </label>
-              <input
-                type="text"
-                placeholder="Enter National ID"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="staffmanagement-search-input"
-              />
-        
+            </label>
+            <input
+              type="text"
+              placeholder="Enter National ID"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="staffmanagement-search-input"
+            />
             {searchQuery && (
-              <button className="staffmanagement-clear-search-btn" onClick={clearSearch}>
-                ×
-              </button>
-            )}
-            <label htmlFor="staffTypeSearch" className="staffmanagement-filter-label">
-              Filter by Staff Type:
-              </label>
-              <select
-                value={staffTypeQuery}
-                onChange={(e) => setStaffTypeQuery(e.target.value)}
-                className="staffmanagement-search-input"
+              <button
+                className="staffmanagement-clear-search-btn"
+                onClick={clearSearch}
               >
-                <option value="">All</option>
-                {uniqueStaffTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            {staffTypeQuery && (
-              <button className="staffmanagement-clear-search-btn" onClick={clearStaffType}>
                 ×
               </button>
             )}
+
+            <label className="staffmanagement-filter-label">
+              Filter by Staff Type:
+            </label>
+            <select
+              value={staffTypeQuery}
+              onChange={(e) => setStaffTypeQuery(e.target.value)}
+              className="staffmanagement-search-input"
+            >
+              <option value="">All</option>
+              {uniqueStaffTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+            {staffTypeQuery && (
+              <button
+                className="staffmanagement-clear-search-btn"
+                onClick={clearStaffType}
+              >
+                ×
+              </button>
+            )}
+
             <Link to="/addStaff" className="staffmanagement-add-staff-btn">
               + Add Staff
             </Link>
 
-            {/* PDF button */}
-            <button className="staffmanagement-download-pdf-btn" onClick={generatePDF}>
+            <button
+              className="staffmanagement-download-pdf-btn"
+              onClick={generatePDF}
+            >
               Download PDF
             </button>
           </div>
         </div>
 
-        {/* Staff Table */}
         <table className="staffmanagement-staff-table">
           <thead>
             <tr>
@@ -259,8 +260,11 @@ function StaffManagement() {
                   <td>{staff.qrCode ? "Yes" : "N/A"}</td>
                   <td>
                     <div className="staffmanagement-action-buttons">
-                      <Link to={`/updateStaff/${staff._id}`}>
-                        <button className="staffmanagement-action-btn staffmanagement-update-btn">Update</button>
+                      <Link
+                        to={`/updateStaff/${staff._id}`}
+                        className="staffmanagement-action-btn"
+                      >
+                        Update
                       </Link>
                       <button
                         className="staffmanagement-action-btn staffmanagement-delete-btn"
@@ -281,36 +285,45 @@ function StaffManagement() {
             ) : (
               <tr>
                 <td colSpan="10">
-                  <div className="staffmanagement-no-data">No staff members found.</div>
+                  <div className="staffmanagement-no-data">
+                    No staff members found.
+                  </div>
                 </td>
               </tr>
             )}
           </tbody>
         </table>
 
-        {/* ID Card Modal */}
         {modalOpen && previewStaff && (
           <div className="staffmanagement-idcard-modal">
             <div className="staffmanagement-idcard-modal-content">
-              <button className="staffmanagement-close-btn" onClick={closeModal}></button>
-
+              <button
+                className="staffmanagement-close-btn"
+                onClick={closeModal}
+              >
+                ×
+              </button>
               <IDCard staff={previewStaff} ref={idCardRef} />
-
               {!previewStaff.photo && (
                 <div className="staffmanagement-upload-photo-section">
                   <p>No photo uploaded. Upload now:</p>
-                  <input type="file" accept="image/*" onChange={handlePhotoUpload} />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoUpload}
+                  />
                 </div>
               )}
-
-              <button className="staffmanagement-download-idcard-btn" onClick={handleDownloadIDCard}>
+              <button
+                className="staffmanagement-download-idcard-btn"
+                onClick={handleDownloadIDCard}
+              >
                 Download ID Card
               </button>
             </div>
           </div>
         )}
       </div>
-    </div>
     </div>
   );
 }

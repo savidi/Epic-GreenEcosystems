@@ -1,10 +1,10 @@
 // src/Components/FWorker/FWorker.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
-import "jspdf-autotable"; // Import autopilot plugin for doc.autoTable
-import Nav from "../Nav/Nav"; // Ensure path is correct
+import "jspdf-autotable";
+import Nav from "../Nav/Nav";
 import "./FWorker.css";
 
 const URL = "http://localhost:5000/fieldworkers";
@@ -13,8 +13,9 @@ const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);
 };
 
-// Inline Worker row component (includes Update + Delete with confirmation)
+// Worker Row component with Update/Delete buttons
 const WorkerRow = ({ user, onDelete }) => {
+  const navigate = useNavigate();
   const {
     _id,
     name,
@@ -30,9 +31,8 @@ const WorkerRow = ({ user, onDelete }) => {
   } = user;
 
   const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this staff member?")) {
+    if (!window.confirm("Are you sure you want to delete this staff member?"))
       return;
-    }
     try {
       await axios.delete(`${URL}/${_id}`);
       if (onDelete) onDelete(_id);
@@ -41,8 +41,12 @@ const WorkerRow = ({ user, onDelete }) => {
     }
   };
 
+  const handleUpdate = () => {
+    navigate(`/mainFWorker/${_id}`);
+  };
+
   const getStatusClass = () => {
-    const s = (paymentstatus || "").toString().toLowerCase();
+    const s = (paymentstatus || "").toLowerCase();
     if (s === "paid") return "fworker-status-badge fworker-status-paid";
     if (s === "pending") return "fworker-status-badge fworker-status-pending";
     if (s === "partial") return "fworker-status-badge fworker-status-partial";
@@ -61,15 +65,13 @@ const WorkerRow = ({ user, onDelete }) => {
       <td>{workedhoures}</td>
       <td>RS: {salary}</td>
       <td>
-        <span className={getStatusClass()}>
-          {paymentstatus || "Unpaid"}
-        </span>
+        <span className={getStatusClass()}>{paymentstatus || "Unpaid"}</span>
       </td>
       <td>
-        <Link to={`/mainFWorker/${_id}`}>
-          <button className="action-btn update-btn">Update</button>
-        </Link>
-        <button onClick={handleDelete} className="action-btn delete-btn">
+        <button onClick={handleUpdate} className="fworker-btn update-btn">
+          Update
+        </button>
+        <button onClick={handleDelete} className="fworker-btn delete-btn">
           Delete
         </button>
       </td>
@@ -79,7 +81,6 @@ const WorkerRow = ({ user, onDelete }) => {
 
 function FWorker() {
   const todayDate = new Date().toISOString().split("T")[0];
-
   const [fworkers, setWorkers] = useState([]);
   const [searchNid, setSearchNid] = useState("");
   const [searchDate, setSearchDate] = useState(todayDate);
@@ -93,7 +94,6 @@ function FWorker() {
     totalHours: 0,
   });
 
-  // Fetch workers on mount
   useEffect(() => {
     const getWorkers = async () => {
       try {
@@ -127,7 +127,7 @@ function FWorker() {
         acc.totalWorkers += 1;
         acc.totalHours += hours;
 
-        switch ((worker.paymentstatus || "").toString().toLowerCase()) {
+        switch ((worker.paymentstatus || "").toLowerCase()) {
           case "paid":
             acc.paidAmount += salary;
             break;
@@ -140,7 +140,6 @@ function FWorker() {
           default:
             break;
         }
-
         return acc;
       },
       {
@@ -154,31 +153,23 @@ function FWorker() {
     );
   };
 
-  // Filter workers when searchNid or searchDate changes
   useEffect(() => {
     let filtered = fworkers || [];
-
-    if (searchNid.trim() !== "") {
-      filtered = filtered.filter(
-        (w) =>
-          w.nationalid &&
-          w.nationalid.toString().toLowerCase().includes(searchNid.toLowerCase())
+    if (searchNid.trim())
+      filtered = filtered.filter((w) =>
+        w.nationalid?.toLowerCase().includes(searchNid.toLowerCase())
       );
-    }
-
-    if (searchDate.trim() !== "") {
+    if (searchDate.trim())
       filtered = filtered.filter(
         (w) => new Date(w.date).toISOString().split("T")[0] === searchDate
       );
-    }
-
     setFilteredWorkers(filtered);
     setPaymentSummary(calculatePaymentSummary(filtered));
   }, [searchNid, searchDate, fworkers]);
 
   const handleViewAll = () => {
     setSearchNid("");
-    setSearchDate(""); // clear date filter
+    setSearchDate("");
     setFilteredWorkers(fworkers);
     setPaymentSummary(calculatePaymentSummary(fworkers));
   };
@@ -189,12 +180,13 @@ function FWorker() {
       maximumFractionDigits: 2,
     })}`;
 
-  // PDF Generation
   const generatePDF = () => {
     if (!filteredWorkers.length) return alert("No workers to export!");
-
-    const doc = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
-
+    const doc = new jsPDF({
+      orientation: "landscape",
+      unit: "pt",
+      format: "a4",
+    });
     doc.setFontSize(18);
     doc.text("Field Workers Report", 40, 40);
 
@@ -208,10 +200,9 @@ function FWorker() {
       "Departure",
       "Worked Hours",
       "Salary",
-      "Payment Status"
+      "Payment Status",
     ];
-
-    const tableRows = filteredWorkers.map(w => [
+    const tableRows = filteredWorkers.map((w) => [
       w.name,
       w.nationalid,
       w.age,
@@ -221,10 +212,9 @@ function FWorker() {
       w.departuretime,
       w.workedhoures,
       w.salary,
-      w.paymentstatus || "Unpaid"
+      w.paymentstatus || "Unpaid",
     ]);
 
-    // Totals row
     tableRows.push([
       "TOTAL",
       "",
@@ -235,7 +225,7 @@ function FWorker() {
       "",
       paymentSummary.totalHours.toFixed(1),
       paymentSummary.totalPayments.toFixed(2),
-      ""
+      "",
     ]);
 
     doc.autoTable({
@@ -247,7 +237,6 @@ function FWorker() {
       headStyles: { fillColor: [230, 167, 107], textColor: 0 },
       alternateRowStyles: { fillColor: [245, 245, 245] },
       didParseCell: (data) => {
-        // Highlight the totals row
         if (data.row.index === tableRows.length - 1) {
           data.cell.styles.fontStyle = "bold";
           data.cell.styles.fillColor = [220, 220, 220];
@@ -258,7 +247,7 @@ function FWorker() {
       tableWidth: "auto",
     });
 
-    doc.save(`Field_Workers_Report.pdf`);
+    doc.save("Field_Workers_Report.pdf");
   };
 
   return (
@@ -267,40 +256,42 @@ function FWorker() {
       <div className="fworker-fworker-content">
         <h1 className="fworker-page-title">Field Workers</h1>
 
-        {/* Search Section */}
         <div className="fworker-search-section">
           <div className="fworker-search-inputs">
-            <label className="fworker-filter-label">Search by National ID:</label>
+            <label>Search by National ID:</label>
             <input
               type="text"
               placeholder="Enter National ID"
               value={searchNid}
               onChange={(e) => setSearchNid(e.target.value)}
             />
-
-            <label className="fworker-filter-label">Filter by Date:</label>
+            <label>Filter by Date:</label>
             <input
               type="date"
               value={searchDate}
               onChange={(e) => setSearchDate(e.target.value)}
-              title="Filter by date"
             />
           </div>
 
           <div className="fworker-action-buttons">
-            <button onClick={handleViewAll} className="fworker-btn fworker-view-all-btn">
+            <button
+              onClick={handleViewAll}
+              className="fworker-btn fworker-view-all-btn"
+            >
               View All
             </button>
             <Link to="/mainAddWorker" className="fworker-btn fworker-add-worker-btn">
               Add Worker
             </Link>
-            <button onClick={generatePDF} className="fworker-btn fworker-download-btn">
+            <button
+              onClick={generatePDF}
+              className="fworker-btn fworker-download-btn"
+            >
               Download PDF
             </button>
           </div>
         </div>
 
-        {/* Workers Table */}
         {filteredWorkers.length > 0 ? (
           <>
             <table className="fworker-workers-table">
@@ -320,17 +311,12 @@ function FWorker() {
                 </tr>
               </thead>
               <tbody>
-                {filteredWorkers.map((fworker, i) => (
-                  <WorkerRow
-                    key={fworker._id || i}
-                    user={fworker}
-                    onDelete={handleDelete}
-                  />
+                {filteredWorkers.map((w, i) => (
+                  <WorkerRow key={w._id || i} user={w} onDelete={handleDelete} />
                 ))}
               </tbody>
             </table>
 
-            {/* Payment Summary */}
             <div className="fworker-payment-summary-section">
               <h2>
                 {searchDate
@@ -340,34 +326,52 @@ function FWorker() {
               <div className="fworker-summary-cards">
                 <div className="fworker-summary-card total">
                   <h3>Total Payments</h3>
-                  <p className="fworker-amount">{formatCurrency(paymentSummary.totalPayments)}</p>
-                  <span className="fworker-count">{paymentSummary.totalWorkers} workers</span>
+                  <p className="fworker-amount">
+                    {formatCurrency(paymentSummary.totalPayments)}
+                  </p>
+                  <span>{paymentSummary.totalWorkers} workers</span>
                 </div>
                 <div className="fworker-summary-card paid">
                   <h3>Paid</h3>
-                  <p className="fworker-amount">{formatCurrency(paymentSummary.paidAmount)}</p>
-                  <span className="fworker-percentage">
+                  <p className="fworker-amount">
+                    {formatCurrency(paymentSummary.paidAmount)}
+                  </p>
+                  <span>
                     {paymentSummary.totalPayments > 0
-                      ? `${((paymentSummary.paidAmount / paymentSummary.totalPayments) * 100).toFixed(1)}%`
+                      ? `${(
+                          (paymentSummary.paidAmount /
+                            paymentSummary.totalPayments) *
+                          100
+                        ).toFixed(1)}%`
                       : "0%"}
                   </span>
                 </div>
                 <div className="fworker-summary-card pending">
                   <h3>Pending</h3>
-                  <p className="fworker-amount">{formatCurrency(paymentSummary.pendingAmount)}</p>
-                  <span className="fworker-percentage">
+                  <p className="fworker-amount">
+                    {formatCurrency(paymentSummary.pendingAmount)}
+                  </p>
+                  <span>
                     {paymentSummary.totalPayments > 0
-                      ? `${((paymentSummary.pendingAmount / paymentSummary.totalPayments) * 100).toFixed(1)}%`
+                      ? `${(
+                          (paymentSummary.pendingAmount /
+                            paymentSummary.totalPayments) *
+                          100
+                        ).toFixed(1)}%`
                       : "0%"}
                   </span>
                 </div>
                 <div className="fworker-summary-card hours">
                   <h3>Total Hours</h3>
-                  <p className="fworker-amount">{paymentSummary.totalHours.toFixed(1)} hrs</p>
-                  <span className="fworker-count">
-                    Avg: {paymentSummary.totalWorkers > 0
+                  <p className="fworker-amount">
+                    {paymentSummary.totalHours.toFixed(1)} hrs
+                  </p>
+                  <span>
+                    Avg:{" "}
+                    {paymentSummary.totalWorkers > 0
                       ? (paymentSummary.totalHours / paymentSummary.totalWorkers).toFixed(1)
-                      : "0"}{" "}hrs/worker
+                      : "0"}{" "}
+                    hrs/worker
                   </span>
                 </div>
               </div>
