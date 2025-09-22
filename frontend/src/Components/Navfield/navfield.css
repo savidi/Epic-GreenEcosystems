@@ -1,15 +1,16 @@
 :root {
-  --primary: #8D4E2A;      
-  --secondary: #e59b57;    
-  --accent1: #7A4A2C;      
-  --accent2: #8B5A3C;      
-  --accent3: #9C6A4C;      
-  --accent4: #AD7A5C;      
-  --dark: #1A0F08;          
-  --light: #F5F0E8;         
-  --success: #689F38;       
-  --gradient1: #5D3A1A;    
-  --gradient2: #7A4A2C;
+  /* Lighter color scheme */
+  --primary: #D4A574;      /* Light caramel - main sidebar background */
+  --secondary: #E6D2B5;    /* Soft sand - header and footer background */
+  --accent1: #C19A6B;      /* Cinnamon - hover states */
+  --accent2: #D4A574;      /* Warm caramel - active states */
+  --accent3: #E6D2B5;      /* Soft sand - additional accents */
+  --accent4: #F5E6D3;      /* Very light tan - highlights */
+  --dark: #8B4513;          /* Saddle brown - text and borders */
+  --light: #FFFFFF;         /* White - text and highlights */
+  --success: #689F38;       /* Green - success states */
+  --gradient1: #C19A6B;    /* Cinnamon - gradients */
+  --gradient2: #D4A574;    /* Warm caramel - gradients */
 }
 
 /* Sidebar container */
@@ -20,11 +21,12 @@
   top: 0;
   height: 100vh;
   background-color: var(--primary);
-  color: var(--light);
+  color: var(--dark);
   display: flex;
   flex-direction: column;
   transition: width 0.3s;
   z-index: 1000;
+  border-right: 1px solid var(--accent1);
 }
 
 .navfield-sidebar.collapsed {
@@ -44,9 +46,31 @@
 .navfield-toggle-btn {
   background: none;
   border: none;
-  color: var(--light);
+  color: var(--dark);
   font-size: 1.2rem;
   cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.navfield-toggle-btn:hover {
+  background: var(--accent3);
+  transform: scale(1.1);
+}
+
+.navfield-logo {
+  height: 40px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.navfield-logo:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
 }
 
 .navfield-sidebar-links {
@@ -91,15 +115,16 @@
 }
 
 .navfield-sidebar-links li:hover {
-  background: var(--accent1);
-  border-left: 4px solid var(--gradient1);
+  background: var(--accent3);
+  border-left: 4px solid var(--accent1);
   padding-left: 16px;
 }
 
 .navfield-sidebar-links li.active {
-  background: var(--accent2);
-  border-left: 4px solid var(--gradient1);
+  background: var(--accent3);
+  border-left: 4px solid var(--accent1);
   padding-left: 16px;
+  font-weight: 600;
 }
 
 .navfield-sidebar-links li.active a {
@@ -131,8 +156,9 @@
 /* Social Media Footer */
 .navfield-sidebar-footer {
   padding: 16px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--accent1);
   background: var(--secondary);
+  color: var(--dark);
 }
 
 .navfield-social-links {
@@ -145,20 +171,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--light);
+  margin: 0 4px;
   text-decoration: none;
+  color: var(--dark);
   padding: 10px;
   border-radius: 4px;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--accent4);
   width: 36px;
   height: 36px;
+  border: 1px solid var(--accent3);
 }
 
 .navfield-social-link:hover {
-  background: var(--accent1);
+  background: var(--accent3);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(139, 69, 19, 0.2);
+  border-color: var(--accent1);
 }
 
 .navfield-social-link .navfield-icon {

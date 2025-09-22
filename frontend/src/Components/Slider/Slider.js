@@ -7,6 +7,7 @@ import CardamomImg from '../Images/Cardomom.png';
 import TurmericImg from '../Images/Turmeric.png';
 import PepperImg from '../Images/Pepper.png';
 import CbackgroundImg from '../Images/Cbackground.png';
+import RedChilliImg from '../Images/RedChilli.png';
 
 function Slider() {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -33,15 +34,16 @@ function Slider() {
             image: PepperImg
         },
         {
+            title: "RED CHILI",
+            description: "64 hectares of premium spice cultivation.",
+            image: RedChilliImg
+        },
+        {
             title: "SPICE ",
             description: "Diverse spice ecosystem in perfect harmony.",
             image: CbackgroundImg
-        },
-        {
-            title: "FARM OVERVIEW",
-            description: "64 hectares of premium spice cultivation.",
-            image: CbackgroundImg
         }
+
     ];
 
     const nextSlide = () => {
@@ -51,11 +53,11 @@ function Slider() {
     const prevSlide = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
     };
-
+ 
     useEffect(() => {
         const interval = setInterval(() => {
             nextSlide();
-        }, 5000);
+        }, 3000);
         
         return () => clearInterval(interval);
     }, []);
@@ -83,7 +85,6 @@ function Slider() {
                             <div className="content">
                                 <div className="name">{slide.title}</div>
                                 <div className="des">{slide.description}</div>
-                                <button>See More</button>
                             </div>
                         </div>
                     );
