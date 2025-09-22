@@ -35,7 +35,7 @@ function Login() {
         setMessageType("success");
         // Redirect after a short delay to allow the user to see the message
         setTimeout(() => {
-          navigate("/local-orders");
+          navigate("/customer");
         }, 1500);
       } else {
         setMessage(response.data.message);

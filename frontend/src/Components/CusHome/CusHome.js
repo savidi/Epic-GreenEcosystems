@@ -58,29 +58,29 @@ function Home() {
 
     const renderStars = (rating) => {
         return Array.from({ length: 5 }, (_, index) => (
-            <FaStar key={index} className={index < rating ? 'cushome-star-filled' : 'cushome-star-empty'} />
+            <FaStar key={index} className={index < rating ? 'star-filled' : 'star-empty'} />
         ));
     };
 
     return (
-        <div className="cushome-container">
+        <div className="home-container">
             <Nav />
             {/* Hero Section */}
-            <section className="cushome-hero-section" id="section_1">
-                <div className="cushome-hero-content">
-                    <em className="cushome-small-text">welcome to Epic Green</em>
+            <section className="hero-section" id="section_1">
+                <div className="hero-content">
+                    <em className="small-text">welcome to Epic Green</em>
                     <h1>Taste Matters!</h1>
-                    <p className="cushome-hero-subtitle">
+                    <p className="hero-subtitle">
                         Handpicked with love in Matale. Embrace Timeless Essences: Elevating Culinary Delights with Exquisite Flavours of Asia
                     </p>
-                    <div className="cushome-hero-buttons">
-                        <Link to="#section_2" className="cushome-btn cushome-custom-btn cushome-custom-border-btn smoothscroll">
+                    <div className="hero-buttons">
+                        <Link to="#section_2" className="btn custom-btn custom-border-btn smoothscroll">
                             Our Story
                         </Link>
                     </div>
                 </div>
-                <div className="cushome-hero-slides">
-                    <video autoPlay muted loop className="cushome-hero-video">
+                <div className="hero-slides">
+                    <video autoPlay muted loop className="hero-video">
                         <source src={SpiceVideo} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
@@ -88,12 +88,12 @@ function Home() {
             </section>
 
             {/* About Section */}
-            <section className="cushome-about-section cushome-section-padding" id="section_2">
-                <div className="cushome-section-overlay"></div>
+            <section className="about-section section-padding" id="section_2">
+                <div className="section-overlay"></div>
                 <div className="container">
                     <div className="row align-items-center">
                        <div className="col-lg-6 col-12">
-              <div className="cushome-about-video-container" style={{ position: 'relative', width: '100%', height: '400px', borderRadius: '15px', overflow: 'hidden' }}>
+              <div className="about-video-container" style={{ position: 'relative', width: '100%', height: '400px', borderRadius: '15px', overflow: 'hidden' }}>
                 <video 
                   ref={videoRef}
                   src={Spice1Video} 
@@ -144,7 +144,7 @@ function Home() {
                             <p className="text-white">
                                 The farm is run by dedicated professionals committed to sustainable farming practices and producing the finest spices in Sri Lanka.
                             </p>
-                            <Link to="#team" className="smoothscroll cushome-btn cushome-custom-btn cushome-custom-border-btn mt-3 mb-4">
+                            <Link to="#team" className="smoothscroll btn custom-btn custom-border-btn mt-3 mb-4">
                                 Meet Our Team
                             </Link>
                         </div>
@@ -154,7 +154,7 @@ function Home() {
 
             {/* Team Section */}
             {/* Showcase Section */}
-            <section className="cushome-showcase-section cushome-section-padding cushome-section-bg" id="showcase">
+            <section className="showcase-section section-padding section-bg" id="showcase">
                 <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-lg-12 col-12 text-center mb-4 pb-lg-2">
@@ -162,35 +162,35 @@ function Home() {
                             <h2 className="text-white">Our Products</h2>
                         </div>
                         <div className="col-lg-12 col-12">
-                            <div className="cushome-showcase-grid">
-                                <div className="cushome-showcase-item featured">
+                            <div className="showcase-grid">
+                                <div className="showcase-item featured">
                                     <img src="./images/product4.jpg" alt="Premium spices" className="img-fluid" />
-                                    <div className="cushome-showcase-overlay">
+                                    <div className="showcase-overlay">
                                         <h3 className="text-white">Premium Cinnamon</h3>
                                         <p className="text-white">World's finest quality</p>
                                     </div>
                                 </div>
-                                <div className="cushome-showcase-item">
+                                <div className="showcase-item">
                                     <img src="./images/product2.jpg"  alt="Cardamom" className="img-fluid" />
-                                    <div className="cushome-showcase-overlay">
+                                    <div className="showcase-overlay">
                                         <h4 className="text-white">Black Pepper</h4>
                                     </div>
                                 </div>
-                                <div className="cushome-showcase-item">
+                                <div className="showcase-item">
                                     <img src="./images/product3.jpg" alt="Turmeric" className="img-fluid" />
-                                    <div className="cushome-showcase-overlay">
+                                    <div className="showcase-overlay">
                                         <h4 className="text-white">Turmeric</h4>
                                     </div>
                                 </div>
-                                <div className="cushome-showcase-item">
+                                <div className="showcase-item">
                                     <img src="./images/product1.jpg" alt="Pepper" className="img-fluid" />
-                                    <div className="cushome-showcase-overlay">
+                                    <div className="showcase-overlay">
                                         <h4 className="text-white">Chillie Powder</h4>
                                     </div>
                                 </div>
-                                <div className="cushome-showcase-item">
+                                <div className="showcase-item">
                                     <img src="./images/currymix.jpg" alt="Pepper" className="img-fluid" />
-                                    <div className="cushome-showcase-overlay">
+                                    <div className="showcase-overlay">
                                         <h4 className="text-white">Meat Curry Mix</h4>
                                     </div>
                                 </div>
@@ -201,22 +201,22 @@ function Home() {
             </section>
 
             {/* Menu Section */}
-            <section className="cushome-menu-section cushome-section-padding" id="section_3">
+            <section className="menu-section section-padding" id="section_3">
                 <div className="container">
                     <div className="row">
                         {menuItems.map((category, catIndex) => (
                             <div className="col-lg-6 col-12 mb-4 mb-lg-0" key={catIndex}>
-                                <div className="cushome-menu-block-wrap">
+                                <div className="menu-block-wrap">
                                     <div className="text-center mb-4 pb-lg-2">
                                         <em className="text-white">Premium Quality</em>
                                         <h4 className="text-white">{category.category}</h4>
                                     </div>
                                     {category.items.map((item, itemIndex) => (
-                                        <div className={`cushome-menu-block ${itemIndex > 0 ? 'my-4' : ''}`} key={itemIndex}>
+                                        <div className={`menu-block ${itemIndex > 0 ? 'my-4' : ''}`} key={itemIndex}>
                                             <div className="d-flex">
                                                 <h6>
                                                     {item.name}
-                                                    {item.featured && <span className="cushome-badge ms-3">Recommend</span>}
+                                                    {item.featured && <span className="badge ms-3">Recommend</span>}
                                                 </h6>
                                                 <span className="underline"></span>
                                                 <strong className="ms-auto">{item.price}</strong>
@@ -234,32 +234,32 @@ function Home() {
             </section>
 
             {/* Testimonials Section */}
-            <section className="cushome-reviews-section cushome-section-padding cushome-section-bg" id="section_4">
+            <section className="reviews-section section-padding section-bg" id="section_4">
                 <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-lg-12 col-12 text-center mb-4 pb-lg-2">
                             <em className="text-white">Reviews by Customers</em>
                             <h2 className="text-white">REVIEWS</h2>
                         </div>
-                        <div className="cushome-timeline">
+                        <div className="timeline">
                             {testimonials.map((testimonial, index) => (
                                 <div
-                                    className={`cushome-timeline-container cushome-timeline-container-${index % 2 === 0 ? 'left' : 'right'}`}
+                                    className={`timeline-container timeline-container-${index % 2 === 0 ? 'left' : 'right'}`}
                                     key={index}
                                 >
-                                    <div className="cushome-timeline-content">
-                                        <div className="cushome-reviews-block">
-                                            <div className="cushome-reviews-block-image-wrap d-flex align-items-center">
+                                    <div className="timeline-content">
+                                        <div className="reviews-block">
+                                            <div className="reviews-block-image-wrap d-flex align-items-center">
                                                 <div>
                                                     <h6 className="text-white mb-0">{testimonial.name}</h6>
                                                     <em className="text-white">{testimonial.role}</em>
                                                 </div>
                                             </div>
-                                            <div className="cushome-reviews-block-info">
+                                            <div className="reviews-block-info">
                                                 <p>{testimonial.content}</p>
                                                 <div className="d-flex border-top border-secondary pt-3 mt-4">
                                                     <strong className="text-dark">{testimonial.rating}.0 <small className="ms-2">Rating</small></strong>
-                                                    <div className="cushome-reviews-group ms-auto">
+                                                    <div className="reviews-group ms-auto">
                                                         {renderStars(testimonial.rating)}
                                                     </div>
                                                 </div>
@@ -274,7 +274,7 @@ function Home() {
             </section>
 
             {/* Gallery Section */}
-            <section className="cushome-gallery-section cushome-section-padding cushome-section-bg" id="gallery">
+            <section className="gallery-section section-padding section-bg" id="gallery">
                 <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-lg-12 col-12 text-center mb-4 pb-lg-2">
@@ -282,20 +282,20 @@ function Home() {
                             <h2 className="text-white">Gallery</h2>
                         </div>
                         <div className="col-lg-12 col-12">
-                            <div className="cushome-gallery-grid">
-                                <div className="cushome-gallery-item large">
+                            <div className="gallery-grid">
+                                <div className="gallery-item large">
                                     <img src="./images/gallery2.jpg" alt="Cinnamon sticks" className="img-fluid" />
                                 </div>
-                                <div className="cushome-gallery-item">
+                                <div className="gallery-item">
                                     <img src="./images/gallery1.jpg" alt="Cardamom pods" className="img-fluid" />
                                 </div>
-                                <div className="cushome-gallery-item">
+                                <div className="gallery-item">
                                     <img src="./images/gallery5.jpg" alt="Turmeric powder" className="img-fluid" />
                                 </div>
-                                <div className="cushome-gallery-item">
+                                <div className="gallery-item">
                                     <img src="./images/gallery6.jpg" alt="Black pepper" className="img-fluid" />
                                 </div>
-                                <div className="cushome-gallery-item">
+                                <div className="gallery-item">
                                     <img src="./images/gallery7.jpg" alt="Clove buds" className="img-fluid" />
                                 </div>
                             </div>

@@ -1,10 +1,10 @@
 
 :root {
   --white-color:                  #ffffff;
-  --primary-color:                #84430b;
-  --secondary-color:              #754a18;
+  --primary-color:                #BC6C25;
+  --secondary-color:              #DDA15E;
   --section-bg-color:             #b78752;
-  --custom-btn-bg-color:          #793e0bf0;
+  --custom-btn-bg-color:          #BC6C25;
   --custom-btn-bg-hover-color:    #DDA15E;
   --dark-color:                   #000000;
   --p-color:                      #717275;
@@ -36,7 +36,7 @@
 }
 
 /* ===== Home Page Styles - Barista Cafe Theme ===== */
-.cushome-container {
+.home-container {
   font-family: var(--body-font-family);
   color: var(--p-color);
   line-height: 1.6;
@@ -44,7 +44,7 @@
 }
 
 /* ===== Hero Section ===== */
-.cushome-hero-section {
+.hero-section {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,7 +52,7 @@
   overflow: hidden;
 }
 
-.cushome-hero-content {
+.hero-content {
   text-align: left;
   max-width: 900px;
   padding: 3rem 2rem;
@@ -62,7 +62,7 @@
   margin-right: auto;
 }
 
-.cushome-small-text {
+.small-text {
   color: var(--white-color);
   font-size: 0.875rem;
   font-weight: 300;
@@ -85,7 +85,7 @@
   font-style: italic;
 }
 
-.cushome-hero-subtitle {
+.hero-subtitle {
   font-size: 1rem;
   color: var(--white-color);
   margin-bottom: 3rem;
@@ -96,20 +96,20 @@
   max-width: 600px;
 }
 
-.cushome-hero-subtitle em {
+.hero-subtitle em {
   font-style: normal;
   color: var(--secondary-color);
   font-weight: 400;
 }
 
-.cushome-hero-buttons {
+.hero-buttons {
   display: flex;
   gap: 1rem;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
 
-.cushome-hero-slides {
+.hero-slides {
   position: absolute;
   top: 0;
   left: 0;
@@ -119,7 +119,7 @@
   overflow: hidden;
 }
 
-.cushome-hero-video::before{
+.hero-video::before{
   content:"";
   position:absolute;
   top:0;
@@ -128,7 +128,7 @@
   height:100%
 }
 
-.cushome-hero-video {
+.hero-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -157,7 +157,7 @@
   justify-content: center;
 }
 
-.cushome-custom-btn {
+.custom-btn {
   background: var(--custom-btn-bg-color);
   border: 2px solid transparent;
   border-radius: var(--border-radius-large);
@@ -172,12 +172,12 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-.cushome-custom-btn:hover {
+.custom-btn:hover {
   background: var(--custom-btn-bg-hover-color);
   color: var(--white-color);
 }
 
-.cushome-custom-border-btn {
+.custom-border-btn {
   background: transparent;
   border: 2px solid var(--white-color);
   color: var(--white-color);
@@ -187,19 +187,19 @@
   font-weight: 500;
 }
 
-.cushome-custom-border-btn:hover {
+.custom-border-btn:hover {
   background: var(--white-color);
   color: var(--secondary-color);
 }
 
 /* ===== About Section ===== */
-.cushome-about-section {
+.about-section {
   padding: 5rem 0;
   background-color: var(--secondary-color);
   position: relative;
 }
 
-.cushome-section-overlay {
+.section-overlay {
   background-color: var(--dark-color);
   position: absolute;
   z-index: 9;
@@ -211,14 +211,14 @@
   opacity: 0.3;
 }
 
-.cushome-about-video-container {
+.about-video-placeholder {
   position: relative;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.cushome-about-video-container.cushome-hero-slides {
+.about-video-placeholder.hero-slides {
   width: 100%;
   height: 100%;
   position: absolute !important;
@@ -227,13 +227,13 @@
   z-index: 1;
 }
 
-.cushome-about-video-container img {
+.about-video-placeholder img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.cushome-about-video-info {
+.about-video-info {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -243,7 +243,7 @@
   padding: 2rem;
 }
 
-.cushome-about-video-info h4 {
+.about-video-info h4 {
   margin: 0;
   font-weight: var(--font-weight-bold);
   color: var(--white-color);
@@ -251,20 +251,20 @@
 
 /* ===== Team Section ===== */
 
-.cushome-team-section {
+.team-section {
   padding: 5rem 0;
   background-color:var(--section-bg-color);
 }
 
-.cushome-section-padding {
+.section-padding {
   padding: 5rem 0;
 }
 
-.cushome-section-bg {
+.section-bg {
   background-color: rgba(30, 20, 10, 0.9);
 }
 
-.cushome-team-block-wrap {
+.team-block-wrap {
   background-color: var(--secondary-color);
   border-radius: var(--border-radius-medium);
   position: relative;
@@ -274,33 +274,33 @@
   height: 100%;
 }
 
-.cushome-team-block-wrap:hover {
+.team-block-wrap:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 }
 
-.cushome-team-block-info {
+.team-block-info {
   padding: 1.5rem;
   min-height: 120px;
 }
 
-.cushome-team-block-image-wrap {
+.team-block-image-wrap {
   height: 200px;
   overflow: hidden;
 }
 
-.cushome-team-block-image {
+.team-block-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.cushome-team-block-wrap:hover .cushome-team-block-image {
+.team-block-wrap:hover .team-block-image {
   transform: scale(1.1);
 }
 
-.cushome-badge {
+.badge {
   background-color: var(--primary-color);
   font-size: 12px;
   position: relative;
@@ -311,7 +311,7 @@
   font-weight: var(--font-weight-medium);
 }
 
-.cushome-badge::before {
+.badge::before {
   content: "";
   position: absolute;
   top: 0;
@@ -323,34 +323,34 @@
 }
 
 /* ===== Menu Section ===== */
-.cushome-menu-section {
+.menu-section {
   padding: 5rem 0;
   background-image: linear-gradient(rgba(182, 97, 43, 0.7), rgba(126, 73, 45, 0.7)), url('./spice_back.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
-.cushome-menu-block-wrap {
+.menu-block-wrap {
   background: rgba(0, 0, 0, 0.65);
   border-radius: var(--border-radius-medium);
   padding: 45px;
 }
 
-.cushome-menu-block {
+.menu-block {
   margin-bottom: 1rem;
 }
 
-.cushome-menu-block .border-top {
+.menu-block .border-top {
   border-top-color: rgba(255, 255, 255, 0.35) !important;
 }
 
-.cushome-menu-block h6 {
+.menu-block h6 {
   color: var(--white-color);
   font-weight: var(--font-weight-bold);
   margin: 0;
   font-size: var(--menu-font-size);
 }
 
-.cushome-menu-block .underline {
+.menu-block .underline {
   flex: 1;
   height: 1px;
   background: rgba(255, 255, 255, 0.35);
@@ -358,23 +358,23 @@
   align-self: center;
 }
 
-.cushome-menu-block strong {
+.menu-block strong {
   color: var(--secondary-color);
   font-weight: var(--font-weight-bold);
 }
 
-.cushome-menu-block small {
+.menu-block small {
   color: rgba(255, 255, 255, 0.35);
   font-size: var(--btn-font-size);
 }
 
 /* ===== Testimonials Section ===== */
-.cushome-reviews-section {
+.reviews-section {
   padding: 5rem 0;
   background-color: rgba(30, 20, 10, 0.9);
 }
 
-.cushome-timeline {
+.timeline {
   position: relative;
   padding: 2rem 0;
 }
@@ -390,21 +390,21 @@
   transform: translateX(-50%);
 }
 
-.cushome-timeline-container {
+.timeline-container {
   position: relative;
   width: 50%;
   padding: 0 2rem;
 }
 
-.cushome-timeline-container-left {
+.timeline-container-left {
   left: 0;
 }
 
-.cushome-timeline-container-right {
+.timeline-container-right {
   left: 50%;
 }
 
-.cushome-timeline-content {
+.timeline-content {
   padding: 20px;
   background-color: rgb(225, 208, 177);
   position: relative;
@@ -412,21 +412,21 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.cushome-timeline-container-left .cushome-timeline-content {
+.timeline-container-left .timeline-content {
   margin-left: auto;
   text-align: right;
 }
 
-.cushome-timeline-container-right .cushome-timeline-content {
+.timeline-container-right .timeline-content {
   margin-right: auto;
   text-align: left;
 }
 
-.cushome-reviews-block-image-wrap {
+.reviews-block-image-wrap {
   margin-bottom: 1rem;
 }
 
-.cushome-reviews-block-image {
+.reviews-block-image {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -434,53 +434,53 @@
   margin-right: 1rem;
 }
 
-.cushome-timeline-container-left .cushome-reviews-block-image-wrap {
+.timeline-container-left .reviews-block-image-wrap {
   justify-content: flex-end;
 }
 
-.cushome-timeline-container-left .cushome-reviews-block-image {
+.timeline-container-left .reviews-block-image {
   margin-right: 0;
   margin-left: 1rem;
   order: 2;
 }
 
-.cushome-timeline-container-left h6,
-.cushome-timeline-container-left em {
+.timeline-container-left h6,
+.timeline-container-left em {
   color: var(--dark-color);
 }
 
-.cushome-timeline-container-right h6,
-.cushome-timeline-container-right em {
+.timeline-container-right h6,
+.timeline-container-right em {
   color: var(--dark-color);
 }
 
-.cushome-reviews-block-info p {
+.reviews-block-info p {
   font-size: var(--btn-font-size);
   font-style: italic;
   color: var(--p-color);
   margin-bottom: 1rem;
 }
 
-.cushome-reviews-group {
+.reviews-group {
   display: flex;
   gap: 0.25rem;
 }
 
 
-.cushome-reviews-group i {
+.reviews-group i {
   color: var(--primary-color);
 }
 
-.cushome-star-filled {
+.star-filled {
   color: var(--secondary-color);
 }
 
-.cushome-star-empty {
+.star-empty {
   color: rgba(0, 0, 0, 0.2);
 }
 
 /* ===== Contact Section ===== */
-.cushome-contact-section {
+.contact-section {
   padding: 5rem 0;
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(188, 108, 37, 1)), url('../Images/young-female-barista-wear-face-mask-serving-take-away-hot-coffee-paper-cup-consumer-cafe.jpg');
   background-repeat: no-repeat;
@@ -488,20 +488,20 @@
   background-size: cover;
 }
 
-.cushome-contact-form {
+.contact-form {
   background-color: rgba(0, 0, 0, 0.65);
   border-radius: var(--border-radius-medium);
   padding: 2rem;
 }
 
-.cushome-form-label {
+.form-label {
   color: var(--white-color);
   font-style: italic;
   font-weight: var(--font-weight-bold);
   margin-bottom: 15px;
 }
 
-.cushome-form-control {
+.form-control {
   color: var(--p-color);
   border-radius: var(--border-radius-small);
   margin-bottom: 30px;
@@ -514,18 +514,18 @@
   border-color: rgba(255, 255, 255, 0.25);
 }
 
-.cushome-form-control:hover,
-.cushome-form-control:focus {
+.form-control:hover,
+.form-control:focus {
   background: var(--primary-color);
   border-color: transparent;
   color: var(--white-color);
 }
 
-.cushome-form-control::placeholder {
+.form-control::placeholder {
   color: var(--white-color);
 }
 
-.cushome-contact-form button {
+.contact-form button {
   background: var(--custom-btn-bg-color);
   border: none;
   border-radius: var(--border-radius-large);
@@ -537,8 +537,8 @@
   padding: 12px 28px;
 }
 
-.cushome-contact-form button:hover,
-.cushome-contact-form button:focus {
+.contact-form button:hover,
+.contact-form button:focus {
   background: var(--white-color);
   border-color: transparent;
   color: var(--primary-color);
@@ -547,74 +547,74 @@
 
 /* ===== Responsive Design ===== */
 @media (max-width: 768px) {
-  .cushome-hero-content h1 {
+  .hero-content h1 {
     font-size: 2.5rem;
   }
 
-  .cushome-hero-subtitle {
+  .hero-subtitle {
     font-size: 1.2rem;
   }
 
-  .cushome-hero-buttons {
+  .hero-buttons {
     flex-direction: column;
     align-items: center;
   }
 
-  .cushome-btn {
+  .btn {
     padding: 0.8rem 1.5rem;
     font-size: 0.9rem;
   }
 
-  .cushome-timeline::before {
+  .timeline::before {
     left: 2rem;
   }
 
-  .cushome-timeline-container {
+  .timeline-container {
     width: 100%;
     left: 0 !important;
     padding-left: 4rem;
     padding-right: 1rem;
   }
 
-  .cushome-timeline-container-left .cushome-timeline-content,
-  .cushome-timeline-container-right .cushome-timeline-content {
+  .timeline-container-left .timeline-content,
+  .timeline-container-right .timeline-content {
     text-align: left;
   }
 
-  .cushome-timeline-container-left .cushome-reviews-block-image-wrap {
+  .timeline-container-left .reviews-block-image-wrap {
     justify-content: flex-start;
   }
 
-  .cushome-timeline-container-left .cushome-reviews-block-image {
+  .timeline-container-left .reviews-block-image {
     margin-right: 1rem;
     margin-left: 0;
     order: 1;
   }
 
-  .cushome-team-block-image-wrap {
+  .team-block-image-wrap {
     height: 150px;
   }
 }
 
 @media (max-width: 480px) {
-  .cushome-hero-content h1 {
+  .hero-content h1 {
     font-size: 2rem;
   }
 
-  .cushome-hero-subtitle {
+  .hero-subtitle {
     font-size: 1rem;
   }
 
-  .cushome-section-padding {
+  .section-padding {
     padding: 3rem 0;
   }
 
-  .cushome-menu-block-wrap,
-  .cushome-contact-form {
+  .menu-block-wrap,
+  .contact-form {
     padding: 1.5rem;
   }
 
-  .cushome-timeline-container {
+  .timeline-container {
     padding-left: 3rem;
   }
 }
@@ -625,52 +625,52 @@ html {
 }
 
 /* ===== Container ===== */
-.cushome-container {
+.container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
 /* ===== Row and Column Styles ===== */
-.cushome-row {
+.row {
   display: flex;
   flex-wrap: wrap;
   margin: 0 -1rem;
 }
 
-.cushome-col-lg-12, .cushome-col-lg-6, .cushome-col-lg-5, .cushome-col-lg-4, .cushome-col-lg-3,
-.cushome-col-md-6, .cushome-col-12 {
+.col-lg-12, .col-lg-6, .col-lg-5, .col-lg-4, .col-lg-3,
+.col-md-6, .col-12 {
   position: relative;
   padding: 0 1rem;
 }
 
-.cushome-col-lg-12 { flex: 0 0 100%; max-width: 100%; }
-.cushome-col-lg-6 { flex: 0 0 50%; max-width: 50%; }
-.cushome-col-lg-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
-.cushome-col-lg-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
-.cushome-col-lg-3 { flex: 0 0 25%; max-width: 25%; }
+.col-lg-12 { flex: 0 0 100%; max-width: 100%; }
+.col-lg-6 { flex: 0 0 50%; max-width: 50%; }
+.col-lg-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
+.col-lg-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+.col-lg-3 { flex: 0 0 25%; max-width: 25%; }
 
 @media (max-width: 992px) {
-  .cushome-col-lg-12, .cushome-col-lg-6, .cushome-col-lg-5, .cushome-col-lg-4, .cushome-col-lg-3 {
+  .col-lg-12, .col-lg-6, .col-lg-5, .col-lg-4, .col-lg-3 {
     flex: 0 0 100%;
     max-width: 100%;
   }
 }
 
 @media (max-width: 768px) {
-  .cushome-col-md-6 { flex: 0 0 50%; max-width: 50%; }
+  .col-md-6 { flex: 0 0 50%; max-width: 50%; }
 }
 
 @media (max-width: 576px) {
-  .cushome-col-md-6, .cushome-col-12 {
+  .col-md-6, .col-12 {
     flex: 0 0 100%;
     max-width: 100%;
   }
 }
 
 /* ===== Text Alignment ===== */
-.cushome-text-center { text-align: center; }
-.cushome-text-white { 
+.text-center { text-align: center; }
+.text-white { 
   color: white;
  }
 
@@ -693,55 +693,55 @@ html {
 .me-4 { margin-right: 1.5rem; }
 .mx-auto { margin-left: auto; margin-right: auto; }
 .pb-lg-2 { padding-bottom: 0.5rem; }
-.cushome-ratio-16x9::before { padding-top: 56.25%; }
+.pt-3 { padding-top: 1rem; }
 
 /* ===== Display Utilities ===== */
-.cushome-d-flex { display: flex; }
-.cushome-d-block { display: block; }
+.d-flex { display: flex; }
+.d-block { display: block; }
 
 /* ===== Flex Utilities ===== */
-.cushome-align-items-center { align-items: center; }
-.cushome-justify-content-center { justify-content: center; }
-.cushome-justify-content-between { justify-content: space-between; }
-.cushome-flex-column { flex-direction: column; }
-.cushome-flex-wrap { flex-wrap: wrap; }
+.align-items-center { align-items: center; }
+.justify-content-center { justify-content: center; }
+.justify-content-between { justify-content: space-between; }
+.flex-column { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
 
 /* ===== Position Utilities ===== */
-.cushome-position-relative { position: relative; }
-.cushome-position-absolute { position: absolute; }
+.position-relative { position: relative; }
+.position-absolute { position: absolute; }
 
 /* ===== Border Utilities ===== */
-.cushome-border-top { border-top: 1px solid #dee2e6; }
-.cushome-border-0 { border: 0 !important; }
+.border-top { border-top: 1px solid #dee2e6; }
+.border-0 { border: 0 !important; }
 
 /* ===== Background Utilities ===== */
-.cushome-bg-transparent { background-color: transparent !important; }
+.bg-transparent { background-color: transparent !important; }
 
 /* ===== Image Utilities ===== */
-.cushome-img-fluid { max-width: 100%; height: auto; }
+.img-fluid { max-width: 100%; height: auto; }
 
 /* ===== Text Utilities ===== */
-.cushome-text-danger { color: #dc3545 !important; }
+.text-danger { color: #dc3545 !important; }
 
 /* ===== Form Utilities ===== */
-.cushome-form-control {
+.form-control {
   display: block;
   width: 100%;
 }
 
 /* ===== Ratio Utilities ===== */
-.cushome-ratio {
+.ratio {
   position: relative;
   width: 100%;
 }
 
-.cushome-ratio::before {
+.ratio::before {
   display: block;
   padding-top: 100%;
   content: "";
 }
 
-.cushome-ratio > * {
+.ratio > * {
   position: absolute;
   top: 0;
   left: 0;
@@ -750,7 +750,7 @@ html {
 }
 
 /* ===== Gallery Section ===== */
-.cushome-gallery-grid {
+.gallery-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
@@ -759,7 +759,7 @@ html {
   height: 600px;
 }
 
-.cushome-gallery-item {
+.gallery-item {
   position: relative;
   border-radius: 15px;
   overflow: hidden;
@@ -767,27 +767,27 @@ html {
   transition: transform 0.3s ease;
 }
 
-.cushome-gallery-item:hover {
+.gallery-item:hover {
   transform: translateY(-5px);
 }
 
-.cushome-gallery-item.large {
+.gallery-item.large {
   grid-column: span 2;
   grid-row: span 2;
 }
 
-.cushome-gallery-item.wide {
+.gallery-item.wide {
   grid-column: span 2;
 }
 
-.cushome-gallery-item img {
+.gallery-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.cushome-gallery-item:hover img {
+.gallery-item:hover img {
   transform: scale(1.05);
 }
 
@@ -801,7 +801,7 @@ html {
   height: 600px;
 }
 
-.cushome-showcase-item {
+.showcase-item {
   position: relative;
   border-radius: 15px;
   overflow: hidden;
@@ -809,26 +809,26 @@ html {
   transition: transform 0.3s ease;
 }
 
-.cushome-showcase-item:hover {
+.showcase-item:hover {
   transform: scale(1.02);
 }
 
-.cushome-showcase-item.featured {
+.showcase-item.featured {
   grid-row: span 2;
 }
 
-.cushome-showcase-item img {
+.showcase-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.cushome-showcase-item:hover img {
+.showcase-item:hover img {
   transform: scale(1.1);
 }
 
-.cushome-showcase-overlay {
+.showcase-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -840,17 +840,17 @@ html {
   transition: transform 0.3s ease;
 }
 
-.cushome-showcase-item:hover .cushome-showcase-overlay {
+.showcase-item:hover .showcase-overlay {
   transform: translateY(0);
 }
 
-.cushome-showcase-overlay h3,
-.cushome-showcase-overlay h4 {
+.showcase-overlay h3,
+.showcase-overlay h4 {
   margin: 0;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.cushome-showcase-overlay p {
+.showcase-overlay p {
   margin: 5px 0 0 0;
   opacity: 0.9;
 }

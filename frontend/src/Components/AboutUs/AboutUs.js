@@ -49,19 +49,19 @@ const AboutUs = () => {
   ];
 
   return (
-    <div className="about-page">
+    <div className="about-us-page">
       {/* Hero Section */}
       <Nav />
-      <section className="about-hero-section">
-        <div className="about-hero-content">
+      <section className="hhero-section">
+        <div className="hhero-content">
           <h1>About Us</h1>
         </div>
       </section>
 
       {/* Mission Section */}
-      <section className="about-mission-section">
-        <div className="about-section-content">
-          <div className="about-text-content">
+      <section className="mission-section">
+        <div className="section-content">
+          <div className="text-content">
             <h2>OUR MISSION</h2>
             <p>
               Our mission is to simplify and modernize the way spices are managed, traded,
@@ -76,11 +76,11 @@ const AboutUs = () => {
       </section>
 
       {/* Vision Section */}
-      <section className="about-vision-section">
-        <div className="about-vision-background">
-          <div className="about-vision-overlay">
-            <div className="about-section-content">
-              <div className="about-text-content">
+      <section className="vision-section">
+        <div className="vision-background">
+          <div className="vision-overlay">
+            <div className="section-content">
+              <div className="text-content">
                 <h2>OUR VISION</h2>
                 <p>
                   To become the leading digital platform for spice management,
@@ -97,11 +97,11 @@ const AboutUs = () => {
       </section>
 
       {/* Values Section */}
-      <section className="about-values-section">
-        <div className="about-section-content">
-          <div className="about-text-content">
+      <section className="values-section">
+        <div className="section-content">
+          <div className="text-content">
             <h2>OUR VALUES</h2>
-            <ul className="about-values-list">
+            <ul className="values-list">
               {values.map((value, index) => (
                 <li key={index}>{value}</li>
               ))}
@@ -111,15 +111,15 @@ const AboutUs = () => {
       </section>
 
       {/* Team Section */}
-      <section className="about-team-section">
-        <h2 className="about-team-heading">OUR TEAM</h2>
-        <div className="about-team-grid">
+      <section className="team-section">
+        <h2 className="team-heading">OUR TEAM</h2>
+        <div className="team-grid">
           {teamMembers.map((member) => (
-            <div key={member.id} className="about-team-member">
-              <div className="about-member-image">
+            <div key={member.id} className="team-member">
+              <div className="member-image">
                 <img src={member.image} alt={member.name} />
-                <div className="about-member-overlay">
-                  <div className="about-member-info">
+                <div className="member-overlay">
+                  <div className="member-info">
                     <h3>{member.name}</h3>
                     <p>{member.position}</p>
                   </div>
@@ -131,12 +131,12 @@ const AboutUs = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="about-cta-section">
-        <div className="about-cta-content">
-          <div className="about-cta-text">
+      <section className="cta-section">
+        <div className="cta-content">
+          <div className="cta-text">
             <h2>Join us in transforming Sri Lanka’s spice industry with smart solutions.</h2>
           </div>
-          <div className="about-cta-arrow">
+          <div className="cta-arrow">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

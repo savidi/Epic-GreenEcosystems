@@ -2,22 +2,24 @@
 .navinv-sidebar {
   height: 100vh;
   width: 260px;
-  position: fixed; 
+  position: fixed;
   top: 0;
   left: 0;
-  background-color: #6d380c; 
+  background-color: #6d380c;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
-  overflow-y: auto; 
+  overflow-y: auto;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
 
 /* Company Name */
 .navinv-company-name {
   text-align: center;
-  color: #ffffff; 
-  font-size: 24px; 
+  color: #ffffff;
+  font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
 }
@@ -26,28 +28,28 @@
 .navinv-profile-section {
   text-align: center;
   margin-bottom: 30px;
-  border-bottom: 1px solid #e9820d; 
+  border-bottom: 1px solid #e9820d;
   padding-bottom: 20px;
-  width: 80%; 
+  width: 80%;
 }
 
 .navinv-profile-pic {
-  width: 90px; 
+  width: 90px;
   height: 90px;
   border-radius: 50%;
   margin-bottom: 10px;
-  border: 3px solid #e9820d; 
+  border: 3px solid #e9820d;
 }
 
 .navinv-profile-name {
   color: #ffffff;
-  font-size: 18px; 
+  font-size: 18px;
   margin: 0;
 }
 
 .navinv-profile-role {
   color: #C8E6C9;
-  font-size: 14px; 
+  font-size: 14px;
   margin: 0;
 }
 
@@ -61,28 +63,30 @@
 
 .navinv-sidebar-links li {
   width: 100%;
-  border-bottom: none; /* Remove individual link borders */
+  border-bottom: none;
 }
 
 .navinv-sidebar-links li:last-child {
-  border-bottom: none; /* No line under the last item */
+  border-bottom: none;
 }
 
 /* Links and Dropdown Headers */
 .navinv-sidebar-links li a,
 .navinv-dropdown > span {
-  display: block; /* Ensures the whole area is clickable */
+  display: block;
   color: #ffffff;
-  padding: 10px 20px; /* Smaller padding */
+  padding: 12px 20px;
   text-decoration: none;
-  font-size: 14px; /* Smaller font size for all links and dropdown headers */
+  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .navinv-sidebar-links li a:hover,
 .navinv-dropdown > span:hover,
 .navinv-sidebar-links li a.active {
-  background-color: #d7a039; /* Lighter green on hover/active */
+  background-color: #d7a039;
+  color: #fff;
 }
 
 /* Dropdown container */
@@ -94,8 +98,8 @@
 .navinv-dropdown-content {
   display: none;
   flex-direction: column;
-  background-color: #efb343; /* Slightly lighter green for dropdown background */
-  min-width: 100%; /* Full width dropdown */
+  background-color: #efb343;
+  min-width: 100%;
 }
 
 /* Show the dropdown menu on hover */
@@ -107,12 +111,12 @@
 /* Dropdown links */
 .navinv-dropdown-content a {
   color: #ffffff;
-  padding: 8px 30px; /* Adjust padding for nested links */
+  padding: 10px 30px;
   text-decoration: none;
-  font-size: 13px; /* Even smaller font size for dropdown items */
+  font-size: 15px;
   display: block;
 }
 
 .navinv-dropdown-content a:hover {
-  background-color: #4CAF50; /* Light green on hover for dropdown items */
+  background-color: #4CAF50;
 }

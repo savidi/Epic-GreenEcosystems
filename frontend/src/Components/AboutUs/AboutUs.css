@@ -12,16 +12,16 @@ body {
   background: #fff8f0;
 }
 
-.about-page {
+.about-us-page {
   min-height: 100vh;
 }
 
 /* Hero Section */
-.about-hero-section {
+.hhero-section {
   height: 40vh;
   min-height: 300px;
   background: linear-gradient(135deg, #ffcc80 0%, #d84315 100%);
-
+  background-image: url('F:\ITP\Project\frontend\src\Components\Images\Lucid_Origin_A_vibrant_and_diverse_still_life_arrangement_of_n_3.jpg');
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,25 +36,25 @@ body {
 }
 
 /* Section Content */
-.about-section-content {
+.section-content {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
-.about-text-content {
+.text-content {
   max-width: 800px;
   margin: 0 auto;
 }
 
-.about-text-content h2 {
+.text-content h2 {
   font-size: 2rem;
   font-weight: 700;
   color: #d84315;
   margin-bottom: 2rem;
 }
 
-.about-text-content p {
+.text-content p {
   font-size: 1rem;
   line-height: 1.8;
   margin-bottom: 1.5rem;
@@ -62,36 +62,36 @@ body {
 }
 
 /* Mission Section */
-.about-mission-section {
+.mission-section {
   background: #6d4c41;
   padding: 5rem 0;
   color: white;
 }
 
-.about-mission-section .about-text-content h2 {
+.mission-section .text-content h2 {
   color: #dc9f45;
 }
 
 /* Vision Section */
-.about-vision-section {
+.vision-section {
   position: relative;
   min-height: 60vh;
   display: flex;
   align-items: center;
 }
 
-.about-vision-background {
+.vision-background {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-
+  background-image: url('F:\ITP\Project\frontend\src\Components\Images\WhatsApp Image 2025-09-20 at 21.31.17.jpg');
   background-size: cover;
   background-position: center;
 }
 
-.about-vision-overlay {
+.vision-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -103,27 +103,27 @@ body {
   padding: 5rem 0;
 }
 
-.about-vision-section .about-text-content h2 {
+.vision-section .text-content h2 {
   color: #d59f4c;
 }
 
 /* Values Section */
-.about-values-section {
+.values-section {
   background: #8b7147;
   padding: 5rem 0;
 }
 
-.about-values-section .about-text-content h2 {
+.values-section .text-content h2 {
   color: #fff;
   margin-bottom: 3rem;
 }
 
-.about-values-list {
+.values-list {
   list-style: none;
   padding: 0;
 }
 
-.about-values-list li {
+.values-list li {
   font-size: 1.1rem;
   margin-bottom: 1.2rem;
   padding-left: 1.5rem;
@@ -132,7 +132,7 @@ body {
   font-weight: 100px;
 }
 
-.about-values-list li::before {
+.values-list li::before {
   content: '•';
   position: absolute;
   left: 0;
@@ -141,28 +141,28 @@ body {
 }
 
 /* Team Section */
-.about-team-section {
+.team-section {
   padding: 5rem 2rem;
   background: #3e2723;
   color: white;
   text-align: center;
 }
 
-.about-team-heading {
+.team-heading {
   font-size: 2rem;
   font-weight: 700;
   color: #ffcc80;
   margin-bottom: 3rem;
 }
 
-.about-team-grid {
+.team-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   /* ✅ 5 members in one row */
   gap: 2rem;
 }
 
-.about-team-member {
+.team-member {
   position: relative;
   overflow: hidden;
   background: #5d4037;
@@ -171,11 +171,11 @@ body {
   transition: transform 0.3s ease;
 }
 
-.about-team-member:hover {
+.team-member:hover {
   transform: translateY(-8px);
 }
 
-.about-member-image img {
+.member-image img {
   width: 100%;
   height: 280px;
   object-fit: cover;
@@ -184,7 +184,7 @@ body {
   transition: transform 0.3s ease;
 }
 
-.about-member-overlay {
+.member-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -196,33 +196,33 @@ body {
   transition: transform 0.3s ease;
 }
 
-.about-team-member:hover .about-member-overlay {
+.team-member:hover .member-overlay {
   transform: translateY(0);
 }
 
-.about-team-member:hover img {
+.team-member:hover img {
   transform: scale(1.08);
 }
 
-.about-member-info h3 {
+.member-info h3 {
   font-size: 1.1rem;
   font-weight: 600;
   color: #ffb74d;
 }
 
-.about-member-info p {
+.member-info p {
   font-size: 0.85rem;
   margin: 0;
   color: #ffe0b2;
 }
 
 /* CTA Section */
-.about-cta-section {
+.cta-section {
   background: #ffcc80;
   padding: 4rem 0;
 }
 
-.about-cta-content {
+.cta-content {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
@@ -231,63 +231,63 @@ body {
   padding: 0 2rem;
 }
 
-.about-cta-text h2 {
+.cta-text h2 {
   font-size: 2rem;
   font-weight: 600;
   color: #3e2723;
   margin: 0;
 }
 
-.about-cta-arrow svg {
+.cta-arrow svg {
   width: 60px;
   height: 60px;
   color: #d84315;
   transition: transform 0.3s ease;
 }
 
-.about-cta-content:hover .about-cta-arrow svg {
+.cta-content:hover .cta-arrow svg {
   transform: translateX(10px);
 }
 
 /* Responsive */
 @media (max-width: 1200px) {
-  .about-team-grid {
+  .team-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .about-hero-content h1 {
+  .hero-content h1 {
     font-size: 3rem;
   }
 
-  .about-team-grid {
+  .team-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .about-team-member {
+  .team-member {
     height: auto;
   }
 
-  .about-cta-text h2 {
+  .cta-text h2 {
     font-size: 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
-  .about-hero-content h1 {
+  .hhero-content h1 {
     font-size: 2.2rem;
   }
 
-  .about-team-grid {
+  .team-grid {
     grid-template-columns: 1fr;
   }
 
-  .about-team-member {
+  .team-member {
     height: auto;
   }
 
-  .about-cta-text h2 {
+  .cta-text h2 {
     font-size: 1.3rem;
   }
 }
