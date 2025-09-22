@@ -5,7 +5,10 @@
 .home-content-wrapper {
   display: flex;
   gap: 20px;
-  margin-top: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20px;
+  box-sizing: border-box;
 }
 .sidebar.collapsed ~ .home-content-wrapper {
   margin-left: 60px; /* collapsed sidebar */
@@ -235,3 +238,31 @@
 }
 
 
+/* Make slider occupy full width under Nav */
+.home-slider-section {
+  width: 100%;
+  height: 50vh; /* adjust height as you like */
+  margin-bottom: 20px;
+}
+
+/* Charts wrapper */
+.home-content-wrapper {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap; /* responsive */
+}
+
+/* Each chart */
+.home-chart-column {
+  flex: 1;
+  min-width: 300px;   /* ensures they don’t shrink too much */
+  max-width: 32%;     /* 3 per row */
+  display: flex;
+  justify-content: center;
+}
+
+.home-chart-column > * {
+  width: 100%;
+  height: 400px;       /* consistent height for all */
+}

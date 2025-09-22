@@ -4,7 +4,6 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import './UpdateWorker.css';
 import Nav from "../Nav/Nav";
 
-
 function UpdateWorker() {
   const [inputs, setInputs] = useState({
     name: '',
@@ -26,27 +25,22 @@ function UpdateWorker() {
   const { id } = useParams();
   const location = useLocation();
 
-  // Worker passed from FWorker component via state
   const preloadedWorker = location.state?.worker || null;
 
-  // Helper: convert "HH:MM" to minutes
   const timeToMinutes = (timeStr) => {
     const [hours, minutes] = timeStr.split(':').map(Number);
     return hours * 60 + minutes;
   };
 
-  // Helper: calculate worked hours
   const calculateWorkedHours = (arrival, departure) => {
     if (!arrival || !departure) return 0;
     let diff = timeToMinutes(departure) - timeToMinutes(arrival);
-    if (diff < 0) diff += 24 * 60; // overnight shift
+    if (diff < 0) diff += 24 * 60;
     return (diff / 60).toFixed(2);
   };
 
-  // Helper: calculate salary
   const calculateSalary = (hours) => (parseFloat(hours) * 200).toFixed(2);
 
-  // Helper: get current time "HH:MM"
   const getCurrentTime = () => {
     const now = new Date();
     const hrs = now.getHours().toString().padStart(2, '0');
@@ -54,14 +48,12 @@ function UpdateWorker() {
     return `${hrs}:${mins}`;
   };
 
-  // Fetch or initialize worker data
   useEffect(() => {
     const fetchWorker = async () => {
       try {
         setLoading(true);
         let workerData = preloadedWorker;
 
-        // If no preloaded worker, fetch from backend
         if (!workerData) {
           const res = await axios.get(`http://localhost:5000/fieldworkers/${id}`);
           workerData = res.data.data || res.data;
@@ -74,9 +66,7 @@ function UpdateWorker() {
           nationalid: workerData.nationalid || '',
           age: workerData.age || '',
           gender: workerData.gender || '',
-          date: workerData.date
-            ? new Date(workerData.date).toISOString().split('T')[0]
-            : '',
+          date: workerData.date ? new Date(workerData.date).toISOString().split('T')[0] : '',
           arrivaltime: workerData.arrivaltime || '',
           departuretime: departureTime,
           workedhoures: workerData.arrivaltime
@@ -102,7 +92,6 @@ function UpdateWorker() {
     if (id) fetchWorker();
   }, [id, preloadedWorker]);
 
-  // Recalculate worked hours and salary when arrival/departure changes
   useEffect(() => {
     if (!initialLoad && inputs.arrivaltime && inputs.departuretime) {
       const workedHours = calculateWorkedHours(inputs.arrivaltime, inputs.departuretime);
@@ -115,16 +104,14 @@ function UpdateWorker() {
     }
   }, [inputs.arrivaltime, inputs.departuretime, initialLoad]);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs((prev) => ({
       ...prev,
-      [name]: value !== undefined && value !== null ? value : ''
+      [name]: value ?? ''
     }));
   };
 
-  // Send PUT request to update worker
   const sendRequest = async () => {
     try {
       await axios.put(`http://localhost:5000/fieldworkers/${id}`, {
@@ -154,54 +141,51 @@ function UpdateWorker() {
   if (error) return <div className="updateworker-error">{error}</div>;
 
   return (
+    <div className="updateworker-update-worker-page">
+      <Nav /> {/* Sidebar */}
+      <div className="updateworker-form-container">
+        <h1>UPDATE WORKER</h1>
+        <form onSubmit={handleSubmit}>
+          <label>Name</label>
+          <input type="text" name="name" value={inputs.name} onChange={handleChange} required />
 
-     <div className="updateworker-update-worker-page">
-            <Nav /> {/* Sidebar */}
+          <label>National ID</label>
+          <input type="text" name="nationalid" value={inputs.nationalid} onChange={handleChange} required />
 
+          <label>Age</label>
+          <input type="number" name="age" value={inputs.age} onChange={handleChange} min="16" max="100" required />
 
-    <div className="updateworker-form-container">
-      <h1>UPDATE WORKER</h1>
-      <form onSubmit={handleSubmit}>
-        <label>Name</label>
-        <input type="text" name="name" value={inputs.name} onChange={handleChange} required />
+          <label>Gender</label>
+          <select name="gender" value={inputs.gender} onChange={handleChange} required>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
 
-        <label>National ID</label>
-        <input type="text" name="nationalid" value={inputs.nationalid} onChange={handleChange} required />
+          <label>Date</label>
+          <input type="date" name="date" value={inputs.date} onChange={handleChange} required />
 
-        <label>Age</label>
-        <input type="number" name="age" value={inputs.age} onChange={handleChange} min="16" max="100" required />
+          <label>Arrival Time</label>
+          <input type="time" name="arrivaltime" value={inputs.arrivaltime} onChange={handleChange} required />
 
-        <label>Gender</label>
-        <select name="gender" value={inputs.gender} onChange={handleChange} required>
-          <option value="">Select Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
+          <label>Departure Time</label>
+          <input type="time" name="departuretime" value={inputs.departuretime} onChange={handleChange} required />
 
-        <label>Date</label>
-        <input type="date" name="date" value={inputs.date} onChange={handleChange} required />
+          <label>Worked Hours</label>
+          <input type="text" value={`${inputs.workedhoures} hours`} readOnly />
 
-        <label>Arrival Time</label>
-        <input type="time" name="arrivaltime" value={inputs.arrivaltime} onChange={handleChange} required />
+          <label>Total Salary</label>
+          <input type="text" value={`Rs. ${inputs.salary}`} readOnly />
 
-        <label>Departure Time</label>
-        <input type="time" name="departuretime" value={inputs.departuretime} onChange={handleChange} required />
+          <label>Payment Status</label>
+          <select name="paymentstatus" value={inputs.paymentstatus} onChange={handleChange} required>
+            <option value="Pending">Pending</option>
+            <option value="Paid">Paid</option>
+          </select>
 
-        <label>Worked Hours</label>
-        <input type="text" value={`${inputs.workedhoures} hours`} readOnly />
-
-        <label>Total Salary</label>
-        <input type="text" value={`Rs. ${inputs.salary}`} readOnly />
-
-        <label>Payment Status</label>
-        <select name="paymentstatus" value={inputs.paymentstatus} onChange={handleChange} required>
-          <option value="Pending">Pending</option>
-          <option value="Paid">Paid</option>
-        </select>
-
-        <button type="submit">Update Worker</button>
-      </form>
-    </div>
+          <button type="submit">Update Worker</button>
+        </form>
+      </div>
     </div>
   );
 }
