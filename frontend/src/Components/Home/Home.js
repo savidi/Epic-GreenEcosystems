@@ -1,8 +1,7 @@
 // src/Components/Home/Home.js
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './Home.css';
-
+import Slider from '../Slider/Slider';
 import Nav from "../Nav/Nav";
 import ManhoursChart from './ManhoursChart';
 import AttendanceChart from './AttendanceChart';
@@ -12,21 +11,23 @@ function Home() {
   return (
     <div className="home-container">
       <Nav />
-      
+
+      {/* Top slider section */}
+      <section className="home-slider-section">
+        <Slider />
+      </section>
+
+      {/* Bottom charts section */}
       <div className="home-content-wrapper">
-        <div className="home-charts-container">
-           <div className="home-chart-column">
-            <ManhoursChart />
-          </div>
-          <div className="home-chart-column">
-            <AttendanceChart />
-          </div>
-          <div className="home-chart-column">
-            <TaskPage /> {/* ✅ Add here */}
-          </div>
+        <div className="home-chart-column">
+          <ManhoursChart />
         </div>
-        
-        {/* Add other home page content as needed */}
+        <div className="home-chart-column">
+          <AttendanceChart />
+        </div>
+        <div className="home-chart-column">
+          <TaskPage />
+        </div>
       </div>
     </div>
   );

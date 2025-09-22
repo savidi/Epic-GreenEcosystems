@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./Stock.css";
 import jsPDF from "jspdf";
@@ -146,74 +146,80 @@ function Stock() {
   };
 
   return (
-<div className="Nav">
-            <NavSup /> {/* Sidebar */}
+    <div className="sup-page">
+      <NavSup />
 
-    <div className="stock-stock-container">
-      <div className="stock-header">
-        <h1>Stock Information</h1>
-        <p>Select a date to view spice stock totals</p>
-      </div>
 
-      <div className="stock-date-picker-container">
-        <label>Select Date:</label>
-        <input
-          type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-        />
-      </div>
+      <div className="sup-stock-container">
+        <div className="sup-header">
+          <h1>Stock Information</h1>
+          <p>Select a date to view spice stock totals</p>
+        
 
-      <div className="stock-card">
-        <div className="stock-card-header">
-          <div className="stock-card-title">Spice Stock Summary</div>
+        <div className="sup-date-picker">
+          <label>Select Date:</label>
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          />
         </div>
-        <table className="stock-stock-table">
-          <thead>
-            <tr>
-              <th>Spice Type</th>
-              <th>Total Quantity (kg)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {stockData.length > 0 ? (
-              stockData.map((item, idx) => (
-                <tr key={idx}>
-                  <td>{item.spice}</td>
-                  <td>{item.total}</td>
-                </tr>
-              ))
-            ) : (
+         </div>
+
+        <div className="sup-card">
+          <div className="sup-card-header">
+            <h2>Spice Stock Summary</h2>
+          </div>
+          <table className="sup-stock-table">
+            <thead>
               <tr>
-                <td colSpan="2">No stock data available for selected date</td>
+                <th>Spice Type</th>
+                <th>Total Quantity (kg)</th>
               </tr>
+            </thead>
+            <tbody>
+              {stockData.length > 0 ? (
+                stockData.map((item, idx) => (
+                  <tr key={idx}>
+                    <td>{item.spice}</td>
+                    <td>{item.total}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="2">No stock data available for selected date</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="sup-card">
+          <div className="sup-card-header">
+            <h2>Spice Stock Bar Chart</h2>
+          </div>
+          <div className="sup-chart-container">
+            {stockData.length > 0 ? (
+              <canvas
+                ref={canvasRef}
+                width={800}
+                height={400}
+                className="sup-chart-canvas"
+              />
+            ) : (
+              <div className="sup-no-data">No data available for chart</div>
             )}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="stock-card chart-card">
-        <div className="stock-card-header">
-          <div className="stock-card-title">Spice Stock Bar Chart</div>
+          </div>
         </div>
-        <div className="stock-chart-container">
-          {stockData.length > 0 ? (
-            <canvas ref={canvasRef} width={800} height={400} className="stock-chart-canvas" />
-          ) : (
-            <div className="stock-no-data">No data available for chart</div>
-          )}
-        </div>
-      </div>
 
-      <button
-        className="btn btn-secondary"
-        onClick={handleDownloadPdf}
-        style={{ marginTop: "20px" }}
-        disabled={!selectedDate || stockData.length === 0}
-      >
-        Download PDF
-      </button>
-    </div>
+        <button
+          className="sup-btn"
+          onClick={handleDownloadPdf}
+          disabled={!selectedDate || stockData.length === 0}
+        >
+          Download PDF
+        </button>
+      </div>
     </div>
   );
 }

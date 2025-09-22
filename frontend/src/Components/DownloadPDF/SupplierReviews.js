@@ -1,9 +1,8 @@
-// src/Components/StaffManagement/SupplierReviews.js
+ // src/Components/StaffManagement/SupplierReviews.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SupplierReviews.css";
 import NavSup from "../NavSup/NavSup";
-
 
 const URL = "http://localhost:5000/suppliers";
 
@@ -30,7 +29,6 @@ function SupplierReviews() {
     });
   }, []);
 
-  // Calculate supplier performance metrics
   const calculateSupplierMetrics = (supplier) => {
     const registrationDate = new Date(supplier.date);
     const currentDate = new Date();
@@ -85,100 +83,97 @@ function SupplierReviews() {
   };
 
   return (
+    <div className="sup-page">
+      <NavSup /> {/* Sidebar Navigation */}
 
-<div className="Nav">
-            <NavSup /> {/* Sidebar */}
+      <div className="sup-content">
+        <div className="sup-container">
+          <h1 className="sup-title">Supplier Performance Reviews</h1>
 
-    <div className="supplier-reviews-container">
-      <h1>Supplier Performance Reviews</h1>
-
-      <div className="table-container">
-        <table className="suppliers-table">
-          <thead>
-            <tr>
-              <th>Supplier Details</th>
-              <th>Spice & Quantity</th>
-              <th>Supply Duration</th>
-              <th>Performance</th>
-              <th>Rating</th>
-              <th>Review Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {suppliers.length > 0 ? (
-              suppliers.map((supplier, i) => (
-                <tr
-                  key={i}
-                  className={`review-${supplier.reviewCategory}`}
-                >
-                  <td>
-                    <div className="supplier-info">
-                      <strong>{supplier.name || "-"}</strong>
-                      <br />
-                      <small>{supplier.email || "-"}</small>
-                      <br />
-                      <small>{supplier.phoneno || "-"}</small>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="spice-info">
-                      <span className="spice-name">{supplier.spicename || "-"}</span>
-                      <br />
-                      <span className="quantity">
-                        {supplier.qty ? `${supplier.qty} kg` : "-"}
-                      </span>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="duration-info">
-                      <span className="duration">{supplier.supplyDuration}</span>
-                      <br />
-                      <small>{supplier.daysSinceRegistration} days</small>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="performance-info">
-                      <div className="performance-bar">
-                        <div
-                          className="performance-fill"
-                          style={{ width: `${supplier.performanceScore}%` }}
-                        ></div>
-                      </div>
-                      <span className="performance-score">
-                        {supplier.performanceScore}%
-                      </span>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="rating-info">
-                      <div className="stars">
-                        {"★".repeat(supplier.qualityRating)}
-                        {"☆".repeat(5 - supplier.qualityRating)}
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <span
-                      className={`review-badge ${supplier.reviewCategory}`}
-                    >
-                      {supplier.reviewCategory.toUpperCase()}
-                    </span>
-                  </td>
+          <div className="sup-table-container">
+            <table className="sup-table">
+              <thead>
+                <tr>
+                  <th>Supplier Details</th>
+                  <th>Spice & Quantity</th>
+                  <th>Supply Duration</th>
+                  <th>Performance</th>
+                  <th>Rating</th>
+                  <th>Review Status</th>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6" style={{ textAlign: "center", padding: "40px" }}>
-                  No suppliers found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {suppliers.length > 0 ? (
+                  suppliers.map((supplier, i) => (
+                    <tr key={i} className={`sup-review-${supplier.reviewCategory}`}>
+                      <td>
+                        <div className="sup-supplier-info">
+                          <strong>{supplier.name || "-"}</strong>
+                          <br />
+                          <small>{supplier.email || "-"}</small>
+                          <br />
+                          <small>{supplier.phoneno || "-"}</small>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="sup-spice-info">
+                          <span className="sup-spice-name">{supplier.spicename || "-"}</span>
+                          <br />
+                          <span className="sup-quantity">
+                            {supplier.qty ? `${supplier.qty} kg` : "-"}
+                          </span>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="sup-duration-info">
+                          <span className="sup-duration">{supplier.supplyDuration}</span>
+                          <br />
+                          <small>{supplier.daysSinceRegistration} days</small>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="sup-performance-info">
+                          <div className="sup-performance-bar">
+                            <div
+                              className="sup-performance-fill"
+                              style={{ width: `${supplier.performanceScore}%` }}
+                            ></div>
+                          </div>
+                          <span className="sup-performance-score">
+                            {supplier.performanceScore}%
+                          </span>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="sup-rating-info">
+                          <div className="sup-stars">
+                            {"★".repeat(supplier.qualityRating)}
+                            {"☆".repeat(5 - supplier.qualityRating)}
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span className={`sup-review-badge sup-${supplier.reviewCategory}`}>
+                          {supplier.reviewCategory.toUpperCase()}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" style={{ textAlign: "center", padding: "40px" }}>
+                      No suppliers found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </div>
     </div>
   );
 }
 
 export default SupplierReviews;
+

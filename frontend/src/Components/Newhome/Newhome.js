@@ -1,15 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import './Newhome.css';
+ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./Newhome.css";
 import NavSup from "../NavSup/NavSup";
+
+// Import images directly
+import CinnamonImg from '../Images/Cinnamon.png';
+import CardamomImg from '../Images/Cardomom.png';
+import TurmericImg from '../Images/Turmeric.png';
+import PepperImg from '../Images/Pepper.png';
+import CbackgroundImg from '../Images/Cbackground.png';
+import RedChilliImg from '../Images/RedChilli.png';
+
+// ✅ Import icons from lucide-react
+import { BarChart3, Building } from "lucide-react";
 
 const API = {
   SUPPLIERS: "http://localhost:5000/suppliers",
   FERTILIZERS: "http://localhost:5000/fertilizers"
 };
 
-// Generic fetch function
+/* -------------------- Helper Functions -------------------- */
 const fetchData = async (url, key) => {
   try {
     const res = await axios.get(url);
@@ -20,10 +31,10 @@ const fetchData = async (url, key) => {
   }
 };
 
-// Get today's total price
 const getTodayTotalPrice = async () => {
   const fertilizers = await fetchData(API.FERTILIZERS, 'fertilizers');
   const today = new Date().toISOString().split("T")[0];
+
   return fertilizers.reduce((sum, f) => {
     const qty = Number(f.quantity) || 0;
     const price = Number(f.price) || 0;
@@ -32,6 +43,65 @@ const getTodayTotalPrice = async () => {
   }, 0);
 };
 
+/* -------------------- Slider Component -------------------- */
+const Slider = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const slides = [
+    { title: "CINNAMON", description: "Premium cinnamon cultivation with traditional farming methods.", image: CinnamonImg },
+    { title: "CARDAMOM", description: "Queen of spices grown in perfect climate conditions.", image: CardamomImg },
+    { title: "TURMERIC", description: "Golden turmeric with exceptional quality and color.", image: TurmericImg },
+    { title: "PEPPER", description: "King of spices cultivated with care and expertise.", image: PepperImg },
+    { title: "RED CHILI", description: "Premium red chili cultivation with rich flavor.", image: RedChilliImg },
+    { title: "SPICES", description: "Diverse spice ecosystem in perfect harmony.", image: CbackgroundImg }
+  ];
+
+  const nextSlide = () => setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
+  const prevSlide = () => setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
+
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="slider-container">
+      <div className="slides-wrapper">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`slide-item ${index === currentIndex ? 'active' : ''}`}
+            style={{
+              backgroundImage: `linear-gradient(rgba(61, 41, 20, 0.4), rgba(61, 41, 20, 0.6)), url(${slide.image})`,
+            }}
+          >
+            <div className="slide-content">
+              <h2 className="slide-title">{slide.title}</h2>
+              <p className="slide-description">{slide.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      {/* Navigation Buttons */}
+      <button className="slider-btn prev-btn" onClick={prevSlide}>‹</button>
+      <button className="slider-btn next-btn" onClick={nextSlide}>›</button>
+      
+      {/* Dots Indicator */}
+      <div className="slider-dots">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            className={`dot ${index === currentIndex ? 'active' : ''}`}
+            onClick={() => setCurrentIndex(index)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/* -------------------- Main Home Component -------------------- */
 function Newhome() {
   const navigate = useNavigate();
   const [stats, setStats] = useState({
@@ -48,15 +118,7 @@ function Newhome() {
     price: true
   });
 
-  // Modal states
-  const [modals, setModals] = useState({
-    supplier: false,
-    fertilizer: false,
-    payment: false,
-    stock: false
-  });
-
-  // Load all stats
+  /* -------------------- Load Stats -------------------- */
   useEffect(() => {
     const loadStats = async () => {
       try {
@@ -83,17 +145,17 @@ function Newhome() {
   }, []);
 
   const statCards = [
-    { label: 'Total Suppliers', value: stats.totalSuppliers, loading: loading.suppliers, iconClass: 'suppliers-stat', highlight: true },
-    { label: 'Active Fertilizers', value: stats.activeFertilizers, loading: loading.fertilizers, iconClass: 'fertilizers-stat', highlight: true },
-    { label: "Total Value (Today)", value: `Rs. ${stats.todayTotalPrice.toLocaleString()}`, loading: loading.price, iconClass: 'price-stat', highlight: true },
-    { label: "Low Stock Alerts", value: stats.lowStockAlerts, iconClass: 'alerts-stat' }
+    { label: 'Total Suppliers', value: stats.totalSuppliers, loading: loading.suppliers, highlight: true, icon: <BarChart3 size={22} /> },
+    { label: 'Active Fertilizers', value: stats.activeFertilizers, loading: loading.fertilizers, highlight: true, icon: <BarChart3 size={22} /> },
+    { label: "Total Value (Today)", value: `Rs. ${stats.todayTotalPrice.toLocaleString()}`, loading: loading.price, highlight: true, icon: <BarChart3 size={22} /> },
+    { label: "Low Stock Alerts", value: stats.lowStockAlerts, icon: <BarChart3 size={22} /> }
   ];
 
   const quickActionCards = [
     {
       title: 'Supplier Management',
       description: 'Add new suppliers, update contact info, and manage spice supply relationships.',
-      iconClass: 'supplier-card-icon',
+      icon: <Building size={22} />,
       actions: [
         { label: 'Add Supplier', onClick: () => navigate("/Addsup"), primary: true },
         { label: 'View All Suppliers', onClick: () => navigate("/Supdet") }
@@ -103,7 +165,7 @@ function Newhome() {
     {
       title: 'Fertilizer Management',
       description: 'Track fertilizer inventory, manage stock levels, and coordinate with suppliers.',
-      iconClass: 'fertilizer-card-icon',
+      icon: <Building size={22} />,
       actions: [
         { label: 'Add Fertilizer', onClick: () => navigate("/addfertilizers"), primary: true },
         { label: 'View Fertilizers', onClick: () => navigate("/fertilizers") }
@@ -113,7 +175,7 @@ function Newhome() {
     {
       title: 'Payment Management',
       description: 'Record and track payments to suppliers and manage financial transactions.',
-      iconClass: 'payments-card-icon',
+      icon: <Building size={22} />,
       actions: [
         { label: 'View Payments', onClick: () => navigate("/payments") }
       ]
@@ -121,7 +183,7 @@ function Newhome() {
     {
       title: 'Stock Information',
       description: 'Monitor current stock levels, update inventory records, and track spice quantities.',
-      iconClass: 'stock-card-icon',
+      icon: <Building size={22} />,
       actions: [
         { label: 'View Stock Info', onClick: () => navigate("/stock") }
       ]
@@ -129,7 +191,7 @@ function Newhome() {
     {
       title: 'Performance and Reviews',
       description: 'Generate reports on supplier performance for better decision-making.',
-      iconClass: 'analytics-card-icon',
+      icon: <Building size={22} />,
       actions: [
         { label: 'Supplier Performance', onClick: () => navigate("/pdfdownloadsp") }
       ]
@@ -137,70 +199,74 @@ function Newhome() {
     {
       title: 'Alerts & Notifications',
       description: 'Monitor low stock alerts, supplier delivery schedules, and system notifications.',
-      iconClass: 'alerts-card-icon',
+      icon: <Building size={22} />,
       actions: [
-        { label: 'View Alerts', onClick: () => {} },
+        { label: 'View Alerts', onClick: () => {} ,primary: true},
         { label: 'Settings', onClick: () => {} }
       ]
     }
   ];
 
   return (
-
-<div className="Nav">
-            <NavSup /> {/* Sidebar */}
-
-    <div className="content-section">
-      <div className="header">
-        <h1>Welcome back, Supplier Coordinator!</h1>
-        <p>Manage suppliers and fertilizers efficiently for your spices management system</p>
+    <div className="sup-app">
+      <div className="sup-sidebar">
+        <NavSup />
       </div>
 
-      <div className="stats-grid">
-        {statCards.map((card, idx) => (
-          <div key={idx} className={`stat-card ${card.highlight ? 'highlight-card' : ''}`}>
-            <div className={`stat-icon ${card.iconClass}`}></div>
-            <div className="stat-content">
-              <div className="stat-number">{card.loading ? '...' : card.value}</div>
-              <div className="stat-label">{card.label}</div>
-              {card.loading && <div className="stat-status">Loading...</div>}
-            </div>
+      <div className="sup-main-content">
+        {/* Slider Section */}
+        <div className="sup-slider-section">
+          <Slider />
+         
+          {/* Header */}
+          <div className="sup-header">
+            <h1>Welcome back, Supplier Coordinator!</h1>
+            <p>Manage suppliers and fertilizers efficiently for your spices management system</p>
           </div>
-        ))}
-      </div>
+        </div>
 
-      <div className="cards-grid">
-        {quickActionCards.map((card, idx) => (
-          <div key={idx} className="card">
-            <div className="card-header">
-              <div className={`card-icon ${card.iconClass}`}></div>
-              <h3 className="card-title">{card.title}</h3>
+        {/* Stats Section */}
+        <div className="sup-stats-grid">
+          {statCards.map((card, idx) => (
+            <div key={idx} className={`sup-stat-card ${card.highlight ? 'sup-highlight' : ''}`}>
+              <div className="sup-stat-icon">{card.icon}</div>
+              <div className="sup-stat-content">
+                <div className="sup-stat-number">{card.loading ? '...' : card.value}</div>
+                <div className="sup-stat-label">{card.label}</div>
+                {card.loading && <div className="sup-stat-status">Loading...</div>}
+              </div>
             </div>
-            <p className="card-description">{card.description}</p>
-            {card.stat && <div className="card-stat"><strong>{card.stat}</strong></div>}
-            <div className="card-actions">
-              {card.actions.map((btn, bIdx) => (
-                <button
-                  key={bIdx}
-                  className={`btn ${btn.primary ? '' : 'btn-secondary'}`}
-                  onClick={btn.onClick}
-                >
-                  {btn.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* Modal placeholders */}
-      {modals.supplier && <div className="modal">Supplier Modal</div>}
-      {modals.fertilizer && <div className="modal">Fertilizer Modal</div>}
-      {modals.payment && <div className="modal">Payment Modal</div>}
-      {modals.stock && <div className="modal">Stock Modal</div>}
-    </div>
+        {/* Quick Action Cards Section */}
+        <div className="sup-cards-grid">
+          {quickActionCards.map((card, idx) => (
+            <div key={idx} className="sup-card">
+              <div className="sup-card-header">
+                <div className="sup-card-icon">{card.icon}</div>
+                <h3 className="sup-card-title">{card.title}</h3>
+              </div>
+              <p className="sup-card-description">{card.description}</p>
+              {card.stat && <div className="sup-card-stat"><strong>{card.stat}</strong></div>}
+              <div className="sup-card-actions">
+                {card.actions.map((btn, bIdx) => (
+                  <button
+                    key={bIdx}
+                    className={`sup-btn ${btn.primary ? '' : 'sup-btn-secondary'} sup-btn-sm`}
+                    onClick={btn.onClick}
+                  >
+                    {btn.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
 export default Newhome;
+

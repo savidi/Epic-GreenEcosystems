@@ -1,7 +1,7 @@
 /* ManhoursChart.css */
 .chart-container {
-  width: 600px;
-  min-height: 380px;
+   width: 100%;
+  min-height: 400px; /* unified size */
   background: linear-gradient(135deg, #EFEBE9, #F5F5F5);
   border-radius: 8px;
   padding: 16px;

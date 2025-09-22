@@ -1,0 +1,270 @@
+ /* -------------------- Layout -------------------- */
+.sup-layout {
+  display: flex;
+  background: linear-gradient(135deg, #f7f3f0 0%, #ede4db 100%);
+  min-height: 100vh;
+  font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #3d2914;
+  line-height: 1.6;
+}
+
+.sup-main-content {
+  flex: 1;
+  padding: 30px;
+  margin-left: 220px; /* prevents NavSup overlap */
+  box-sizing: border-box;
+}
+
+/* -------------------- Header -------------------- */
+.sup-header {
+  background: linear-gradient(135deg, #ffffff 0%, #faf8f5 100%);
+  padding: 25px 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(101, 67, 33, 0.08);
+  margin-bottom: 30px;
+  text-align: center;
+  border: 1px solid rgba(139, 94, 60, 0.1);
+}
+
+.sup-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #8b5e3c 0%, #a0724e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.sup-header p {
+  font-size: 15px;
+  color: #5d4037;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.sup-header .sup-btn {
+  margin-top: 15px;
+}
+
+/* -------------------- Buttons -------------------- */
+.sup-btn {
+  background: linear-gradient(135deg, #8b5e3c 0%, #c5885a 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(139, 94, 60, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.sup-btn:hover {
+  background: linear-gradient(135deg, #7a5235 0%, #8f6547 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(139, 94, 60, 0.35);
+}
+
+.sup-btn:active {
+  transform: translateY(0);
+}
+
+.sup-btn-secondary {
+  background: linear-gradient(135deg, #d4a574 0%, #e8c4a0 100%);
+  color: #3d2914;
+  box-shadow: 0 2px 8px rgba(212, 165, 116, 0.25);
+}
+
+.sup-btn-secondary:hover {
+  background: linear-gradient(135deg, #c69660 0%, #d4a574 100%);
+  box-shadow: 0 4px 16px rgba(201, 123, 38, 0.35);
+}
+
+.sup-btn-sm {
+  padding: 8px 16px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+/* -------------------- Table -------------------- */
+.sup-table-container {
+  background: linear-gradient(135deg, #ffffff 0%, #d7a777 100%);
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(101, 67, 33, 0.08);
+  overflow-x: auto;
+  border: 1px solid rgba(139, 94, 60, 0.1);
+}
+
+.sup-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.sup-table th,
+.sup-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(139, 94, 60, 0.1);
+  text-align: left;
+  font-size: 14px;
+}
+
+.sup-table th {
+  background: linear-gradient(135deg, #f5f0eb 0%, #ede4db 100%);
+  color: #3d2914;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 12px;
+  border-bottom: 2px solid rgba(139, 94, 60, 0.2);
+}
+
+.sup-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.sup-table tbody tr:hover {
+  background-color: rgba(139, 94, 60, 0.04);
+}
+
+.sup-table tbody tr:nth-child(even) {
+  background-color: rgba(139, 94, 60, 0.02);
+}
+
+.sup-table tbody tr:nth-child(even):hover {
+  background-color: rgba(139, 94, 60, 0.06);
+}
+
+.sup-table td {
+  color: #4a3429;
+  font-weight: 500;
+}
+
+.sup-no-data {
+  text-align: center;
+  padding: 40px 20px;
+  color: #8b5e3c;
+  font-style: italic;
+  font-size: 16px;
+  background: linear-gradient(135deg, #f9f6f3 0%, #9b6c3d 100%);
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+/* -------------------- Actions -------------------- */
+.sup-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* -------------------- Typography Enhancements -------------------- */
+h1, h2, h3, h4, h5, h6 {
+  color: #3d2914;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+p, span, div {
+  color: #4a3429;
+}
+
+/* -------------------- Form Elements -------------------- */
+.sup-input,
+.sup-select,
+.sup-textarea {
+  background: #ffffff;
+  border: 2px solid rgba(139, 94, 60, 0.2);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #3d2914;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.sup-input:focus,
+.sup-select:focus,
+.sup-textarea:focus {
+  outline: none;
+  border-color: #8b5e3c;
+  box-shadow: 0 0 0 3px rgba(139, 94, 60, 0.1);
+}
+
+/* -------------------- Status Indicators -------------------- */
+.sup-status-active {
+  background: linear-gradient(135deg, #d4a574 0%, #e8c4a0 100%);
+  color: #3d2914;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sup-status-inactive {
+  background: linear-gradient(135deg, #8b7355 0%, #a08b73 100%);
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* -------------------- Card Elements -------------------- */
+.sup-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fefcfa 100%);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(101, 67, 33, 0.08);
+  border: 1px solid rgba(139, 94, 60, 0.1);
+  margin-bottom: 24px;
+}
+
+.sup-card-title {
+  color: #3d2914;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 768px) {
+  .sup-main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+  
+  .sup-header {
+    padding: 20px;
+    border-radius: 12px;
+  }
+  
+  .sup-header h1 {
+    font-size: 24px;
+  }
+  
+  .sup-table-container {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  
+  .sup-table th,
+  .sup-table td {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+  
+  .sup-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}

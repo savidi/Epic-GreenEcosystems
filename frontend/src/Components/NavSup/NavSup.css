@@ -1,162 +1,171 @@
-:root {
-  --primary: #8D4E2A;      
-  --secondary: #A0522D;    
-  --accent1: #CD853F;      
-  --accent2: #DEB887;      
-  --accent3: #F4A460;      
-  --light: #EFEBE9;         
+ :root {
+  --primary: #8D4E2A;
+  --secondary: #A0522D;
+  --accent1: #CD853F;
+  --accent2: #DEB887;
+  --accent3: #F4A460;
+  --dark: #5D4037;
+  --light: #ffffff; /* white font */
   --white: #ffffff;
 }
 
-/* Sidebar container */
-.navsup-sidebar {
+/* Sidebar */
+.supnav-sidebar {
+  width: 220px;
   position: fixed;
-  top: 0;
   left: 0;
-  height: 100%;
-  width: 250px;
+  top: 0;
+  height: 100vh;
   background-color: var(--primary);
-  color: var(--white);
+  color: var(--light);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
-  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.25);
-  transition: width 0.3s ease;
+  transition: width 0.3s;
   z-index: 1000;
+  overflow: hidden;
+}
+
+.supnav-sidebar.collapsed {
+  width: 60px;
+}
+
+/* Header */
+.supnav-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background: var(--secondary);
+  border-bottom: 1px solid var(--accent2);
+  min-height: 60px;
+  box-sizing: border-box;
+  color: var(--light);
+}
+
+.supnav-sidebar-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--light);
+}
+
+.supnav-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--light);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.supnav-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Profile */
+.supnav-profile {
+  text-align: center;
+  padding: 20px 10px;
+  color: var(--light);
+}
+
+.supnav-profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--accent2);
+  object-fit: cover;
+}
+
+.supnav-profile-name {
+  margin: 8px 0 2px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--light);
+}
+
+.supnav-profile-role {
+  font-size: 13px;
+  color: var(--light);
+}
+
+/* Links */
+.supnav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.supnav-links li a {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  color: var(--light);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.supnav-links li a:hover {
+  background: var(--accent1);
+  color: var(--white);
+}
+
+.supnav-links li.active {
+  background: var(--accent3);
+  border-left: 4px solid var(--secondary);
+}
+
+.supnav-links li.active a {
+  font-weight: bold;
+  color: var(--white);
+}
+
+.supnav-icon {
+  font-size: 1.2rem;
+  margin-right: 12px;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  color: var(--white);
+}
+
+.supnav-label {
+  font-size: 15px;
+  color: var(--white);
 }
 
 /* Collapsed */
-.navsup-sidebar.collapsed {
-  width: 72px;
-  align-items: center;
-}
-
-/* Collapse toggle button */
-.navsup-collapse-toggle {
-  position: absolute;
-  top: 12px;
-  right: -12px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: none;
-  background: var(--secondary);
-  color: var(--white);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  cursor: pointer;
-}
-
-/* Profile section */
-.navsup-profile-section {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.navsup-profile-pic {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  border: 4px solid var(--accent2);
-  object-fit: cover;
-  margin-bottom: 10px;
-}
-.navsup-profile-name {
-  margin: 5px 0;
-  font-size: 18px;
-  font-weight: bold;
-}
-.navsup-profile-role {
-  font-size: 14px;
-  color: var(--light);
-}
-
-/* Company name */
-.navsup-company-name {
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 15px 10px;
-  color: var(--white);
-}
-
-/* Divider */
-.navsup-divider {
-  width: 80%;
-  border: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 15px 0;
-}
-
-/* Navigation menu */
-.navsup-menu {
-  list-style: none;
-  padding: 0;
-  width: 100%;
-}
-.navsup-menu li {
-  margin: 8px 0;
-}
-.navsup-menu li a {
-  display: flex;
-  align-items: center;
-  padding: 12px 20px;
-  text-decoration: none;
-  color: var(--light);
-  transition: background 0.3s ease, color 0.3s ease;
-  border-radius: 8px;
-}
-.navsup-menu li a .navsup-icon {
-  font-size: 20px;
-  min-width: 20px;
-  margin-right: 12px;
-}
-.navsup-menu li a .navsup-label {
-  font-size: 16px;
-}
-.navsup-menu li.active a,
-.navsup-menu li a:hover {
-  background-color: var(--secondary);
-  color: var(--white);
-}
-
-/* Logout */
-.navsup-logout {
-  margin-top: auto;
-  padding-bottom: 20px;
-}
-.navsup-logout a {
-  display: flex;
-  align-items: center;
-  padding: 12px 20px;
-  text-decoration: none;
-  color: var(--light);
-  border-radius: 8px;
-  transition: background 0.3s ease;
-}
-.navsup-logout a:hover {
-  background-color: var(--secondary);
-  color: var(--white);
-}
-
-/* Hide labels when collapsed */
-.navsup-sidebar.collapsed .navsup-company-name,
-.navsup-sidebar.collapsed .navsup-profile-name,
-.navsup-sidebar.collapsed .navsup-profile-role,
-.navsup-sidebar.collapsed .navsup-menu li a .navsup-label,
-.navsup-sidebar.collapsed .navsup-divider,
-.navsup-sidebar.collapsed .navsup-logout .navsup-label {
+.supnav-sidebar.collapsed .supnav-profile-name,
+.supnav-sidebar.collapsed .supnav-profile-role,
+.supnav-sidebar.collapsed .supnav-label {
   display: none;
 }
 
-/* Expand on hover */
-.navsup-sidebar.collapsed:hover {
-  width: 250px;
+.supnav-sidebar.collapsed .supnav-links li a {
+  justify-content: center;
+  padding: 14px 12px;
 }
-.navsup-sidebar.collapsed:hover .navsup-company-name,
-.navsup-sidebar.collapsed:hover .navsup-profile-name,
-.navsup-sidebar.collapsed:hover .navsup-profile-role,
-.navsup-sidebar.collapsed:hover .navsup-menu li a .navsup-label,
-.navsup-sidebar.collapsed:hover .navsup-divider,
-.navsup-sidebar.collapsed:hover .navsup-logout .navsup-label {
-  display: block;
+
+.supnav-sidebar.collapsed .supnav-icon {
+  margin: 0;
+}
+
+/* Logout */
+.supnav-logout {
+  padding: 12px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.supnav-logout a {
+  display: flex;
+  align-items: center;
+  color: var(--white);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.supnav-logout a:hover {
+  background: var(--secondary);
+  color: var(--white);
 }

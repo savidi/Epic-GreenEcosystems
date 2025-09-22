@@ -2,9 +2,9 @@
 
 /* -------------------- Root Colors -------------------- */
 :root {
-  --primary-color: #E6A76B;       /* Light Cinnamon */
-  --secondary-color: #FFB347;     /* Light Paprika */
-  --accent-color: #F0D9B5;        /* Cream/Beige */
+  --primary-color: #E6A76B;
+  --secondary-color: #FFB347;
+  --accent-color: #F0D9B5;
   --text-color: #333333;
   --bg-color: #FFF9F0;
   --table-header-color: #C68C53;
@@ -56,54 +56,68 @@ button:hover {
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   max-width: 1200px;
+  width: calc(100% - 40px);
+  box-sizing: border-box;
 }
 
 /* -------------------- Tables -------------------- */
-table {
+.fworker-fworker-page table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
   font-size: 14px;
 }
 
-thead {
+.fworker-fworker-page thead {
   background-color: var(--table-header-color);
   color: #fff;
 }
 
-th, td {
+.fworker-fworker-page th, .fworker-fworker-page td {
   padding: 10px 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
-tr:hover {
+.fworker-fworker-page tr:hover {
   background-color: var(--accent-color);
   transition: background-color 0.3s ease;
 }
 
 /* -------------------- Buttons -------------------- */
-.add-staff-btn, .fworker-add-worker-btn, .download-pdf-btn, .btn {
+.fworker-fworker-page .fworker-btn,
+.fworker-fworker-page .update-btn,
+.fworker-fworker-page .delete-btn,
+.fworker-fworker-page .fworker-add-worker-btn,
+.fworker-fworker-page .fworker-view-all-btn,
+.fworker-fworker-page .fworker-download-btn {
   background-color: var(--primary-color);
+  color: white;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0 4px 4px 0;
+  transition: all 0.3s ease;
+}
+
+.fworker-fworker-page .fworker-btn:hover,
+.fworker-fworker-page .update-btn:hover,
+.fworker-fworker-page .delete-btn:hover,
+.fworker-fworker-page .fworker-add-worker-btn:hover,
+.fworker-fworker-page .fworker-view-all-btn:hover,
+.fworker-fworker-page .fworker-download-btn:hover {
+  background-color: var(--btn-hover);
   color: white;
 }
 
-.add-staff-btn:hover,
-.fworker-add-worker-btn:hover,
-.download-pdf-btn:hover,
-.btn:hover {
-  background-color: var(--btn-hover);
-}
-
-.clear-search-btn {
-  background-color: transparent;
-  color: #999;
-  font-size: 18px;
-  margin-left: 6px;
-}
-
 /* -------------------- Inputs -------------------- */
-input[type="text"], input[type="month"], input[type="date"], select {
+.fworker-fworker-page input[type="text"],
+.fworker-fworker-page input[type="month"],
+.fworker-fworker-page input[type="date"],
+.fworker-fworker-page select {
   padding: 6px 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -112,20 +126,21 @@ input[type="text"], input[type="month"], input[type="date"], select {
   width: 180px;
 }
 
-input:focus, select:focus {
+.fworker-fworker-page input:focus,
+.fworker-fworker-page select:focus {
   outline: none;
   border-color: var(--primary-color);
 }
 
 /* -------------------- Summary Cards -------------------- */
-.fworker-summary-cards {
+.fworker-fworker-page .fworker-summary-cards {
   display: flex;
   gap: 16px;
   margin-top: 20px;
   flex-wrap: wrap;
 }
 
-.fworker-summary-card {
+.fworker-fworker-page .fworker-summary-card {
   background-color: var(--header-bg);
   padding: 16px;
   border-radius: 10px;
@@ -133,24 +148,25 @@ input:focus, select:focus {
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
-.fworker-summary-card h3 {
+.fworker-fworker-page .fworker-summary-card h3 {
   margin: 0 0 8px 0;
   font-size: 16px;
 }
 
-.fworker-summary-card .amount {
+.fworker-fworker-page .fworker-summary-card .fworker-amount {
   font-size: 20px;
   font-weight: bold;
   color: var(--secondary-color);
 }
 
-.fworker-summary-card .percentage, .fworker-summary-card .count {
+.fworker-fworker-page .fworker-summary-card .fworker-percentage,
+.fworker-fworker-page .fworker-summary-card .fworker-count {
   font-size: 12px;
   color: #555;
 }
 
 /* -------------------- Status Badges -------------------- */
-.fworker-status-badge {
+.fworker-fworker-page .fworker-status-badge {
   padding: 4px 8px;
   border-radius: 8px;
   font-weight: 500;
@@ -160,17 +176,13 @@ input:focus, select:focus {
   min-width: 60px;
 }
 
-.fworker-status-paid { background-color: #2ECC71; color: white; }
-.fworker-status-pending { background-color: #E67E22; color: white; }
-.fworker-status-partial { background-color: #F1C40F; color: white; }
-.fworker-status-unpaid { background-color: #E74C3C; color: white; }
+.fworker-fworker-page .fworker-status-paid { background-color: #2ECC71; color: white; }
+.fworker-fworker-page .fworker-status-pending { background-color: #E67E22; color: white; }
+.fworker-fworker-page .fworker-status-partial { background-color: #F1C40F; color: white; }
+.fworker-fworker-page .fworker-status-unpaid { background-color: #E74C3C; color: white; }
 
-.fworker-status-present { background-color: #2ECC71; color: white; }
-.fworker-status-late { background-color: #E67E22; color: white; }
-.fworker-status-absent { background-color: #E74C3C; color: white; }
-
-/* -------------------- Modal -------------------- */
-.fworker-idcard-modal {
+/* -------------------- Modals -------------------- */
+.fworker-fworker-page .fworker-idcard-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -183,7 +195,7 @@ input:focus, select:focus {
   z-index: 1000;
 }
 
-.fworker-idcard-modal-content {
+.fworker-fworker-page .fworker-idcard-modal-content {
   background-color: #fff;
   padding: 20px;
   border-radius: 12px;
@@ -192,7 +204,7 @@ input:focus, select:focus {
   position: relative;
 }
 
-.fworker-idcard-modal-content .fworker-close-btn {
+.fworker-fworker-page .fworker-close-btn {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -207,36 +219,26 @@ input:focus, select:focus {
 }
 
 /* -------------------- Search Section -------------------- */
-.fworker-search-section, .payment-actions, .top-bar, .filter-section {
+.fworker-fworker-page .fworker-search-section,
+.fworker-fworker-page .payment-actions,
+.fworker-fworker-page .top-bar,
+.fworker-fworker-page .filter-section {
   display: flex;
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
 }
 
-.fworker-search-input, .fworker-date-input {
+.fworker-fworker-page .fworker-search-input,
+.fworker-fworker-page .fworker-date-input {
   width: 180px;
 }
 
-.fworker-btn-pdf {
-  background-color: var(--secondary-color);
-  color: white;
-}
-
-.fworker-btn-clear {
-  background-color: #ddd;
-  color: #333;
-}
-
 /* -------------------- Empty State -------------------- */
-.fworker-empty-state, .fworker-no-data, .fworker-no-results {
+.fworker-fworker-page .fworker-empty-state,
+.fworker-fworker-page .fworker-no-data,
+.fworker-fworker-page .fworker-no-results {
   text-align: center;
   color: #777;
   padding: 20px 0;
 }
-
-/* -------------------- Misc -------------------- */
-.page-title, .attendance-title, h2 {
-  color: var(--primary-color);
-}
-

@@ -1,298 +1,138 @@
-/* Supplier Page Styles - Spice Theme */
-:root {
-    /* Primary Colors */
-    --primary-red: #D2691E;        /* Cinnamon */
-    --primary-orange: #A0522D;     /* Changed to Light Brown (Sienna) */
-    --primary-yellow: #DAA520;     /* Turmeric */
-    
-    /* Background Colors */
-    --bg-cream: #FFF8DC;           /* Cornsilk */
-    --bg-light: #FAF0E6;          /* Linen */
-    --bg-white: #FFFFFF;
-    
-    /* Text Colors */
-    --text-dark: #8B4513;          /* Saddle Brown */
-    --text-medium: #A0522D;        /* Sienna */
-    --text-light: #CD853F;         /* Peru */
-    
-    /* Accent Colors */
-    --accent-green: #228B22;       /* Forest Green - for fresh herbs */
-    --accent-gold: #FFD700;        /* Gold - for premium spices */
-    
-    /* Status Colors */
-    --success: #32CD32;            /* Lime Green */
-    --warning: #FF6347;            /* Tomato */
-    --error: #DC143C;              /* Crimson */
+ /* -------------------- Layout -------------------- */
+.sup-layout {
+  display: flex;
+  background-color: #fff9f0;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
-.supplierdetails-page {
-    min-height: 100vh;
-    background-color: var(--bg-light);
-    width: 100%;
+.sup-main-content {
+  flex: 1;
+  padding: 30px;
+  margin-left: 220px; /* prevents NavSup overlap */
+  box-sizing: border-box;
 }
 
-.supplierdetails-content {
-    padding: 0; /* Remove padding since main-content already handles it */
-    overflow-y: visible;
-    min-height: auto;
-    width: 100%;
+/* -------------------- Header -------------------- */
+.sup-header {
+  background: #fff;
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  margin-bottom: 25px;
+  text-align: center;
 }
 
-.supplierdetails-page-header {
-    margin-bottom: 2rem;
-    position: relative;
+.sup-header h1 {
+  font-size: 24px;
+  color: #e6a76b;
+  margin-bottom: 8px;
 }
 
-.supplierdetails-page-header h2 {
-    color: var(--text-dark);
-    margin-bottom: 0.5rem;
-    font-weight: 700;
+.sup-header p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
 }
 
-.supplierdetails-page-header .ant-typography {
-    color: var(--text-medium);
+/* -------------------- Buttons -------------------- */
+.sup-btn {
+  background-color: #e6a76b;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  margin: 3px;
 }
 
-.supplierdetails-header-actions {
-    position: absolute;
-    top: 0;
-    right: 0;
+.sup-btn:hover {
+  background-color: #d99a5f;
 }
 
-.supplierdetails-header-actions .ant-btn-primary {
-    background-color: var(--primary-orange);
-    border-color: var(--primary-orange);
-    border-radius: 8px;
-    font-weight: 500;
+.sup-btn-secondary {
+  background-color: #e74c3c;
 }
 
-.supplierdetails-header-actions .ant-btn-primary:hover {
-    background-color: #8B4513;
-    border-color: #8B4513;
+.sup-btn-secondary:hover {
+  background-color: #c0392b;
 }
 
-/* Statistics Cards */
-.ant-statistic-title {
-    color: var(--text-medium);
-    font-weight: 500;
+/* -------------------- Table -------------------- */
+.sup-table-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
 }
 
-.ant-statistic-content {
-    color: var(--text-dark);
-    font-weight: 600;
+.sup-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.ant-card {
-    border-radius: 8px;
-    border: 1px solid var(--primary-yellow);
-    box-shadow: 0 2px 8px rgba(218, 165, 32, 0.1);
+.sup-table th,
+.sup-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 14px;
 }
 
-.ant-card .ant-card-head {
-    border-bottom: 1px solid var(--primary-yellow);
-    background-color: var(--bg-cream);
+.sup-table th {
+  background-color: #fff5e9;
+  color: #333;
+  font-weight: 600;
 }
 
-.ant-card .ant-card-head-title {
-    color: var(--text-dark);
-    font-weight: 600;
+.sup-row-light {
+  background: #fff;
 }
 
-/* Search Input */
-.ant-input-search .ant-input {
-    border-radius: 8px;
-    border: 1px solid #d9d9d9;
+.sup-row-dark {
+  background: #fffdf8;
 }
 
-.ant-input-search .ant-input:focus {
-    border-color: var(--primary-orange);
-    box-shadow: 0 0 0 2px rgba(160, 82, 45, 0.2);
+.sup-no-data {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+  font-style: italic;
 }
 
-.ant-input-search .ant-btn {
-    background-color: var(--primary-orange);
-    border-color: var(--primary-orange);
-    border-radius: 0 8px 8px 0;
+/* -------------------- Actions -------------------- */
+.sup-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.ant-input-search .ant-btn:hover {
-    background-color: #8B4513;
-    border-color: #8B4513;
+/* -------------------- Stats Row -------------------- */
+.sup-stats-row {
+  margin-bottom: 20px;
 }
 
-/* Table Styling */
-.ant-table {
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.ant-table-thead > tr > th {
-    background-color: var(--bg-cream);
-    font-weight: 600;
-    color: var(--text-dark);
-    border-bottom: 2px solid var(--primary-yellow);
-}
-
-.ant-table-tbody > tr > td {
-    border-bottom: 1px solid #f0f0f0;
-    color: var(--text-dark);
-}
-
-.supplierdetails-table-row-light {
-    background-color: #ffffff;
-}
-
-.supplierdetails-table-row-dark {
-    background-color: #fafafa;
-}
-
-.ant-table-tbody > tr:hover > td {
-    background-color: var(--bg-cream) !important;
-}
-
-/* Action Buttons */
-.supplierdetails-action-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-}
-
-.supplierdetails-action-buttons .ant-btn {
-    border-radius: 6px;
-    font-size: 12px;
-    height: auto;
-    padding: 4px 8px;
-    line-height: 1.4;
-}
-
-.supplierdetails-action-buttons .ant-btn-primary {
-    background-color: var(--primary-orange);
-    border-color: var(--primary-orange);
-}
-
-.supplierdetails-action-buttons .ant-btn-primary:hover {
-    background-color: #8B4513;
-    border-color: #8B4513;
-}
-
-.supplierdetails-action-buttons .ant-btn-default {
-    background-color: var(--primary-yellow);
-    border-color: var(--primary-yellow);
-    color: var(--text-dark);
-}
-
-.supplierdetails-action-buttons .ant-btn-default:hover {
-    background-color: var(--accent-gold);
-    border-color: var(--accent-gold);
-    color: var(--text-dark);
-}
-
-/* Pagination */
-.ant-pagination .ant-pagination-item-active {
-    background-color: var(--primary-orange);
-    border-color: var(--primary-orange);
-}
-
-.ant-pagination .ant-pagination-item-active a {
-    color: white;
-}
-
-.ant-pagination .ant-pagination-item:hover {
-    border-color: var(--primary-orange);
-}
-
-.ant-pagination .ant-pagination-item:hover a {
-    color: var(--primary-orange);
-}
-
-.ant-pagination .ant-pagination-next:hover .ant-pagination-item-link,
-.ant-pagination .ant-pagination-prev:hover .ant-pagination-item-link {
-    color: var(--primary-orange);
-    border-color: var(--primary-orange);
-}
-
-/* Divider */
-.ant-divider-horizontal {
-    border-top: 1px solid var(--primary-yellow);
-}
-
-/* Responsive Design */
+/* -------------------- Responsive -------------------- */
 @media (max-width: 768px) {
-    .supplierdetails-content {
-        padding: 1rem;
-        height: 100vh;
-        overflow-y: auto;
-    }
-    
-    .supplierdetails-page-header {
-        position: relative;
-        margin-bottom: 1.5rem;
-    }
-    
-    .supplierdetails-header-actions {
-        position: relative;
-        top: auto;
-        right: auto;
-        margin-top: 1rem;
-    }
-    
-    .supplierdetails-action-buttons {
-        flex-direction: column;
-    }
-    
-    .supplierdetails-action-buttons .ant-btn {
-        width: 100%;
-        margin-bottom: 4px;
-    }
-}
+  .sup-main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
 
-@media (max-width: 576px) {
-    .supplierdetails-page-header h2 {
-        font-size: 1.5rem;
-    }
-    
-    .ant-statistic-title {
-        font-size: 14px;
-    }
-    
-    .ant-statistic-content {
-        font-size: 20px;
-    }
-    
-    .ant-col {
-        margin-bottom: 16px;
-    }
-}
+  .sup-header {
+    padding: 15px;
+  }
 
-/* Loading State */
-.supplierdetails-page .supplierdetails-content {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Empty State */
-.ant-empty {
-    color: var(--text-medium);
-}
-
-.ant-empty-description {
-    color: var(--text-light);
-}
-
-/* Custom scrollbar */
-.supplierdetails-content::-webkit-scrollbar {
-    width: 8px;
-}
-
-.supplierdetails-content::-webkit-scrollbar-track {
-    background: var(--bg-light);
-}
-
-.supplierdetails-content::-webkit-scrollbar-thumb {
-    background: var(--primary-yellow);
-    border-radius: 4px;
-}
-
-.supplierdetails-content::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-orange);
+  .sup-table th,
+  .sup-table td {
+    padding: 10px;
+    font-size: 13px;
+  }
 }

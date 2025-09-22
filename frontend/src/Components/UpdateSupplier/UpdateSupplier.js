@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import "./UpdateSupplier.css";
 import NavSup from "../NavSup/NavSup";
+
 function UpdateSupplier() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -78,12 +79,12 @@ function UpdateSupplier() {
   };
 
   if (loading) {
-    return <p style={{ textAlign: "center" }}>Loading supplier details...</p>;
+    return <p className="sup-loading">Loading supplier details...</p>;
   }
 
   if (error) {
     return (
-      <div style={{ textAlign: "center", color: "red" }}>
+      <div className="sup-error">
         <h3>{error}</h3>
         <button onClick={() => navigate("/Supdet")}>Go Back</button>
       </div>
@@ -91,73 +92,82 @@ function UpdateSupplier() {
   }
 
   return (
+    <div className="sup-page">
+      <NavSup /> {/* Sidebar */}
 
-    <div className="updatesupplier-nav">
-            <NavSup /> {/* Sidebar */}
+      <div className="sup-content">
+        <div className="sup-form-container">
+          <h1>Update Supplier</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="sup-form-group">
+              <label>Supplier Name *</label>
+              <input
+                type="text"
+                name="name"
+                value={input.name}
+                onChange={handleChange}
+                placeholder="Enter supplier name"
+                required
+              />
+            </div>
 
-    <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
-      <h1>Update Supplier</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="updatesupplier-form-group">
-          <label>Supplier Name *</label>
-          <input
-            type="text"
-            name="name"
-            value={input.name}
-            onChange={handleChange}
-            placeholder="Enter supplier name"
-            required
-          />
+            <div className="sup-form-group">
+              <label>Phone Number *</label>
+              <input
+                type="tel"
+                name="phoneno"
+                value={input.phoneno}
+                onChange={handleChange}
+                placeholder="Enter phone number"
+                required
+              />
+            </div>
+
+            <div className="sup-form-group">
+              <label>Address *</label>
+              <textarea
+                name="address"
+                rows="3"
+                value={input.address}
+                onChange={handleChange}
+                placeholder="Enter supplier address"
+                required
+              />
+            </div>
+
+            <div className="sup-form-group">
+              <label>Email *</label>
+              <input
+                type="email"
+                name="email"
+                value={input.email}
+                onChange={handleChange}
+                placeholder="Enter email address"
+                required
+              />
+            </div>
+
+            <div className="sup-actions">
+              <button
+                type="button"
+                onClick={() => navigate("/Supdet")}
+                className="sup-btn sup-btn-secondary"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="sup-btn sup-btn-primary"
+              >
+                Update Supplier
+              </button>
+            </div>
+          </form>
         </div>
-
-        <div className="updatesupplier-form-group">
-          <label>Phone Number *</label>
-          <input
-            type="tel"
-            name="phoneno"
-            value={input.phoneno}
-            onChange={handleChange}
-            placeholder="Enter phone number"
-            required
-          />
-        </div>
-
-        <div className="updatesupplier-form-group">
-          <label>Address *</label>
-          <textarea
-            name="address"
-            rows="3"
-            value={input.address}
-            onChange={handleChange}
-            placeholder="Enter supplier address"
-            required
-          />
-        </div>
-
-        <div className="updatesupplier-form-group">
-          <label>Email *</label>
-          <input
-            type="email"
-            name="email"
-            value={input.email}
-            onChange={handleChange}
-            placeholder="Enter email address"
-            required
-          />
-        </div>
-
-        <div className="updatesupplier-modal-actions">
-          <button type="button" onClick={() => navigate("/Supdet")} className="updatesupplier-btn updatesupplier-btn-secondary">
-            Cancel
-          </button>
-          <button type="submit" className="updatesupplier-btn updatesupplier-btn-primary">
-            Update Supplier
-          </button>
-        </div>
-      </form>
-    </div>
+      </div>
     </div>
   );
 }
 
 export default UpdateSupplier;
+
