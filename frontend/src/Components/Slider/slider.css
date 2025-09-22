@@ -78,7 +78,7 @@
     max-width: 560px;  /* keep text readable */
     padding: 24px;     /* minimal inner padding for text */
     transform: translate(0, -50%);
-    color: #f5e6d3;
+    color: #ffffff;
     text-align: left;
     display: none;
 }
@@ -113,7 +113,7 @@
     font-size: 14px;
     font-weight: 600;
     transition: all 0.3s ease;
-    border: 2px solid #f5e6d3;
+    border: 2px solid #ffffff;
 }
 
 .content button:hover {

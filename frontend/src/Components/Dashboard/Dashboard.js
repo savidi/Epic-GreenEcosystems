@@ -3,16 +3,22 @@ import './dashboard.css';
 import Slider from '../Slider/Slider';
 import { Link } from 'react-router-dom';
 import Navfield from "../Navfield/Navfield";
-import { MapContainer, TileLayer, Marker, Popup, Rectangle, Tooltip } from 'react-leaflet';
+
+// react-leaflet
+import { MapContainer, TileLayer, Marker, Popup, Rectangle, Tooltip as LeafletTooltip } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Import marker images directly
+// chart.js
+import { Chart as ChartJS, ArcElement, Tooltip as ChartTooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+
+// leaflet marker images
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import iconRetina from 'leaflet/dist/images/marker-icon-2x.png';
 
-// Import images
+// app images
 import CinnamonImg from '../Images/Cinnamon.png';
 import CardamomImg from '../Images/Cardomom.png';
 import TurmericImg from '../Images/Turmeric.png';
@@ -20,6 +26,9 @@ import PepperImg from '../Images/Pepper.png';
 import MapImg from '../Images/map.webp';
 import RedCilliImg from '../Images/RedChilli.png';
 import CloveImg from '../Images/Clove.png';
+
+// ✅ register chart.js plugins after imports
+ChartJS.register(ArcElement, ChartTooltip, Legend);
 
 function Dashboard() {
     // Fix for default markers in react-leaflet
@@ -178,17 +187,97 @@ L.Icon.Default.mergeOptions({
     ];
 
     const stats = [
-        { title: "Total Land Area", value: "64 Hectares" },
-        { title: "Spices Grown", value: "6 Types" },
-        { title: "Active Workers", value: "120+" },
-        
+        { 
+            title: "Total Land Area", 
+            value: "64", 
+            unit: "Hectares",
+            description: "Cultivated land across plantation",
+            trend: "+2.5% from last year",
+            trendType: "positive"
+        },
+        { 
+            title: "Spices Grown", 
+            value: "6", 
+            unit: "Types",
+            description: "Premium spice varieties",
+            trend: "Stable",
+            trendType: "stable"
+        },
+        { 
+            title: "Active Workers", 
+            value: "120+", 
+            unit: "Staff",
+            description: "Dedicated plantation team",
+            trend: "+15 new hires",
+            trendType: "positive"
+        },
+
     ];
+
+
+    const cropDistributionData = {
+        labels: ['Cinnamon', 'Cardamom', 'Turmeric', 'Pepper', 'Clove', 'Red Chili'],
+        datasets: [
+            {
+                data: [25, 20, 18, 15, 12, 10],
+                backgroundColor: [
+                    '#D2691E', // Cinnamon - Chocolate
+                    '#228B22', // Cardamom - Forest Green
+                    '#FFD700', // Turmeric - Gold
+                    '#2F4F4F', // Pepper - Dark Slate Gray
+                    '#8B4513', // Clove - Saddle Brown
+                    '#DC143C', // Red Chili - Crimson
+                ],
+                borderColor: '#ffffff',
+                borderWidth: 2,
+            },
+        ],
+    };
+
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    padding: 20,
+                    font: {
+                        size: 12,
+                    },
+                },
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return context.label + ': ' + context.parsed + '%';
+                    }
+                }
+            }
+        },
+    };
 
     const activities = [
         "Cinnamon fields fertilized on Aug 30",
         "Pepper irrigation completed on Sep 1",
         "Turmeric harvest expected mid-Sep",
         "New workers assigned to Chili plantation",
+    ];
+
+
+    const harvestSchedule = [
+        { month: "January", crops: ["Cardamom"], status: "completed" },
+        { month: "February", crops: [], status: "empty" },
+        { month: "March", crops: [], status: "empty" },
+        { month: "April", crops: ["Pepper"], status: "completed" },
+        { month: "May", crops: [], status: "empty" },
+        { month: "June", crops: [], status: "empty" },
+        { month: "July", crops: ["Clove"], status: "completed" },
+        { month: "August", crops: [], status: "empty" },
+        { month: "September", crops: ["Turmeric"], status: "upcoming" },
+        { month: "October", crops: ["Cinnamon", "Red Chili"], status: "upcoming" },
+        { month: "November", crops: [], status: "empty" },
+        { month: "December", crops: [], status: "empty" },
     ];
 
     return (
@@ -200,19 +289,26 @@ L.Icon.Default.mergeOptions({
                 <section className="dash-slider-section">
                     <Slider />
                 </section>
-                {/* Stats Section */}
-                <section className="dash-section dash-stats-section">
+                 {/* Stats Section */}
+                 <section className="dash-section dash-stats-section">
                     <h2>Farm Overview</h2>
                     <div className="dash-stats-cards">
                         {stats.map((stat, index) => (
                             <div key={index} className="dash-stat-card">
-                                <h3>{stat.value}</h3>
-                                <p>{stat.title}</p>
+                                
+                                <div className="dash-stat-content">
+                                    <div className="dash-stat-value">
+                                        <span className="dash-stat-number">{stat.value}</span>
+                                        <span className="dash-stat-unit">{stat.unit}</span>
+                                    </div>
+                                    <h3>{stat.title}</h3>
+                                    <p className="dash-stat-description">{stat.description}</p>
+                                    <div className={`dash-stat-trend ${stat.trendType}`}>{stat.trend}</div>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </section>
-
                 {/* Interactive Land Map Section */}
                 <section className="dash-map-section">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
@@ -254,13 +350,13 @@ L.Icon.Default.mergeOptions({
                                         click: () => handleDivisionClick(division)
                                     }}
                                 >
-                                    <Tooltip direction="top" offset={[0, -20]} opacity={1}>
+                                    <LeafletTooltip direction="top" offset={[0, -20]} opacity={1}>
                                         <div style={{ textAlign: 'center', padding: '0.5rem' }}>
                                             <strong>{division.name}</strong><br/>
                                             <small>{division.description}</small><br/>
                                             <small>Click to zoom in</small>
                                         </div>
-                                    </Tooltip>
+                                    </LeafletTooltip>
                                 </Rectangle>
                             ))}
                             
@@ -294,6 +390,60 @@ L.Icon.Default.mergeOptions({
                     </div>
                 </section>
 
+                 {/* Crop Distribution & Harvest Calendar Section */}
+                    <section className="dash-section dash-chart-calendar-section">
+                        <div className="dash-chart-calendar-grid">
+                            {/* Left Side - Chart */}
+                            <div className="dash-chart-side">
+                        <h2>Crop Distribution</h2>
+                        <div className="dash-chart-container">
+                            <Doughnut data={cropDistributionData} options={chartOptions} />
+                            </div>
+                            </div>
+                            
+                            {/* Right Side - Harvest Calendar */}
+                            <div className="dash-calendar-side">
+                                <h2>Harvest Calendar</h2>
+                                <div className="dash-calendar-grid">
+                                    {harvestSchedule.map((item, index) => (
+                                        <div 
+                                            key={index} 
+                                            className={`dash-calendar-month ${item.status}`}
+                                        >
+                                            <div className="dash-month-name">{item.month}</div>
+                                            <div className="dash-month-crops">
+                                                {item.crops.length > 0 ? (
+                                                    item.crops.map((crop, cropIndex) => (
+                                                        <span key={cropIndex} className="dash-crop-tag">
+                                                            {crop}
+                                                        </span>
+                                                    ))
+                                                ) : (
+                                                    <span className="dash-no-crops">—</span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="dash-calendar-legend">
+                                    <div className="dash-legend-item">
+                                        <div className="dash-legend-color completed"></div>
+                                        <span>Completed</span>
+                                    </div>
+                                    <div className="dash-legend-item">
+                                        <div className="dash-legend-color upcoming"></div>
+                                        <span>Upcoming</span>
+                                    </div>
+                                    <div className="dash-legend-item">
+                                        <div className="dash-legend-color empty"></div>
+                                        <span>No Harvest</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    
                 {/* Spices Section */}
                 <section className="dash-section dash-spice-section">
                     <h2>Our Spices</h2>

@@ -52,7 +52,6 @@ function Slider() {
                     <div className="content">
                         <div className="name">{slides[getSlideIndex(0)].title}</div>
                         <div className="des">{slides[getSlideIndex(0)].description}</div>
-                        <button>See More</button>
                     </div>
                 </div>
 
