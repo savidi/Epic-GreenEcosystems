@@ -1,7 +1,7 @@
-// src/components/SalesManager/OrderByTypeChart.js
+// src/components/SalesManager/OrderByTypeChart.js (Revised)
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// Removed 'useNavigate' import
 import { Doughnut } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -10,7 +10,6 @@ import {
     Legend
 } from 'chart.js';
 import jsPDF from 'jspdf';
-import './SalesManager.css';
 
 // Register Chart.js components for the donut chart
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -19,33 +18,24 @@ const OrderByTypeChart = () => {
     const [orderTypeData, setOrderTypeData] = useState({ local: 0, global: 0 });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
+    // Removed the useNavigate hook
     const chartRef = useRef(null);
 
     const fetchOrderTypeCounts = useCallback(async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                setError('No authentication token found. Please log in again.');
-                setLoading(false);
-                return;
-            }
-            const response = await axios.get('http://localhost:5000/api/sales/order-type-counts', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            // Removed token check and navigation
+            // Removed the headers object from the axios call
+            const response = await axios.get('http://localhost:5000/api/sales/order-type-counts');
             setOrderTypeData(response.data);
         } catch (err) {
             console.error('Error fetching order type data:', err);
-            if (err.response && err.response.status === 401) {
-                setError('Access denied. You may not have permission to access order type data.');
-            } else {
-                setError(err);
-            }
+            // Removed 401 error handling and redirect
+            setError(err);
         } finally {
             setLoading(false);
         }
-    }, [navigate]);
+    }, []); // Removed 'navigate' from the dependency array
 
     useEffect(() => {
         fetchOrderTypeCounts();
@@ -123,14 +113,14 @@ const OrderByTypeChart = () => {
     };
 
     return (
-        <div className="salesmanager-order-type-chart-container">
+        <div className="order-type-chart-container">
             <h2>Order Type Distribution</h2>
             {orderTypeData.local > 0 || orderTypeData.global > 0 ? (
                 <>
-                    <div className="salesmanager-chart-wrapper">
+                    <div className="chart-wrapper">
                         <Doughnut ref={chartRef} data={chartData} options={options} />
                     </div>
-                    <button onClick={handleExportPdf} className="salesmanager-export-pdf-button">
+                    <button onClick={handleExportPdf} className="export-pdf-button">
                         Export Report (PDF)
                     </button>
                 </>

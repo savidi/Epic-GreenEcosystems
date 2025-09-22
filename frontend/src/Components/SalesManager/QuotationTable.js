@@ -1,6 +1,7 @@
 // QuotationTable.js
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 import './QuoteTable.css';
 import { FaSearch } from 'react-icons/fa';
@@ -13,9 +14,9 @@ applyPlugin(jsPDF);
 
 // Status Card component
 const StatusCard = ({ title, count }) => (
-    <div className="salesmanager-status-card">
+    <div className="status-card-quote">
         <h4>{title}</h4>
-        <p className="salesmanager-status-count">{count}</p>
+        <p className="status-count">{count}</p>
     </div>
 );
 
@@ -35,19 +36,12 @@ const QuotationTable = ({ title, emptyMessage }) => {
     const fetchQuotations = useCallback(async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                setError('No authentication token found. Please log in again.');
-                setLoading(false);
-                return;
-            }
             const queryParams = new URLSearchParams();
             if (searchTerm) queryParams.append('search', searchTerm);
             if (countryFilter) queryParams.append('country', countryFilter);
             if (dateFilter) queryParams.append('date', dateFilter);
 
             const response = await axios.get(`http://localhost:5000/api/sales/quotations?${queryParams.toString()}`, {
-                headers: { Authorization: `Bearer ${token}` }
             });
             setQuotations(response.data.quotations);
             // Process the fetched data to get counts
@@ -59,22 +53,18 @@ const QuotationTable = ({ title, emptyMessage }) => {
             setAllCount(fetchedQuotations.length);
         } catch (err) {
             console.error('Error fetching quotations:', err);
-            if (err.response && err.response.status === 401) {
-                setError('Access denied. You may not have permission to access quotation data.');
-            } else {
-                setError(err);
-            }
+            setError(err);
         } finally {
             setLoading(false);
         }
-    }, [navigate, searchTerm, countryFilter, dateFilter]);
+    }, [searchTerm, countryFilter, dateFilter]);
 
     useEffect(() => {
         fetchQuotations();
     }, [fetchQuotations]);
 
     const handleViewQuotation = (quotationId) => {
-        navigate(`/sales-manager/quotations/${quotationId}`);
+         navigate(`/sales-manager/quotations/${quotationId}`);
     };
 
     const formatDate = (dateString) => {
@@ -128,26 +118,26 @@ const QuotationTable = ({ title, emptyMessage }) => {
     };
 
     if (loading) {
-        return <div className="salesmanager-loading-message">Loading quotations...</div>;
+        return <div className="loading-message">Loading quotations...</div>;
     }
 
     if (error) {
-        return <div className="salesmanager-error-message">Error: Unable to fetch quotations.</div>;
+        return <div className="error-message">Error: Unable to fetch quotations.</div>;
     }
 
     return (
-        <div className="salesmanager-quotation-table-container">
+        <div className="quotation-table-container">
             {/* New status cards container */}
-            <div className="salesmanager-status-cards-container">
+            <div className="status-cards-container">
                 <StatusCard title="Pending Quotations" count={pendingCount} />
                 <StatusCard title="Approved Quotations" count={approvedCount} />
                 <StatusCard title="All Quotations" count={allCount} />
             </div>
-            <header className="salesmanager-quotation-header">
+            <header className="quotation-header">
                 <h1>{title}</h1>
-                <div className="salesmanager-filter-options-row">
-                    <div className="salesmanager-search-bar2">
-                        <FaSearch className="salesmanager-search-icon" />
+                <div className="filter-options-row">
+                    <div className="search-bar2">
+                        <FaSearch className="search-icon" />
                         <input
                             type="text"
                             placeholder="Search by Customer ID or Name..."
@@ -155,14 +145,14 @@ const QuotationTable = ({ title, emptyMessage }) => {
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
-                    <select className="salesmanager-filter-select" value={countryFilter} onChange={(e) => setCountryFilter(e.target.value)}>
+                    <select className="filter-select" value={countryFilter} onChange={(e) => setCountryFilter(e.target.value)}>
                         <option value="">Filter by Country</option>
                         <option value="Australia">Australia</option>
                         <option value="India">India</option>
                         <option value="Canada">Canada</option>
                         <option value="England">England</option>
                     </select>
-                    <div className="salesmanager-date-filter">
+                    <div className="date-filter">
                         <label htmlFor="quotation-date">Date:</label>
                         <input
                             type="date"
@@ -174,10 +164,10 @@ const QuotationTable = ({ title, emptyMessage }) => {
                 </div>
             </header>
             {quotations.length === 0 ? (
-                <div className="salesmanager-no-data-message">{emptyMessage}</div>
+                <div className="no-data-message">{emptyMessage}</div>
             ) : (
                 <>
-                    <table className="salesmanager-quotation-table">
+                    <table className="quotation-table">
                         <thead>
                             <tr>
                                 <th>Customer ID</th>
@@ -205,7 +195,7 @@ const QuotationTable = ({ title, emptyMessage }) => {
                                         <td>
                                             <button
                                                 onClick={() => handleViewQuotation(quotation._id)}
-                                                className="salesmanager-view-button"
+                                                className="view-button"
                                             >
                                                 {isQuotationApproved ? "View" : "View/Update"}
                                             </button>
@@ -215,7 +205,7 @@ const QuotationTable = ({ title, emptyMessage }) => {
                             })}
                         </tbody>
                     </table>
-                    <button className="salesmanager-download-pdf-button" onClick={generatePDF}>
+                    <button className="download-pdf-button" onClick={generatePDF}>
                         Download PDF
                     </button>
                 </>

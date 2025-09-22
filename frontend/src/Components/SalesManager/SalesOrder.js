@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import jsPDF from 'jspdf';
 import { applyPlugin } from 'jspdf-autotable';
-import StatusBadge from '../StatusBadge/StatusBadge.js';
-import './SalesManager.css'; 
+import StatusBadge from '../StatusBadge/StatusBadge.js'; 
 applyPlugin(jsPDF);
 
 // Status Card component is now a standalone functional component for clarity.
 const StatusCard = ({ title, count }) => (
-    <div className="salesmanager-status-card">
+    <div className="status-card">
         <h4>{title}</h4>
-        <p className="salesmanager-status-count">{count}</p>
+        <p className="status-count">{count}</p>
     </div>
 );
 
@@ -57,22 +56,22 @@ const OrderTable = ({ orders, title, emptyMessage, onStatusUpdate, currency, loc
     };
 
     if (!orders || orders.length === 0) {
-        return <div className="salesmanager-no-data-message">{emptyMessage}</div>;
+        return <div className="no-data-message">{emptyMessage}</div>;
     }
 
     const orderStatusOptions = ['pending', 'paid', 'shipped', 'delivered','quoted','requested'];
 
     return (
-        <div className="salesmanager-order-table-container">
-            <div className="salesmanager-status-cards-container">
+        <div className="order-table-container">
+            <div className="status-cards-container">
                 <StatusCard title="Local Orders" count={localOrderCount} />
                 <StatusCard title="Global Orders" count={globalOrderCount} />
             </div>
-            <div className="salesmanager-table-header-controls">
+            <div className="table-header-controls">
                 <h3>{title}</h3>
                 <button 
                     onClick={handleExportPdf} 
-                    className="salesmanager-export-pdf-button"
+                    className="export-pdf-button"
                     style={{
                         padding: '10px 15px',
                         backgroundColor: '#ed7622ff',
@@ -89,7 +88,7 @@ const OrderTable = ({ orders, title, emptyMessage, onStatusUpdate, currency, loc
                     Export Report (PDF)
                 </button>
             </div>
-            <table className="salesmanager-order-table">
+            <table className="order-table">
                 <thead>
                     <tr>
                         <th>Order ID</th>
@@ -113,7 +112,7 @@ const OrderTable = ({ orders, title, emptyMessage, onStatusUpdate, currency, loc
                             </td>
                             <td>
                                 <select
-                                    className="salesmanager-status-select"
+                                    className="status-select"
                                     value={statusChanges[order._id] || order.orderStatus}
                                     onChange={(e) => handleStatusChange(order._id, e.target.value)}
                                 >
@@ -128,7 +127,7 @@ const OrderTable = ({ orders, title, emptyMessage, onStatusUpdate, currency, loc
                             <td>
                                 <button
                                     onClick={() => onStatusUpdate(order._id, statusChanges[order._id] || order.orderStatus)}
-                                    className="salesmanager-update-button"
+                                    className="update-button"
                                     disabled={!statusChanges[order._id]}
                                 >
                                     Update

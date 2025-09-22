@@ -100,7 +100,7 @@ function CartItems() {
       const stripe = await stripePromise;
 
       const response = await axios.post(
-        'http://localhost:5000/api/create-checkout-session', 
+        'http://localhost:5000/api/payments/create-checkout-session', 
         { orderId: cart._id },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -1,5 +1,5 @@
 /* Container for the entire registration page */
-.reg-container {
+.register-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,7 +12,7 @@
 }
 
 /* Pseudo-element for the blurred background and overlay */
-.reg-container::before {
+.register-container::before {
     content: '';
     position: absolute;
     top: 0;
@@ -26,7 +26,7 @@
 }
 
 /* The box containing the registration form */
-.reg-form {
+.register-form {
     background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
     padding: 40px;
     border-radius: 12px;
@@ -39,7 +39,7 @@
     z-index: 2;
 }
 
-.reg-form h2 {
+.register-form h2 {
     margin-bottom: 25px;
     text-align: center;
     color: #ba7e06;
@@ -47,19 +47,19 @@
     font-weight: 600;
 }
 
-.reg-form-group {
+.form-group {
     text-align: left;
     margin-bottom: 20px;
 }
 
-.reg-form-group label {
+.form-group label {
     display: block;
     margin-bottom: 8px;
     color: #555;
     font-weight: 500;
 }
 
-.reg-form-group input {
+.form-group input {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -69,13 +69,14 @@
     transition: all 0.3s ease;
 }
 
-.reg-form-group input:focus {
+.form-group input:focus {
     border-color: #185C03;
     box-shadow: 0 0 5px rgba(24, 92, 3, 0.3);
     outline: none;
 }
 
-.reg-btn {
+
+.register-btn {
     width: 100%;
     padding: 14px;
     background-color: #e0721e;
@@ -89,30 +90,31 @@
     margin-top: 10px;
 }
 
-.reg-btn:hover {
+.register-btn:hover {
     background-color: #e9dcaf;
     transform: translateY(-2px);
 }
 
-.reg-login-link {
+
+.login-link {
     margin-top: 20px;
     font-size: 14px;
     color: #666;
 }
 
-.reg-login-link a {
+.login-link a {
     color: #b88f2f;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
-.reg-login-link a:hover {
+.login-link a:hover {
     color: #c67e27;
     text-decoration: underline;
 }
 
-.reg-error-text {
+.error-text {
   color: #d9534f;
   font-size: 12px;
   margin-top: 5px;

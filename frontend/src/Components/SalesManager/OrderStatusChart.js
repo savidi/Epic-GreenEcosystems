@@ -1,6 +1,7 @@
+// OrderStatusChart.js (Revised)
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// Removed 'useNavigate' import
 import { Doughnut } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -8,7 +9,6 @@ import {
     Tooltip,
     Legend
 } from 'chart.js';
-import './SalesManager.css';
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -17,32 +17,23 @@ const OrderStatusChart = () => {
     const [statusData, setStatusData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
+    // Removed the useNavigate hook
 
     const fetchOrderStatusCounts = useCallback(async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                setError('No authentication token found. Please log in again.');
-                setLoading(false);
-                return;
-            }
-            const response = await axios.get('http://localhost:5000/api/sales/order-status-counts', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            // Removed token check and navigation
+            // Removed the headers object from the axios call
+            const response = await axios.get('http://localhost:5000/api/sales/order-status-counts');
             setStatusData(response.data);
         } catch (err) {
             console.error('Error fetching order status data:', err);
-            if (err.response && err.response.status === 401) {
-                setError('Access denied. You may not have permission to access order status data.');
-            } else {
-                setError(err);
-            }
+            // Removed 401 error handling and redirect
+            setError(err);
         } finally {
             setLoading(false);
         }
-    }, [navigate]);
+    }, []); // Removed 'navigate' from the dependency array
 
     useEffect(() => {
         fetchOrderStatusCounts();
@@ -66,12 +57,12 @@ const OrderStatusChart = () => {
                 label: 'Number of Orders',
                 data: data,
                 backgroundColor: [
-                    'rgba(230, 157, 47, 0.8)',  // Pending
-                    'rgba(36, 166, 44, 0.8)',  // Paid
-                    'rgba(153, 102, 255, 0.8)',  // Shipped
-                    'rgba(78, 55, 13, 0.8)',  // Delivered
-                    'rgba(206, 46, 24, 0.8)', // Cancelled
-                    'rgba(255, 159, 64, 0.8)',  // Quotation statuses
+                    'rgba(230, 157, 47, 0.8)',   // Pending
+                    'rgba(36, 166, 44, 0.8)',   // Paid
+                    'rgba(153, 102, 255, 0.8)',   // Shipped
+                    'rgba(78, 55, 13, 0.8)',   // Delivered
+                    'rgba(206, 46, 24, 0.8)',  // Cancelled
+                    'rgba(255, 159, 64, 0.8)',   // Quotation statuses
                     'rgba(199, 199, 199, 0.8)',
                 ],
                 borderColor: [
@@ -123,10 +114,10 @@ const OrderStatusChart = () => {
     const hasData = statusData.some(item => item.count > 0);
 
     return (
-        <div className="salesmanager-order-status-chart-container">
+        <div className="order-status-chart-container">
             <h2>Order Status Distribution</h2>
             {hasData ? (
-                <div className="salesmanager-chart-wrapper">
+                <div className="chart-wrapper">
                     <Doughnut data={chartData} options={options} />
                 </div>
             ) : (

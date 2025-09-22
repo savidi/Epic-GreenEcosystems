@@ -7,6 +7,11 @@ import { MapContainer, TileLayer, Marker, Popup, Rectangle, Tooltip } from 'reac
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+// Import marker images directly
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import iconRetina from 'leaflet/dist/images/marker-icon-2x.png';
+
 // Import images
 import CinnamonImg from '../Images/Cinnamon.png';
 import CardamomImg from '../Images/Cardomom.png';
@@ -19,11 +24,12 @@ import CloveImg from '../Images/Clove.png';
 function Dashboard() {
     // Fix for default markers in react-leaflet
     delete L.Icon.Default.prototype._getIconUrl;
-    L.Icon.Default.mergeOptions({
-        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-        iconUrl: require('leaflet/dist/images/marker-icon.png'),
-        shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-    });
+
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: iconRetina,
+    iconUrl: icon,
+    shadowUrl: iconShadow,
+});
 
     // Map state
     const [mapCenter, setMapCenter] = useState([7.4666, 80.5667]);

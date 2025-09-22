@@ -9,11 +9,6 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 
 
-
-
-
-
-
 // Routes
 const fertilizerRouter = require("./Routes/FertilizerRoute");
 const productRouter = require("./Routes/ProductRoute");
@@ -98,6 +93,9 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
     res.status(200).json({ received: true });
 });
 
+
+// 2. Global Middleware (must be after the webhook)
+app.use(express.json());
 // CORS middleware
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
@@ -246,46 +244,8 @@ app.get("/health", (req, res) => {
     });
 });
 
-// Public routes
+// A. Public Routes (no auth middleware)
 app.use('/api/sales', salesRouter);
-
-// Stripe checkout session
-app.post('/api/create-checkout-session', auth, async (req, res) => {
-    try {
-        const { orderId } = req.body;
-        
-        if (!orderId) {
-            return res.status(400).json({ error: 'Order ID is required' });
-        }
-
-        const order = await Order.findById(orderId);
-        if (!order) return res.status(404).json({ error: 'Order not found' });
-        if (order.customer.toString() !== req.userId) return res.status(403).json({ error: 'Forbidden' });
-
-        const line_items = [{
-            price_data: {
-                currency: 'lkr',
-                product_data: { name: `Order #${order._id.toString()}` },
-                unit_amount: Math.round(order.totalPrice * 100),
-            },
-            quantity: 1,
-        }];
-
-        const session = await stripe.checkout.sessions.create({
-            payment_method_types: ['card'],
-            line_items,
-            mode: 'payment',
-            success_url: `http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `http://localhost:3000/cancel`,
-            metadata: { orderId: order._id.toString() },
-        });
-
-        res.json({ id: session.id });
-    } catch (error) {
-        console.error('Error creating checkout session:', error);
-        res.status(500).json({ error: 'Internal Server Error', message: error.message });
-    }
-});
 
 // Authentication routes
 app.post("/register", async (req, res) => {
