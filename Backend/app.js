@@ -97,16 +97,19 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
 
 // 2. Global Middleware (must be after the webhook)
 app.use(express.json());
-// CORS middleware
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+// CORS middleware - allow both frontend ports
+app.use(cors({ 
+    origin: ["http://localhost:3000", "http://localhost:3002","http://localhost:300"], 
+    credentials: true 
+  }));
 
 // REQUEST DEDUPLICATION MIDDLEWARE
 const recentRequests = new Map();
 const REQUEST_CACHE_TIMEOUT = 30000; // 30 seconds
 
 app.use((req, res, next) => {
-    // Skip for GET requests and webhooks
-    if (req.method === 'GET' || req.path === '/webhook') {
+   // Skip for GET requests, webhooks, and authentication endpoints
+   if (req.method === 'GET' || req.path === '/webhook' || req.path === '/login' || req.path === '/register') {
         return next();
     }
 
