@@ -80,38 +80,23 @@ const PlantCard = ({ plant, onDelete, onUpdate }) => {
 
   if (isEditing) {
     return (
-      <div className="navfield-content-wrapper">
+      <div className="plant-card plant-edit-mode">
          <Navfield />
-        <div className="plant-card plant-edit-mode">
-          <form onSubmit={handleSubmit}>
-            <div className="plant-form-group-legacy">
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="plant-form-input-basic"
-              />
-            </div>
-            
-            <div className="form-group">
-              <select
-                name="plantingDivision"
-                value={formData.plantingDivision}
-                onChange={handleChange}
-                className="plant-form-input-basic"
-                required
-              >
-                {divisions.map(div => (
-                  <option key={div} value={div}>Division {div}</option>
-                ))}
-              </select>
-            </div>
-
+        <form onSubmit={handleSubmit}>
+          <div className="plant-form-group-legacy">
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="plant-form-input-basic"
+            />
+          </div>
+          
           <div className="form-group">
             <select
-              name="wateringFrequency"
+              name="plantingDivision"
               value={formData.plantingDivision}
               onChange={handleChange}
               className="plant-form-input-basic"
@@ -178,14 +163,12 @@ const PlantCard = ({ plant, onDelete, onUpdate }) => {
           </div>
         </form>
       </div>
-      </div>
     );
   }
 
   return (
-    <div className="navfield-content-wrapper">
+    <div className="plant-card plant-card-detailed">
          <Navfield />
-      <div className="plant-card plant-card-detailed">
       <div className="plant-card-header">
         <h3 className="plant-card-title">{plant.name}</h3>
         <span className="plant-division">Division {plant.plantingDivision || 'N/A'}</span>
@@ -226,7 +209,6 @@ const PlantCard = ({ plant, onDelete, onUpdate }) => {
         </button>
       </div>
     </div>
-    </div>
   );
 };
 
@@ -248,6 +230,30 @@ function Plant() {
     const [uploadStatus, setUploadStatus] = useState(null); // 'success', 'error', or null
     const API_BASE = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
 
+
+    // Sidebar state management
+    useEffect(() => {
+        const updateBodyClass = () => {
+            const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+            if (isCollapsed) {
+                document.body.classList.add('sidebar-collapsed');
+            } else {
+                document.body.classList.remove('sidebar-collapsed');
+            }
+        };
+
+        // Initial update
+        updateBodyClass();
+
+        // Set up interval to check localStorage changes
+        const interval = setInterval(updateBodyClass, 100);
+
+        // Cleanup
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
     const divisions = ['A', 'B', 'C'];
     const frequencyOptions = [
         { value: '1', label: 'Daily' },
@@ -257,90 +263,6 @@ function Plant() {
         { value: '14', label: 'Every 2 weeks' },
         { value: '30', label: 'Monthly' }
     ];
-
-    // Handle sidebar collapse state
-    useEffect(() => {
-        const handleSidebarState = () => {
-            // Multiple ways to detect sidebar state
-            const isCollapsedFromStorage = localStorage.getItem('sidebar-collapsed') === 'true';
-            const sidebarElement = document.querySelector('.navfield-sidebar');
-            const isCollapsedFromDOM = sidebarElement && sidebarElement.classList.contains('collapsed');
-            
-            // Use the most reliable method
-            const isCollapsed = isCollapsedFromDOM || isCollapsedFromStorage;
-            
-            const contentWrappers = document.querySelectorAll('.navfield-content-wrapper');
-            
-            contentWrappers.forEach(wrapper => {
-                if (isCollapsed) {
-                    // Add collapsed class
-                    wrapper.classList.add('sidebar-collapsed');
-                    
-                    // Set data attribute for CSS targeting
-                    wrapper.setAttribute('data-sidebar-collapsed', 'true');
-                    
-                    // Set CSS custom properties
-                    wrapper.style.setProperty('--sidebar-width', '60px');
-                    
-                    // Fallback inline styles
-                    wrapper.style.marginLeft = '60px';
-                    wrapper.style.width = 'calc(100% - 60px)';
-                } else {
-                    // Remove collapsed class
-                    wrapper.classList.remove('sidebar-collapsed');
-                    
-                    // Remove data attribute
-                    wrapper.setAttribute('data-sidebar-collapsed', 'false');
-                    
-                    // Set CSS custom properties
-                    wrapper.style.setProperty('--sidebar-width', '220px');
-                    
-                    // Fallback inline styles
-                    wrapper.style.marginLeft = '220px';
-                    wrapper.style.width = 'calc(100% - 220px)';
-                }
-            });
-        };
-
-        // Initial setup
-        handleSidebarState();
-
-        // Listen for storage changes (when sidebar is toggled)
-        window.addEventListener('storage', handleSidebarState);
-        
-        // Listen for custom event (more reliable for same-page updates)
-        window.addEventListener('sidebarStateChanged', handleSidebarState);
-        
-        // Also listen for DOM changes as a fallback
-        const observer = new MutationObserver((mutations) => {
-            // Check if any mutation involves the sidebar
-            const hasSidebarChange = mutations.some(mutation => {
-                return Array.from(mutation.addedNodes).some(node => 
-                    node.classList && node.classList.contains('navfield-sidebar')
-                ) || Array.from(mutation.removedNodes).some(node => 
-                    node.classList && node.classList.contains('navfield-sidebar')
-                ) || (mutation.target.classList && mutation.target.classList.contains('navfield-sidebar'));
-            });
-            
-            if (hasSidebarChange) {
-                handleSidebarState();
-            }
-        });
-        
-        observer.observe(document.body, {
-            attributes: true,
-            attributeFilter: ['class'],
-            subtree: true,
-            childList: true
-        });
-
-        // Cleanup
-        return () => {
-            window.removeEventListener('storage', handleSidebarState);
-            window.removeEventListener('sidebarStateChanged', handleSidebarState);
-            observer.disconnect();
-        };
-    }, []);
 
     const handlePlantAdded = () => {
         fetchPlants();
@@ -637,11 +559,9 @@ function Plant() {
 
     if (loading) {
         return (
-            <div className="navfield-content-wrapper">
+            <div className="plant-loading-container">
                 <Navfield />
-                <div className="plant-loading-container">
-                    <div className="plant-loading">Loading plant data...</div>
-                </div>
+                <div className="plant-loading">Loading plant data...</div>
             </div>
         );
     }
@@ -655,9 +575,8 @@ function Plant() {
     }
 
     return (
-        <div className="navfield-content-wrapper">
+        <div className="plant-table-page">
             <Navfield />
-            <div className="plant-table-page">
             <div className="plant-table-header">
                 <Title level={2}>Plant Collection</Title>
                 <Button 
@@ -892,7 +811,6 @@ function Plant() {
                     </Button>
                 </div>
             </Modal>
-            </div>
         </div>
     );
 }

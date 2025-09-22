@@ -18,8 +18,7 @@ body {
 /* Hero Section */
 .contactus-hero-section {
   height: 60vh;
-  background: linear-gradient(135deg, #ffcc80 0%, #8b7147 100%);
-
+  background: url('./contact_spice.jpg') no-repeat center center/cover; 
   position: relative;
   display: flex;
   align-items: center;
@@ -31,7 +30,14 @@ body {
   position: relative;
   z-index: 2;
   text-align: center;
-  color: white;
+  /* Keep a background here for the overlay color, making text readable */
+  background-color: rgba(0, 0, 0, 0.4); 
+  width: 100%;
+  height: 100%;
+  display: flex; /* To center the content inside the overlay */
+  align-items: center;
+  justify-content: center;
+  color: white; /* Ensure text is white or contrasting */
 }
 
 .contactus-hero-content h1 {
@@ -39,6 +45,7 @@ body {
   font-weight: 700;
   margin-bottom: 1rem;
   text-shadow: 2px 2px 4px rgba(62, 39, 35, 0.5);
+  color: white; /* Ensure text color is appropriate for the new background */
 }
 
 .contactus-hero-content p {
@@ -46,6 +53,7 @@ body {
   max-width: 600px;
   margin: 0 auto;
   opacity: 0.9;
+  color: white; /* Ensure text color is appropriate for the new background */
 }
 
 /* Main Content */

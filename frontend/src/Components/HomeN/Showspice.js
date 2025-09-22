@@ -19,17 +19,11 @@ function Showspice() {
   }, []);
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ textAlign: "center", marginBottom: "30px" }}>🌿 Spice Gallery 🌿</h1>
+    <div className="homen-spice-gallery">
+      <h1 className="homen-gallery-title">🌿 Spice Gallery 🌿</h1>
 
       {/* Display Grids */}
-      <div 
-        style={{ 
-          display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", 
-          gap: "20px" 
-        }}
-      >
+      <div className="homen-spice-grid">
         {grids.length > 0 ? (
           grids.map((grid, index) => (
             <div 
@@ -41,8 +35,8 @@ function Showspice() {
                 alt={grid.name} 
               />
               {console.log("Image URL:", grid.image)}
-              <h3 style={{ marginBottom: "10px", color: "#444" }}>{grid.name}</h3>
-              <p style={{ color: "#666" }}>{grid.description}</p>
+              <h3>{grid.name}</h3>
+              <p>{grid.description}</p>
             </div>
           ))
         ) : (

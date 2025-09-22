@@ -1,3 +1,4 @@
+// src/Components/PaymentPage/PaymentPage.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jsPDF from "jspdf";
@@ -69,13 +70,11 @@ function PaymentPage() {
     const doc = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
     doc.setFontSize(18);
     doc.text("Payment Report", 40, 40);
-    
+
     const today = new Date().toLocaleDateString();
     doc.text(`Report Generated: ${today}`, 40, 80);
 
     doc.setFontSize(12);
-    
-
 
     const tableColumn = [
       "Staff Name", "Email", "Position", "Month",
@@ -108,7 +107,7 @@ function PaymentPage() {
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
-      startY: 110,  
+      startY: 110,
       theme: "striped",
       styles: { fontSize: 10, cellPadding: 6 },
       headStyles: { fillColor: [41, 128, 185], textColor: 255 },
@@ -135,73 +134,79 @@ function PaymentPage() {
   return (
     <div className="paymentpage-attendance-scanne-page">
       <Nav />
-      <div className="paymentpage-payment-container">
-        <h2>Payment Management</h2>
+      {/* Wrap content in nav-content-wrapper to move with sidebar */}
+      <div className="nav-content-wrapper">
+        <div className="paymentpage-payment-container">
+          <h1>Payment Management</h1>
 
-        <div className="paymentpage-payment-actions">
-          <label>Select Month:</label>
-          <input type="month" value={month} onChange={handleMonthChange} />
-          
-          <button onClick={generatePDF} className="paymentpage-pdf-btn">Download PDF</button>
-        </div>
+          {/* New filter container */}
+          <div className="paymentpage-filter-container">
+            <div className="paymentpage-payment-actions">
+              <label>Select Month:</label>
+              <input type="month" value={month} onChange={handleMonthChange} />
 
-        {loading ? (
-          <p>Loading payments...</p>
-        ) : payments.length === 0 ? (
-          <p className="paymentpage-no-data">No payments found for selected month.</p>
-        ) : (
-          <table className="paymentpage-payment-table">
-            <thead>
-              <tr>
-                <th>Staff Name</th>
-                <th>Email</th>
-                <th>Position</th>
-                <th>Month</th>
-                <th>OT Pay</th>
-                <th>Late Days</th>
-                <th>Absent Days</th>
-                <th>Late Deduction</th>
-                <th>Absent Deduction</th>
-                <th>Final Salary</th>
-              </tr>
-            </thead>
-            <tbody>
-              {payments.map(p => (
-                <tr key={p._id}>
-                  <td>{p.staffId?.name}</td>
-                  <td>{p.staffId?.email}</td>
-                  <td>{p.staffId?.position}</td>
-                  <td>{p.month}</td>
-                  <td>{p.otPay}</td>
-                  <td>{p.lateCount}</td>
-                  <td>{p.absentCount}</td>
-                  <td>{p.lateDeduction}</td>
-                  <td>{p.absentDeduction}</td>
-                  <td>{isMonthCompleted(p.month) ? p.amount : ""}</td>
+              <button onClick={generatePDF} className="paymentpage-pdf-btn">Download PDF</button>
+            </div>
+          </div>
+
+          {loading ? (
+            <p>Loading payments...</p>
+          ) : payments.length === 0 ? (
+            <p className="paymentpage-no-data">No payments found for selected month.</p>
+          ) : (
+            <table className="paymentpage-payment-table">
+              <thead>
+                <tr>
+                  <th>Staff Name</th>
+                  <th>Email</th>
+                  <th>Position</th>
+                  <th>Month</th>
+                  <th>OT Pay</th>
+                  <th>Late Days</th>
+                  <th>Absent Days</th>
+                  <th>Late Deduction</th>
+                  <th>Absent Deduction</th>
+                  <th>Final Salary</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+              </thead>
+              <tbody>
+                {payments.map(p => (
+                  <tr key={p._id}>
+                    <td>{p.staffId?.name}</td>
+                    <td>{p.staffId?.email}</td>
+                    <td>{p.staffId?.position}</td>
+                    <td>{p.month}</td>
+                    <td>{p.otPay}</td>
+                    <td>{p.lateCount}</td>
+                    <td>{p.absentCount}</td>
+                    <td>{p.lateDeduction}</td>
+                    <td>{p.absentDeduction}</td>
+                    <td>{isMonthCompleted(p.month) ? p.amount : ""}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
 
-        <div className="paymentpage-payment-summary-section">
-          <h2>Monthly Summary</h2>
-          <div className="paymentpage-summary-cards">
-            <div className="paymentpage-summary-card total">
-              <h3>Total OT Pay</h3>
-              <div className="paymentpage-amount">{totalOTPay}</div>
-            </div>
-            <div className="paymentpage-summary-card pending">
-              <h3>Total Late Deduction</h3>
-              <div className="paymentpage-amount">{totalLateDeduction}</div>
-            </div>
-            <div className="paymentpage-summary-card pending">
-              <h3>Total Absent Deduction</h3>
-              <div className="paymentpage-amount">{totalAbsentDeduction}</div>
-            </div>
-            <div className="paymentpage-summary-card paid">
-              <h3>Total Payment</h3>
-              <div className="paymentpage-amount">{totalSalary}</div>
+          <div className="paymentpage-payment-summary-section">
+            <h2>Monthly Summary</h2>
+            <div className="paymentpage-summary-cards">
+              <div className="paymentpage-summary-card total">
+                <h3>Total OT Pay</h3>
+                <div className="paymentpage-amount">{totalOTPay}</div>
+              </div>
+              <div className="paymentpage-summary-card pending">
+                <h3>Total Late Deduction</h3>
+                <div className="paymentpage-amount">{totalLateDeduction}</div>
+              </div>
+              <div className="paymentpage-summary-card pending">
+                <h3>Total Absent Deduction</h3>
+                <div className="paymentpage-amount">{totalAbsentDeduction}</div>
+              </div>
+              <div className="paymentpage-summary-card paid">
+                <h3>Total Payment</h3>
+                <div className="paymentpage-amount">{totalSalary}</div>
+              </div>
             </div>
           </div>
         </div>

@@ -1,5 +1,7 @@
- import React, { useState } from 'react';
+import React, { useState } from 'react';
 import './ContactUs.css';
+import Footer from '../Footer/Footer';
+import Nav from '../NavCus/NavCus';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -46,6 +48,7 @@ const ContactUs = () => {
 
   return (
     <div className="contactus-page">
+      <Nav />
       {/* Hero Section */}
       <section className="contactus-hero-section">
         <div className="contactus-hero-overlay">
@@ -212,6 +215,7 @@ const ContactUs = () => {
     ></iframe>
   </div>
 </section>
+<Footer />
     </div>
   );
 };

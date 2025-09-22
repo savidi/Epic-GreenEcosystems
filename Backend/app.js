@@ -9,6 +9,11 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 
 
+
+
+
+
+
 // Routes
 const fertilizerRouter = require("./Routes/FertilizerRoute");
 const productRouter = require("./Routes/ProductRoute");
@@ -93,20 +98,36 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
     res.status(200).json({ received: true });
 });
 
+// CORS middleware - allow both frontend ports
+app.use(cors({ 
+  origin: ["http://localhost:3000", "http://localhost:3002"], 
+  credentials: true 
+}));
 
-// 2. Global Middleware (must be after the webhook)
-app.use(express.json());
-// CORS middleware
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+// Static file serving for images
+app.use('/images', express.static('images'));
 
 // REQUEST DEDUPLICATION MIDDLEWARE
 const recentRequests = new Map();
-const REQUEST_CACHE_TIMEOUT = 30000; // 30 seconds
+const REQUEST_CACHE_TIMEOUT = 10000; // Reduced to 10 seconds
+const DUPLICATE_WINDOW = 2000; // Reduced to 2 seconds
 
 app.use((req, res, next) => {
-    // Skip for GET requests and webhooks
-    if (req.method === 'GET' || req.path === '/webhook') {
+    // Skip for GET requests, webhooks, and authentication endpoints
+    if (req.method === 'GET' || 
+        req.path === '/webhook' || 
+        req.path === '/staff/login' || 
+        req.path === '/login' || 
+        req.path === '/register') {
         return next();
+    }
+
+    // Clean old entries more aggressively
+    const now = Date.now();
+    for (const [key, timestamp] of recentRequests.entries()) {
+        if (now - timestamp > REQUEST_CACHE_TIMEOUT) {
+            recentRequests.delete(key);
+        }
     }
 
     // Create a unique key for this request
@@ -115,31 +136,21 @@ app.use((req, res, next) => {
     // Check if we've seen this exact request recently
     if (recentRequests.has(requestKey)) {
         const lastRequestTime = recentRequests.get(requestKey);
-        const timeDiff = Date.now() - lastRequestTime;
+        const timeDiff = now - lastRequestTime;
         
-        if (timeDiff < 5000) { // If same request within 5 seconds
+        if (timeDiff < DUPLICATE_WINDOW) { // If same request within 2 seconds
             console.log(`Blocking duplicate request: ${requestKey} (${timeDiff}ms ago)`);
             return res.status(429).json({
                 success: false,
                 error: 'Duplicate request',
                 message: 'This exact request was sent recently. Please wait before retrying.',
-                retryAfter: Math.ceil((5000 - timeDiff) / 1000)
+                retryAfter: Math.ceil((DUPLICATE_WINDOW - timeDiff) / 1000)
             });
         }
     }
     
     // Store this request timestamp
-    recentRequests.set(requestKey, Date.now());
-    
-    // Clean old entries periodically
-    if (recentRequests.size > 100) {
-        const now = Date.now();
-        for (const [key, timestamp] of recentRequests.entries()) {
-            if (now - timestamp > REQUEST_CACHE_TIMEOUT) {
-                recentRequests.delete(key);
-            }
-        }
-    }
+    recentRequests.set(requestKey, now);
     
     next();
 });
@@ -244,8 +255,46 @@ app.get("/health", (req, res) => {
     });
 });
 
-// A. Public Routes (no auth middleware)
+// Public routes
 app.use('/api/sales', salesRouter);
+
+// Stripe checkout session
+app.post('/api/create-checkout-session', auth, async (req, res) => {
+    try {
+        const { orderId } = req.body;
+        
+        if (!orderId) {
+            return res.status(400).json({ error: 'Order ID is required' });
+        }
+
+        const order = await Order.findById(orderId);
+        if (!order) return res.status(404).json({ error: 'Order not found' });
+        if (order.customer.toString() !== req.userId) return res.status(403).json({ error: 'Forbidden' });
+
+        const line_items = [{
+            price_data: {
+                currency: 'lkr',
+                product_data: { name: `Order #${order._id.toString()}` },
+                unit_amount: Math.round(order.totalPrice * 100),
+            },
+            quantity: 1,
+        }];
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items,
+            mode: 'payment',
+            success_url: `http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `http://localhost:3000/cancel`,
+            metadata: { orderId: order._id.toString() },
+        });
+
+        res.json({ id: session.id });
+    } catch (error) {
+        console.error('Error creating checkout session:', error);
+        res.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
+});
 
 // Authentication routes
 app.post("/register", async (req, res) => {

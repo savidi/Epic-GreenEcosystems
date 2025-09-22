@@ -16,6 +16,9 @@ function StaffManagement() {
   const [filteredStaff, setFilteredStaff] = useState([]);
   const [previewStaff, setPreviewStaff] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(
+    JSON.parse(localStorage.getItem("sidebar-collapsed")) || false
+  );
   const idCardRef = useRef();
 
   useEffect(() => {
@@ -25,6 +28,27 @@ function StaffManagement() {
   useEffect(() => {
     filterStaff();
   }, [searchQuery, staffTypeQuery, staffList]);
+
+  // ✅ Sync with Nav sidebar collapse
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const collapsed =
+        JSON.parse(localStorage.getItem("sidebar-collapsed")) || false;
+      setSidebarCollapsed(collapsed);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    const interval = setInterval(() => {
+      const collapsed =
+        JSON.parse(localStorage.getItem("sidebar-collapsed")) || false;
+      if (collapsed !== sidebarCollapsed) setSidebarCollapsed(collapsed);
+    }, 100);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      clearInterval(interval);
+    };
+  }, [sidebarCollapsed]);
 
   const fetchStaff = async () => {
     try {
@@ -170,9 +194,17 @@ function StaffManagement() {
   return (
     <div className="staffmanagement-page">
       <Nav />
-      <div className="staffmanagement-container">
-        <h2>Staff Management</h2>
-        <div className="staffmanagement-top-bar">
+      <div
+        className={`staffmanagement-container ${
+          sidebarCollapsed ? "sidebar-collapsed" : ""
+        }`}
+      >
+
+        
+        <h1 className="fworker-page-title">Staff Management</h1>
+        
+        {/* New filter container based on the image */}
+        <div className="staffmanagement-filter-container">
           <div className="staffmanagement-search-container">
             <label className="staffmanagement-filter-label">
               Search by National ID:
@@ -192,7 +224,9 @@ function StaffManagement() {
                 ×
               </button>
             )}
-
+          </div>
+          
+          <div className="staffmanagement-filter-by-type">
             <label className="staffmanagement-filter-label">
               Filter by Staff Type:
             </label>
@@ -216,11 +250,23 @@ function StaffManagement() {
                 ×
               </button>
             )}
+          </div>
 
+          
+
+          <div className="staffmanagement-action-buttons-group">
+            <button
+              className="staffmanagement-action-btn staffmanagement-view-all-btn"
+              onClick={() => {
+                clearSearch();
+                clearStaffType();
+              }}
+            >
+              View All
+            </button>
             <Link to="/addStaff" className="staffmanagement-add-staff-btn">
               + Add Staff
             </Link>
-
             <button
               className="staffmanagement-download-pdf-btn"
               onClick={generatePDF}
@@ -229,7 +275,7 @@ function StaffManagement() {
             </button>
           </div>
         </div>
-
+        
         <table className="staffmanagement-staff-table">
           <thead>
             <tr>

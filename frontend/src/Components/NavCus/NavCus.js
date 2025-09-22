@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import userIcon from './profile.png';
 import cartIcon from './cart.png';
 import arrowIcon from './arrow.png';
-import Elogo from './Elogo.jpeg'; // Logo
+import Elogo from '../Images/Elogo.png';// Logo
 import axios from 'axios';
 
 function Nav({ cartUpdateTrigger }) {
@@ -71,7 +71,7 @@ function Nav({ cartUpdateTrigger }) {
     <div className="navcus-navbar">
       <div className="navcus-logo">
         <img src={Elogo} alt="Epic Green Logo" className="navcus-elogo" />
-        Epic Green
+        
       </div>
 
       <ul className="navcus-nav-links">

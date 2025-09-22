@@ -35,7 +35,7 @@ function Login() {
         setMessageType("success");
         // Redirect after a short delay to allow the user to see the message
         setTimeout(() => {
-          navigate("/local-orders");
+          navigate("/customer");
         }, 1500);
       } else {
         setMessage(response.data.message);
@@ -43,7 +43,21 @@ function Login() {
       }
     } catch (error) {
       console.error("Login failed:", error);
-      setMessage("An error occurred. Please try again.");
+      console.error("Error response:", error.response);
+      console.error("Error request:", error.request);
+      console.error("Error config:", error.config);
+      
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        setMessage(`Server error: ${error.response.status} - ${error.response.data.message || error.response.statusText}`);
+      } else if (error.request) {
+        // The request was made but no response was received
+        setMessage("Network error: Unable to connect to the server. Please check if the backend is running.");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        setMessage(`Request error: ${error.message}`);
+      }
       setMessageType("error");
     }
   };

@@ -4,15 +4,11 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "./AttendanceTable.css";
 import Nav from "../Nav/Nav";
-import AttendanceChart from "../Home/AttendanceChart";
 
 function AttendanceTable() {
   const [records, setRecords] = useState([]);
   const [staffList, setStaffList] = useState([]);
   const [filteredRecords, setFilteredRecords] = useState([]);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(
-    () => JSON.parse(localStorage.getItem("sidebar-collapsed")) || false
-  );
   const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date();
     const yyyy = today.getFullYear();
@@ -22,7 +18,6 @@ function AttendanceTable() {
   });
   const [searchQuery, setSearchQuery] = useState("");
 
-  // -------------------- Fetch Data --------------------
   useEffect(() => {
     fetchAttendance();
     fetchStaff();
@@ -31,20 +26,6 @@ function AttendanceTable() {
   useEffect(() => {
     filterRecords();
   }, [records, staffList, selectedDate, searchQuery]);
-
-  // Effect to listen for sidebar collapse changes via localStorage
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setIsSidebarCollapsed(
-        JSON.parse(localStorage.getItem("sidebar-collapsed")) || false
-      );
-    };
-    window.addEventListener("storage", handleStorageChange);
-    handleStorageChange(); // Initial check on component mount
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
 
   const fetchAttendance = async () => {
     try {
@@ -72,7 +53,6 @@ function AttendanceTable() {
     return `${yyyy}-${mm}-${dd}`;
   };
 
-  // -------------------- Filter Records --------------------
   const filterRecords = () => {
     let filtered = [...records];
 
@@ -124,7 +104,6 @@ function AttendanceTable() {
     setSearchQuery("");
   };
 
-  // -------------------- Attendance Summary --------------------
   const getAttendanceSummary = () => {
     const totalRegistered = staffList.length;
     let onTime = 0;
@@ -139,20 +118,13 @@ function AttendanceTable() {
     const attended = onTime + late;
     const absent = totalRegistered - attended;
 
-    return {
-      totalRegistered,
-      onTime,
-      late,
-      attended,
-      absent,
-    };
+    return { totalRegistered, onTime, late, attended, absent };
   };
 
   const summary = getAttendanceSummary();
   const getPercentage = (count, total) =>
     total > 0 ? ((count / total) * 100).toFixed(1) : 0;
 
-  // -------------------- PDF Generation --------------------
   const generatePDF = () => {
     if (!filteredRecords.length)
       return alert("No attendance records to export!");
@@ -202,7 +174,6 @@ function AttendanceTable() {
       theme: "striped",
     });
 
-    // -------------------- Summary Below Table --------------------
     const finalY = doc.lastAutoTable.finalY + 10;
     doc.setFontSize(12);
     doc.text(`Total Staff: ${summary.totalRegistered}`, 14, finalY);
@@ -215,91 +186,89 @@ function AttendanceTable() {
     );
   };
 
-  // -------------------- JSX --------------------
   return (
     <>
       <Nav />
-      <div
-        className={`attendancetable-main-content-area ${
-          isSidebarCollapsed ? "sidebar-collapsed" : ""
-        }`}
-      >
+      <div className="attendancetable-main-content-area">
         <h1 className="attendancetable-attendance-title">
           Attendance Records
         </h1>
 
-        {/* Filters */}
-        <div className="attendancetable-filter-section">
-          <div className="filter-group">
-            <label
-              htmlFor="nationalIdSearch"
-              className="attendancetable-filter-label"
-            >
-              Search by National ID:
-            </label>
-            <div className="attendancetable-search-input-container">
-              <input
-                id="nationalIdSearch"
-                type="text"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  if (e.target.value.trim()) setSelectedDate("");
-                }}
-                placeholder="Enter National ID"
-                className="attendancetable-search-input"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="attendancetable-clear-search-btn"
-                >
-                  ×
-                </button>
-              )}
+        {/* New filter container */}
+        <div className="attendancetable-filter-container">
+          {/* Filters */}
+          <div className="attendancetable-filter-section">
+            <div className="filter-group">
+              
+              <div className="attendancetable-search-input-container">
+                <label
+                htmlFor="nationalIdSearch"
+                className="attendancetable-filter-label"
+              >
+                Search by National ID:
+              </label>
+                <input
+                  id="nationalIdSearch"
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    if (e.target.value.trim()) setSelectedDate("");
+                  }}
+                  placeholder="Enter National ID"
+                  className="attendancetable-search-input"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="attendancetable-clear-search-btn"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="attendancetable-filter-group">
-            <label
-              htmlFor="dateSelect"
-              className="attendancetable-filter-label"
+            <div className="attendancetable-filter-group">
+              <label
+                htmlFor="dateSelect"
+                className="attendancetable-filter-label"
+              >
+                Filter by Date:
+              </label>
+              <input
+                id="dateSelect"
+                type="date"
+                value={selectedDate || ""}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="attendancetable-date-input"
+              />
+            </div>
+
+            <button
+              onClick={clearFilters}
+              className="attendancetable-btn attendancetable-btn-clear"
             >
-              Filter by Date:
-            </label>
-            <input
-              id="dateSelect"
-              type="date"
-              value={selectedDate || ""}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              className="attendancetable-date-input"
-            />
+              Reset Filters
+            </button>
+
+            <button
+              onClick={generatePDF}
+              className="attendancetable-btn attendancetable-btn-pdf"
+            >
+              Download PDF
+            </button>
           </div>
-
-          <div className="attendancetable-record-count">
-            Showing {filteredRecords.length} attendance records{" "}
-            {searchQuery && `for National ID: "${searchQuery}"`}{" "}
-            {selectedDate &&
-              !searchQuery &&
-              `on ${formatDate(selectedDate)}`}
-          </div>
-
-          <button
-            onClick={clearFilters}
-            className="attendancetable-btn attendancetable-btn-clear"
-          >
-            Reset Filters
-          </button>
-
-          <button
-            onClick={generatePDF}
-            className="attendancetable-btn attendancetable-btn-pdf"
-          >
-            Download PDF
-          </button>
+        </div>
+        
+        {/* Record Count */}
+        <div className="attendancetable-record-count">
+          Showing {filteredRecords.length} attendance records
+          {searchQuery && ` for National ID: "${searchQuery}"`}
+          {selectedDate && !searchQuery && ` on ${formatDate(selectedDate)}`}
         </div>
 
-        {/* Attendance Table */}
+        {/* Table */}
         <table className="attendancetable-attendance-table">
           <thead className="attendancetable-table-header">
             <tr>
@@ -339,10 +308,7 @@ function AttendanceTable() {
               ))
             ) : (
               <tr>
-                <td
-                  colSpan="10"
-                  className="attendancetable-empty-state"
-                >
+                <td colSpan="10" className="attendancetable-empty-state">
                   No attendance records found
                 </td>
               </tr>
@@ -350,30 +316,24 @@ function AttendanceTable() {
           </tbody>
         </table>
 
-        {/* Summary Cards */}
+        {/* Summary */}
         {!searchQuery.trim() && staffList.length > 0 && (
           <div className="attendancetable-attendance-summary">
             <h2 className="attendancetable-summary-title">
               Attendance Summary{" "}
-              {selectedDate
-                ? `for ${formatDate(selectedDate)}`
-                : "for Today"}
+              {selectedDate ? `for ${formatDate(selectedDate)}` : "for Today"}
             </h2>
 
             <div className="attendancetable-summary-stats">
               <div className="attendancetable-stat-card">
-                <div className="attendancetable-stat-label">
-                  Total Staff
-                </div>
+                <div className="attendancetable-stat-label">Total Staff</div>
                 <div className="attendancetable-stat-value">
                   {summary.totalRegistered}
                 </div>
               </div>
 
               <div className="attendancetable-stat-card attendancetable-stat-present">
-                <div className="attendancetable-stat-label">
-                  Present
-                </div>
+                <div className="attendancetable-stat-label">Present</div>
                 <div className="attendancetable-stat-value">
                   {summary.attended}
                 </div>
@@ -383,9 +343,7 @@ function AttendanceTable() {
               </div>
 
               <div className="attendancetable-stat-card attendancetable-stat-absent">
-                <div className="attendancetable-stat-label">
-                  Absent
-                </div>
+                <div className="attendancetable-stat-label">Absent</div>
                 <div className="attendancetable-stat-value">
                   {summary.absent}
                 </div>
@@ -395,19 +353,11 @@ function AttendanceTable() {
             <div className="attendancetable-summary-info">
               <div className="attendancetable-info-item">
                 <strong>Attendance Rate:</strong>{" "}
-                {getPercentage(
-                  summary.attended,
-                  summary.totalRegistered
-                )}
-                %
+                {getPercentage(summary.attended, summary.totalRegistered)}%
               </div>
               <div className="attendancetable-info-item">
                 <strong>Absenteeism Rate:</strong>{" "}
-                {getPercentage(
-                  summary.absent,
-                  summary.totalRegistered
-                )}
-                %
+                {getPercentage(summary.absent, summary.totalRegistered)}%
               </div>
               {summary.attended > 0 && (
                 <div className="attendancetable-info-item">
