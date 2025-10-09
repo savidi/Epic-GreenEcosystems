@@ -1,6 +1,6 @@
  import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./NavInv.css";
+//import "./navInv.css";
 import {
   FaHome,
   FaBox,

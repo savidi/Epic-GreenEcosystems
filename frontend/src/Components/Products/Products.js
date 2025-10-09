@@ -7,7 +7,7 @@ import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import './Products.css';
+import './products.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import NavInv from '../NavInv/NavInv';
 //import './Products.css';
-import './Addspice.css';
+import './addspice.css';
 //import './AddFertilizerInv.css'
 function Addspice({ onSpiceAdded }) {
     const navigate = useNavigate();

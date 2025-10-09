@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavInv from "../NavInv/NavInv";
 import AddFertilizer from "./AddFertilizerInv";
-import './Products.css'; 
+import './products.css'; 
 
 function Fertilizer() {
   const [fertilizers, setFertilizers] = useState([]);
