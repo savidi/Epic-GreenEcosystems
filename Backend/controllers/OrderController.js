@@ -20,10 +20,6 @@ const getPendingOrder = async (req, res) => {
     }
 };
 
-
-// Add a new item or update an existing one in the pending order
-// Corrected addOrUpdateOrderItem function
-// Corrected addOrUpdateOrderItem function
 const addOrUpdateOrderItem = async (req, res) => {
     try {
         const userId = req.userId;

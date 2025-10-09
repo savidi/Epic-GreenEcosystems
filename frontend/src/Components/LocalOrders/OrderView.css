@@ -1,11 +1,37 @@
-/* Container for the entire page content, excluding the navbar */
+
+.order-view-background {
+    /* Set the background image and make it cover the entire viewport height */
+    min-height: calc(100vh - 80px); /* Adjust height to account for Nav and Footer */
+    background-image: url('./spice_market_background.jpg'); /* <<<< REPLACE WITH YOUR IMAGE PATH >>>> */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Optional: Makes the background scroll-independent */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Outer padding for the whole view */
+    position: relative;
+}
+
+/* Optional: Add a subtle overlay to help the product card pop out against the busy background image */
+.order-view-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(62, 39, 35, 0.7);  /* Light, semi-transparent overlay (f8f0e3 is the light background color from LocalOrders) */
+    z-index: 0;
+}
+
 .order-view-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 90vh;
-    background-color: #f8f8f8; /* Lighter, more professional background */
-    padding: 20px;
+    padding: 0; /* Adjusted padding as the new outer div handles it */
+    z-index: 1; /* Ensure the content is above the overlay */
+    width: 100%; /* Ensure it spans available width */
 }
 
 /* Main card that holds the product details */
@@ -14,11 +40,13 @@
     flex-direction: column;
     background-color: white;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    /* Increased shadow for better contrast against the background */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); 
     overflow: hidden;
     max-width: 1000px;
-    width: 100%;
+    width: 90%; /* Give it breathing room */
 }
+
 
 /* For larger screens, align sections side-by-side */
 @media (min-width: 768px) {
@@ -43,6 +71,11 @@
     height: auto;
     object-fit: contain;
     border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.product-image:hover {
+    transform: scale(1.05); /* Zoom effect on hover */
 }
 
 /* Details section on the right */
@@ -108,7 +141,7 @@
     align-items: center;
     border: 1px solid #ddd;
     border-radius: 6px;
-    overflow: hidden; /* This is key to making the input and buttons look like a single unit */
+    overflow: hidden; 
 }
 
 /* Styling for the number input field */

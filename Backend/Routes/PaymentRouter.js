@@ -1,3 +1,4 @@
+// PaymentRouter.js
 const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -5,12 +6,10 @@ const Order = require('../model/Order');
 const OrderPayments = require('../model/OrderPayments');
 const auth = require('../Middleware/auth');
 
-// Add this line to import the controller function
 const { getPaymentHistory } = require('../controllers/PaymentSalesController');
 
 router.get('/history', auth, getPaymentHistory);
 
-// Route to create a Stripe Checkout Session
 router.post('/create-checkout-session', auth, async (req, res) => {
     try {
         const { orderId } = req.body;

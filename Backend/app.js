@@ -28,9 +28,11 @@ const salesRouter = require('./Routes/SalesRouter');
 const quotationRouter = require('./Routes/QuotationRouter');
 
 // Models
-const Order = require('./model/Order'); 
-const OrderPayments = require('./model/OrderPayments'); 
-const User = require('./model/Register'); 
+// Models and middleware
+const Order = require('./model/Order');
+const OrderPayments = require('./model/OrderPayments');
+const User = require('./model/Register');
+
 
 // Middleware
 const auth = require('./Middleware/auth');
@@ -57,7 +59,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// Stripe webhook (MUST BE BEFORE express.json())
+// 1. Stripe Webhook (must use express.raw before express.json)
 app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
     const sig = req.headers['stripe-signature'];
     const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -66,7 +68,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
     try {
         event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     } catch (err) {
-        console.error('Webhook signature verification failed:', err.message);
+        console.error('Webhook signature verification failed.', err.message);
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
@@ -80,7 +82,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
                 order.orderStatus = 'paid';
                 await order.save();
 
-                const payment = new OrderPayments({ 
+                const payment = new OrderPayments({
                     user: order.customer,
                     order: order._id,
                     amount: order.totalPrice,
@@ -88,13 +90,12 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
                     status: 'succeeded',
                 });
                 await payment.save();
-                console.log(`Order ${order._id} and payment updated successfully!`);
+                console.log('Order and payment updated successfully!');
             }
         } catch (err) {
             console.error('Error updating order after successful payment:', err);
         }
     }
-
     res.status(200).json({ received: true });
 });
 
@@ -258,108 +259,58 @@ app.get("/health", (req, res) => {
 // Public routes
 app.use('/api/sales', salesRouter);
 
-// Stripe checkout session
-app.post('/api/create-checkout-session', auth, async (req, res) => {
-    try {
-        const { orderId } = req.body;
-        
-        if (!orderId) {
-            return res.status(400).json({ error: 'Order ID is required' });
-        }
 
-        const order = await Order.findById(orderId);
-        if (!order) return res.status(404).json({ error: 'Order not found' });
-        if (order.customer.toString() !== req.userId) return res.status(403).json({ error: 'Forbidden' });
-
-        const line_items = [{
-            price_data: {
-                currency: 'lkr',
-                product_data: { name: `Order #${order._id.toString()}` },
-                unit_amount: Math.round(order.totalPrice * 100),
-            },
-            quantity: 1,
-        }];
-
-        const session = await stripe.checkout.sessions.create({
-            payment_method_types: ['card'],
-            line_items,
-            mode: 'payment',
-            success_url: `http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `http://localhost:3000/cancel`,
-            metadata: { orderId: order._id.toString() },
-        });
-
-        res.json({ id: session.id });
-    } catch (error) {
-        console.error('Error creating checkout session:', error);
-        res.status(500).json({ error: 'Internal Server Error', message: error.message });
-    }
-});
-
-// Authentication routes
-app.post("/register", async (req, res) => {
-    const { name, gmail, phone, address, password } = req.body;
-    
-    try {
-        if (!name || !gmail || !phone || !address || !password) {
-            return res.status(400).json({ 
-                status: "error", 
-                message: "All fields are required" 
-            });
-        }
-
+// B. Authentication Routes
+app.post("/register", async(req,res)=>{
+    const {name,gmail,phone,address,password} = req.body;
+    try{
         const encryptedPassword = await bcrypt.hash(password, 10);
-        await User.create({ name, gmail, phone, address, password: encryptedPassword });
-        res.json({ status: "ok", message: "User registered successfully" });
-    } catch (err) {
-        console.error('Registration error:', err);
-        if (err.code === 11000) {
-            res.status(400).json({ status: "error", message: "User already exists" });
-        } else {
-            res.status(500).json({ status: "error", message: "Server error during registration" });
-        }
+        await User.create({
+            name,
+            gmail,
+            phone,
+            address,
+            password: encryptedPassword,
+        });
+        res.send({status:"ok"});
+    }catch(err){
+        res.send({status:"err" });
     }
 });
 
-app.post("/login", async (req, res) => {
-    const { gmail, password } = req.body;
-    
-    try {
-        if (!gmail || !password) {
-            return res.status(400).json({ 
-                status: "error", 
-                message: "Email and password are required" 
-            });
+
+app.post("/login", async(req, res)=>{
+    const {gmail, password} = req.body;
+    try{
+        const user = await User.findOne({gmail});
+        if(!user){
+            return res.json({status:"error", message:"User Not Found"});
         }
-
-        const user = await User.findOne({ gmail });
-        if (!user) return res.status(404).json({ status: "error", message: "User Not Found" });
-
         const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (isPasswordValid) {
+        if(isPasswordValid){
             const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
-            return res.json({ status: "ok", token, userId: user._id });
+            return res.json({ status: "ok", token });
         } else {
-            return res.status(401).json({ status: "error", message: "Incorrect password" });
+            return res.json({status:"error", message:"Incorrect password"});
         }
-    } catch (err) {
-        console.error('Login error:', err);
-        res.status(500).json({ status: "error", message: "Server error during login" });
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({status:"error" , message:"Server error"});
     }
 });
 
-// Protected routes
+// C. Protected Routes (with auth middleware)
 app.use("/api/users", auth, userRouter);
 app.use("/api", auth, spiceRouter);
 app.use("/api/orders", auth, orderRouter);
 app.use("/api/payments", auth, paymentRouter);
 app.use("/api/quotations", auth, quotationRouter);
-
-// Fetch logged-in user details
 app.get('/user-details', auth, async (req, res) => {
     try {
         const user = await User.findById(req.userId).select('name gmail phone address');
-        if (!user) return res.status(404).json({ message: 'User not found' });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
         res.status(200).json({ user });
     } catch (error) {
         console.error("Error fetching user details:", error);

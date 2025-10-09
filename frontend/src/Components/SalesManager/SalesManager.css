@@ -1,7 +1,7 @@
 :root {
-    --primary-color: #9f702f;
-    --secondary-color: #c87b51;
-    --background-color: #f5e6d3;
+    --iprimary-color: #8D4E2A;
+    --isecondary-color: #A0522D;
+    --ibackground-color: #f5e6d3;
     --text-color-dark: #1a232f;
     --text-color-light: #fff;
     --card-background: #ffffff;
@@ -11,7 +11,7 @@
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: var(--background-color);
+    background-color: var(--ibackground-color);
     
 }
 
@@ -23,7 +23,7 @@ body {
 /* Sidebar Styling  */
 .sidebar {
     width: 250px;
-    background-color: var(--primary-color);
+    background-color: var(--iprimary-color);
     color: var(--text-color-light);
     padding: 20px;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -59,7 +59,7 @@ body {
 .profile-section p {
     margin: 5px 0 0;
     font-size: 0.9em;
-    color: var(--background-color);
+    color: var(--ibackground-color);
     font-weight: 600;
 }
 
@@ -95,12 +95,12 @@ body {
 }
 
 .sidebar-nav li.active a {
-    background-color: var(--secondary-color);
+    background-color: var(--isecondary-color);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-nav a:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--isecondary-color);
     transform: translateX(5px);
 }
 

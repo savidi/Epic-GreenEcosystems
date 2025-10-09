@@ -56,11 +56,25 @@ const submitQuotation = async (req, res) => {
 // Function for staff to update the quotation and order
 const updateStaffFields = async (req, res) => {
     try {
-        const { exportDuties, packagingMaterials, shippingPartner, totalCost, staffNotes } = req.body;
+        const { 
+            exportDuties, 
+            packagingMaterials, 
+            shippingPartner, 
+            totalCost, 
+            staffNotes,
+            localBasePrice,
+            exchangeRate,
+            preferredCurrency 
+        } = req.body;
         const quotation = await Quotation.findById(req.params.id);
 
         if (!quotation) {
             return res.status(404).json({ message: 'Quotation not found' });
+        }
+        
+        // Check if status is approved before allowing updates 
+        if (quotation.status === 'approved') {
+             return res.status(400).json({ message: 'Cannot update an approved quotation' });
         }
 
         quotation.exportDuties = exportDuties;
@@ -69,13 +83,19 @@ const updateStaffFields = async (req, res) => {
         quotation.totalCost = totalCost;
         quotation.staffNotes = staffNotes;
         quotation.status = 'pending'; 
+        
+        
+        quotation.localBasePrice = localBasePrice;
+        quotation.exchangeRate = exchangeRate;
+        quotation.preferredCurrency = preferredCurrency; // Ensure this is explicitly saved
+        
+        
         await quotation.save();
 
-        const order = await Order.findById(quotation.orderId); // Find order using the linked orderId
+        const order = await Order.findById(quotation.orderId);
         if (order) {
-            order.totalPrice = totalCost;
+            order.totalPrice = totalCost; // Total cost is now in the preferred currency
             order.orderStatus = 'quoted';
-            
             await order.save();
         }
 
@@ -212,6 +232,10 @@ const rejectQuotation = async (req, res) => {
     }
 };
 
+// QuotationController.js
+
+// ... (all other functions remain the same)
+
 const getQuotationPdf = async (req, res) => {
     try {
         const quotation = await Quotation.findById(req.params.id)
@@ -226,14 +250,35 @@ const getQuotationPdf = async (req, res) => {
             return res.status(400).json({ message: 'Cannot generate PDF for a quotation with "requested" status.' });
         }
 
-        // Calculations
-        const subTotal = quotation.interestedSpices.reduce(
-            (sum, spice) => sum + (spice.price * quotation.requiredQuantity),
-            0
-        );
-        const exportDutiesAmount = subTotal * (quotation.exportDuties / 100);
-        const grandTotal = subTotal + exportDutiesAmount;
+        // --- START OF FIX: Use stored, converted prices ---
 
+        // The Grand Total is already stored and calculated in the preferred currency in totalCost.
+        const grandTotal = quotation.totalCost;
+        
+        // The Subtotal (cost before duties) is the total cost divided by (1 + duty percentage/100).
+        // Since totalCost is calculated as: Subtotal * (1 + exportDuties/100)
+        // We calculate Subtotal as: totalCost / (1 + exportDuties/100)
+        
+        // Convert the exportDuties percentage to a multiplier (e.g., 5% -> 1.05)
+        const dutyMultiplier = 1 + (quotation.exportDuties / 100);
+        
+        // Calculate the Subtotal in the preferred currency (this is the price of spices)
+        const subTotal = grandTotal / dutyMultiplier;
+
+        // Calculate the exact amount of export duties added
+        const exportDutiesAmount = grandTotal - subTotal;
+        
+        // The price for a single item for display can be calculated by dividing the subTotal
+        // by the number of interested spices times the quantity (assuming all items have the same quantity, as per your schema).
+        // A more accurate way for a multi-item quote is to use the original local prices and the stored exchange rate.
+        
+        // Instead of recalculating, we will use the stored data for the summary rows, 
+        // but for the individual item line, we will use the local price converted by the stored exchange rate.
+        const preferredCurrency = quotation.preferredCurrency || 'LKR';
+        const exchangeRate = quotation.exchangeRate || 1.0;
+        
+        // --- END OF FIX ---
+        
         // Format the date for a cleaner look
         const formattedDate = new Date(quotation.createdAt).toLocaleDateString('en-US', {
             day: '2-digit',
@@ -294,7 +339,7 @@ const getQuotationPdf = async (req, res) => {
                             <h3>Details:</h3>
                             <p><strong>Quotation ID:</strong> ${quotation._id}</p>
                             <p><strong>Date:</strong> ${formattedDate}</p>
-                            <p><strong>Currency:</strong> ${quotation.preferredCurrency || 'N/A'}</p>
+                            <p><strong>Currency:</strong> ${preferredCurrency}</p>
                             <p><strong>Delivery Address:</strong> ${quotation.deliveryAddress || 'N/A'}</p>
                         </div>
                     </div>
@@ -305,19 +350,24 @@ const getQuotationPdf = async (req, res) => {
                             <tr>
                                 <th class="item-name">Item</th>
                                 <th class="item-qty">Quantity</th>
-                                <th class="item-unit-price">Unit Price</th>
-                                <th class="item-subtotal">Subtotal</th>
+                                <th class="item-unit-price">Unit Price (${preferredCurrency})</th>
+                                <th class="item-subtotal">Total (${preferredCurrency})</th>
                             </tr>
                         </thead>
                         <tbody>
-                            ${quotation.interestedSpices.map(spice => `
+                            ${quotation.interestedSpices.map(spice => {
+                                // Calculate the converted price per item (price is stored in LKR, so divide by the rate)
+                                const unitPriceConverted = spice.price / exchangeRate;
+                                const itemSubtotal = unitPriceConverted * quotation.requiredQuantity;
+                                return `
                                 <tr>
                                     <td>${spice.name}</td>
                                     <td>${quotation.requiredQuantity || 'N/A'} kg</td>
-                                    <td>${spice.price.toFixed(2)} / kg</td>
-                                    <td>${(spice.price * quotation.requiredQuantity).toFixed(2)}</td>
+                                    <td>${unitPriceConverted.toFixed(2)} / kg</td>
+                                    <td>${itemSubtotal.toFixed(2)}</td>
                                 </tr>
-                            `).join('')}
+                                `;
+                            }).join('')}
                             <tr>
                                 <td colspan="3" class="total-label">Subtotal:</td>
                                 <td class="total-amount">${subTotal.toFixed(2)}</td>
@@ -330,7 +380,7 @@ const getQuotationPdf = async (req, res) => {
                     </table>
                     
                     <div class="grand-total-section">
-                        <p><strong>Grand Total:</strong> ${grandTotal.toFixed(2)}</p>
+                        <p><strong>Grand Total:</strong> ${grandTotal.toFixed(2)} ${preferredCurrency}</p>
                     </div>
 
                     <div class="additional-info">
@@ -344,7 +394,7 @@ const getQuotationPdf = async (req, res) => {
                     
                     <div class="signature-section">
                         <p>Authorized by:</p>
-                        <p>_______________________</p>
+                        <p>__Patali Tennakoon__</p>
                         <p>Sales Manager, Epic Green</p>
                     </div>
                 </div>

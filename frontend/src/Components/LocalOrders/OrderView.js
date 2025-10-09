@@ -23,6 +23,7 @@ function OrderView() {
                     return;
                 }
 
+                // Add headers with the token to the GET request
                 const spiceResponse = await axios.get(`http://localhost:5000/api/spices/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
@@ -33,10 +34,12 @@ function OrderView() {
             } catch (error) {
                 console.error("Error fetching data:", error);
                 
+                // Handle specific errors
                 if (error.response) {
                     if (error.response.status === 404) {
-                        setSpice(null);
+                        setSpice(null); // Ensure state is null for "Spice not found" message
                     } else if (error.response.status === 401) {
+                        // Redirect to login on unauthorized access
                         localStorage.removeItem('token');
                         navigate('/login');
                     }
@@ -53,18 +56,18 @@ function OrderView() {
         setNotification({ message, visible: true, isError });
         setTimeout(() => {
             setNotification({ message: '', visible: false, isError: false });
-        }, 3000);
+        }, 3000); // Notification disappears after 3 seconds
     };
 
     const handleQuantityChange = (e) => {
-        const value = Number(e.target.value);
-        if (value >= 1) {
-            setQuantity(value);
-        }
+    const value = Number(e.target.value);
+    if (value >= 1) {
+        setQuantity(value);
+    }
     };
 
     const handleQuantityIncrement = (value) => {
-        setQuantity(prevQuantity => Math.max(1, prevQuantity + value));
+      setQuantity(prevQuantity => Math.max(1, prevQuantity + value));
     };
 
     const handleAddToCart = async () => {
@@ -96,25 +99,14 @@ function OrderView() {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        // You can use a more professional-looking loader here if you wish
+        return <div>Loading...</div>; 
     }
 
     if (!spice) {
         return <div>Spice not found.</div>;
     }
 
-     // Improved image URL handling
-     const imageSrc = spice.imageUrl
-     ? spice.imageUrl.startsWith('http')
-         ? spice.imageUrl
-         : spice.imageUrl.startsWith('/')
-             ? `http://localhost:5000${spice.imageUrl}`
-             : `http://localhost:5000/images/${spice.imageUrl}`
-     : '/placeholder.png';
- 
- // Debug log to check image URL
- console.log('Image URL:', spice.imageUrl);
- console.log('Constructed imageSrc:', imageSrc);
     return (
         <div>
             <Nav cartUpdateTrigger={cartUpdateTrigger} />
@@ -123,39 +115,42 @@ function OrderView() {
                     {notification.message}
                 </div>
             )}
-            <div className="order-view-container">
-                <div className="product-details-card">
-                    <div className="image-section">
-                        {/* Use the correctly constructed imageSrc here */}
-                        <img src={imageSrc} alt={spice.name} className="product-image" />
-                    </div>
-                    <div className="details-section">
-                        <h1 className="product-name">{spice.name}</h1>
-                        <p className="product-description">{spice.description}</p>
-                        <div className="product-price">
-                            <span className="price-label">Price:</span>
-                            <span className="price-value">Rs.{(spice.price * quantity).toFixed(2)}</span>
+            {/* START: NEW WRAPPER FOR BACKGROUND */}
+            <div className="order-view-background"> 
+                <div className="order-view-container">
+                    <div className="product-details-card">
+                        <div className="image-section">
+                            <img src={spice.imageUrl} alt={spice.name} className="product-image" />
                         </div>
-                        <div className="quantity-section">
-                            <label htmlFor="quantity" className="quantity-label">Quantity (kg):</label>
-                            <div className="quantity-controls">
-                                <button onClick={() => handleQuantityIncrement(-1)} disabled={quantity <= 1}>-</button>
-                                <input
-                                    type="number"
-                                    value={quantity}
-                                    onChange={handleQuantityChange}
-                                    className="quantity-input"
-                                    min="1"
-                                />
-                                <button onClick={() => handleQuantityIncrement(1)}>+</button>
+                        <div className="details-section">
+                            <h1 className="product-name">{spice.name}</h1>
+                            <p className="product-description">{spice.description}</p>
+                            <div className="product-price">
+                                <span className="price-label">Price:</span>
+                                <span className="price-value">Rs.{(spice.price * quantity).toFixed(2)}</span>
                             </div>
+                            <div className="quantity-section">
+                                <label htmlFor="quantity" className="quantity-label">Quantity (kg):</label>
+                                <div className="quantity-controls">
+                                    <button onClick={() => handleQuantityIncrement(-1)} disabled={quantity <= 1}>-</button>
+                                    <input
+                                        type="number"
+                                        value={quantity}
+                                        onChange={handleQuantityChange}
+                                        className="quantity-input"
+                                        min="1"
+                                    />
+                                    <button onClick={() => handleQuantityIncrement(1)}>+</button>
+                                </div>
+                            </div>
+                            <button className="add-to-cart-button" onClick={handleAddToCart}>
+                                Add to Cart
+                            </button>
                         </div>
-                        <button className="add-to-cart-button" onClick={handleAddToCart}>
-                            Add to Cart
-                        </button>
                     </div>
                 </div>
             </div>
+            {/* END: NEW WRAPPER FOR BACKGROUND */}
             <Footer />
         </div>
     );

@@ -1,34 +1,65 @@
-.exportorders-page-container {
-    background-color: #f3e5d5; /* Soft, light gray background */
-    min-height: 100vh; /* Ensures the background covers the full viewport height */
-    padding:0;
+.page-container {
+    /* Kept for overall page structure, but moved background responsibilities to the wrapper */
+    min-height: 100vh;
+    padding: 0;
 }
 
-.exportorders-container {
+.export-page-background {
+    background-image: url('./spice_market_background.jpg'); /* <<<< REPLACE WITH YOUR IMAGE PATH >>>> */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px; /* Generous padding for visual balance */
+    min-height: calc(100vh - 80px); /* Ensures it fills the screen minus nav/footer height */
+    position: relative;
+    z-index: 1; /* For the overlay below */
+}
+
+/* Optional: Add a dark overlay to make the white form stand out */
+.export-page-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(62, 39, 35, 0.7); 
+    z-index: 2;
+}
+
+
+.export-orders-container {
     max-width: 900px;
-    margin: 40px auto;
+    /* Removed the old margin for manual centering, the parent flex container handles it */
+    margin: 0; 
     padding: 40px;
     background-color: #ffffff; /* Use a clean white background */
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* A softer, more professional shadow */
+    /* Stronger shadow for better separation from the background image */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); 
     font-family: 'Open Sans', sans-serif; /* Consistent, clean font */
+    z-index: 3; /* Ensure the form is above the overlay */
+    position: relative; /* Needed for z-index to work */
 }
 
 /* Form Header */
-.exportorders-form-header {
+.form-header {
     text-align: center;
     margin-bottom: 40px;
 }
 
-.exportorders-form-header h1 {
+.form-header h1 {
     font-size: 2.8em;
     font-weight: 700;
-    color: #5d4808; /* Use a rich, brand-consistent brown */
+    color: #7b581b; /* Using the primary accent color */
     margin-bottom: 10px;
 }
 
-.exportorders-form-header p {
-    color: #666;
+.form-header p {
+    color: #6d4c41; /* Earthy brown text color */
     line-height: 1.6;
     font-size: 1em;
     max-width: 600px;
@@ -36,19 +67,19 @@
 }
 
 /* Form Layout */
-.exportorders-form {
+.export-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px 40px; /* Increased gap for better spacing */
 }
 
 /* Ensure full-width fields span both columns */
-.exportorders-form-group.full-width {
+.form-group.full-width {
     grid-column: 1 / 3;
 }
 
-/* Label and Input Styling */
-.exportorders-form-group {
+/* Label and Input Styling (No Changes to internal elements) */
+.form-group {
     display: flex;
     flex-direction: column;
 }
@@ -56,7 +87,7 @@
 label {
     margin-bottom: 8px;
     font-weight: 600;
-    color: #444; /* Darker color for better contrast */
+    color: #444; 
     font-size: 0.95em;
 }
 
@@ -68,7 +99,7 @@ select,
 textarea {
     width: 100%;
     padding: 12px;
-    border: 1px solid #e0e0e0; /* Softer border color */
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     background-color: #fcfcfc;
     box-sizing: border-box;
@@ -82,19 +113,19 @@ input[type="tel"]:focus,
 input[type="number"]:focus,
 select:focus,
 textarea:focus {
-    border-color: #5d4808;
-    box-shadow: 0 0 0 3px rgba(93, 72, 8, 0.1);
+    border-color: #d84315; /* Use accent color on focus */
+    box-shadow: 0 0 0 3px rgba(216, 67, 21, 0.2);
     outline: none;
 }
 
 /* Checkbox group styling */
-.exportorders-checkbox-group {
+.checkbox-group {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
 }
 
-.exportorders-checkbox-label {
+.checkbox-label {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -103,23 +134,23 @@ textarea:focus {
     transition: color 0.3s ease;
 }
 
-.exportorders-checkbox-label input[type="checkbox"] {
+.checkbox-label input[type="checkbox"] {
     margin-right: 8px;
     width: auto;
 }
 
-.exportorders-checkbox-label:hover {
-    color: #5d4808;
+.checkbox-label:hover {
+    color: #d84315;
 }
 
 /* Button Styling */
-.exportorders-request-btn {
+.request-btn {
     grid-column: 1 / 3;
-    background-color: #eb651c; /* Bold, contrasting color for a clear call to action */
+    background-color: #964b00; /* Primary CTA color */
     color: white;
     padding: 16px 30px;
     border: none;
-    border-radius: 50px; /* Pill-shaped button for a modern look */
+    border-radius: 50px;
     cursor: pointer;
     font-size: 1.1em;
     font-weight: 700;
@@ -128,19 +159,19 @@ textarea:focus {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.exportorders-request-btn:hover {
-    background-color: #c45d3b;
-    transform: translateY(-2px);
+.request-btn:hover {
+    background-color: #8c703c;
+    transform: translateY(-3px);
 }
 
-.exportorders-request-btn:disabled {
+.request-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
     transform: none;
 }
 
 /* Error message styling */
-.exportorders-error-message {
+.error-message {
     grid-column: 1 / 3;
     color: #dc3545;
     text-align: center;
@@ -150,11 +181,25 @@ textarea:focus {
 
 /* Responsive design */
 @media (max-width: 768px) {
-    .exportorders-form {
+    .export-form {
         grid-template-columns: 1fr;
     }
-    .exportorders-form-group,
-    .exportorders-form-group.full-width {
+    .form-group,
+    .form-group.full-width {
         grid-column: 1 / 2;
     }
+    .export-orders-container {
+        padding: 20px;
+    }
+}
+
+.field-error {
+    color: #dc3545; /* Red color for errors */
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+.input-error {
+    border-color: #dc3545 !important; /* Highlight input with red border */
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1) !important;
 }

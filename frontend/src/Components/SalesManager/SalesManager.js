@@ -2,8 +2,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './SalesManager.css';
-import Nav from '../NavCus/NavCus.js';
 import Sidebar from './SideBar.js';
+import Slider from "../Slider/Slider";
 import OrderTable from './SalesOrder.js';
 import QuotationTable from './QuotationTable.js';
 import MonthlySalesChart from './MonthlySalesChart.js';
@@ -104,7 +104,7 @@ function SalesManager() {
             fetchSalesStats();
         } else if (activeTab.startsWith('orders')) {
             const type = activeTab === 'orders-local' ? 'orders-local' : 'orders-export';
-            fetchOrders(type, searchTerm);
+            fetchOrders(type, searchTerm, fetchOrders, fetchSalesStats);
         }
     }, [activeTab, searchTerm]);
 
@@ -112,7 +112,7 @@ function SalesManager() {
         if (activeTab === 'dashboard') {
             fetchMonthlySalesData(chartOrderType);
         }
-    }, [activeTab, chartOrderType]);
+    }, [activeTab, chartOrderType, fetchMonthlySalesData]);
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -336,7 +336,7 @@ function SalesManager() {
 
     return (
         <div className="sales-manager-page">
-            <Nav />
+            <Slider /> 
             <div className="sales-manager-container">
                 <Sidebar active={activeTab} onTabClick={handleTabClick} />
                 <div className="main-content">

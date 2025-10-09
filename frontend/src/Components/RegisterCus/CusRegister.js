@@ -35,14 +35,26 @@ function Register() {
     let tempErrors = {};
     let isValid = true;
 
-    // Email validation
     if (!user.gmail) {
       tempErrors.gmail = "Email is required.";
       isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(user.gmail)) {
-      tempErrors.gmail = "Email is not valid.";
+      tempErrors.gmail = "Email is not valid (must contain @ and .).";
+      isValid = false;
+    } 
+    
+    // Check for digit BEFORE the last dot, e.g., 'gmail2.com'
+    else if (/\d\.[a-zA-Z]+$/.test(user.gmail)) { 
+      tempErrors.gmail = "The domain name cannot end with a number before the dot";
+      isValid = false;
+    } 
+    
+    // Check for digit AFTER the last dot, e.g., '.com2'
+    else if (/\.[a-zA-Z]{2,}\d/.test(user.gmail)) { 
+      tempErrors.gmail = "The top-level domain cannot contain a number";
       isValid = false;
     }
+
 
     // Phone number validation (10 digits)
     if (!user.phone) {
@@ -71,13 +83,15 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // THE CHANGE IS HERE: Use separate checks inside the `validate` function
+    // to correctly flag errors and set isValid to false.
     if (validate()) {
       try {
         await axios.post("http://localhost:5000/register", user);
         setMessage("Registered Successfully");
         setMessageType("success");
         setTimeout(() => {
-          history("/local-orders");
+          history("/cushome");
         }, 1500);
       } catch (err) {
         if (err.response && err.response.data && err.response.data.message) {
@@ -94,16 +108,16 @@ function Register() {
   return (
     <div>
       <Nav />
-      <div className="reg-container" style={{ backgroundImage: `url(${backgroundImage})` }}>
-        <div className="reg-form">
+      <div className="register-container" style={{ backgroundImage: `url(${backgroundImage})` }}>
+        <div className="register-form">
           <h2>Register</h2>
           {message && (
-            <div className={`reg-form-message ${messageType}`}>
+            <div className={`form-message ${messageType}`}>
               {message}
             </div>
           )}
           <form onSubmit={handleSubmit}>
-            <div className="reg-form-group">
+            <div className="form-group">
               <label htmlFor="name">Name</label>
               <input
                 type="text"
@@ -114,7 +128,7 @@ function Register() {
                 required
               />
             </div>
-            <div className="reg-form-group">
+            <div className="form-group">
               <label htmlFor="gmail">Email</label>
               <input
                 type="email"
@@ -124,9 +138,9 @@ function Register() {
                 name="gmail"
                 required
               />
-              {errors.gmail && <p className="reg-error-text">{errors.gmail}</p>}
+              {errors.gmail && <p className="error-text">{errors.gmail}</p>}
             </div>
-            <div className="reg-form-group">
+            <div className="form-group">
               <label htmlFor="phone">Phone Number</label>
               <input
                 type="tel"
@@ -136,9 +150,9 @@ function Register() {
                 name="phone"
                 required
               />
-              {errors.phone && <p className="reg-error-text">{errors.phone}</p>}
+              {errors.phone && <p className="error-text">{errors.phone}</p>}
             </div>
-            <div className="reg-form-group">
+            <div className="form-group">
               <label htmlFor="address">Address</label>
               <input
                 type="text"
@@ -149,7 +163,7 @@ function Register() {
                 required
               />
             </div>
-            <div className="reg-form-group">
+            <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
                 type="password"
@@ -159,11 +173,11 @@ function Register() {
                 name="password"
                 required
               />
-              {errors.password && <p className="reg-error-text">{errors.password}</p>}
+              {errors.password && <p className="error-text">{errors.password}</p>}
             </div>
-            <button type="submit" className="reg-btn">Register</button>
+            <button type="submit" className="register-btn">Register</button>
           </form>
-          <div className="reg-login-link">
+          <div className="login-link">
             <p>Already Registered? <Link to="/login">Login</Link></p>
           </div>
         </div>

@@ -76,6 +76,15 @@ const quotationSchema = new Schema({
         type: Number,
         default: 0,
     },
+    // *** NEW FIELDS FOR CURRENCY CONVERSION ***
+    localBasePrice: {
+        type: Number,
+        default: 0, // The subtotal in the local currency (LKR)
+    },
+    exchangeRate: {
+        type: Number,
+        default: 1.0, // The rate used (e.g., 303.0 for USD)
+    },
     staffNotes: {
         type: String,
         default: '',
