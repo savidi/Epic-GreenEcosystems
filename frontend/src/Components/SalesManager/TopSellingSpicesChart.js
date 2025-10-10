@@ -34,25 +34,11 @@ const TopSellingSpicesChart = () => {
     const fetchTopSpices = useCallback(async () => {
         setLoading(true);
         try {
-            // Remove the token check and navigation
-            // const token = localStorage.getItem('token');
-            // if (!token) {
-            //     navigate('/login');
-            //     return;
-            // }
 
-            // Remove the headers object from the axios call
             const response = await axios.get('http://localhost:5000/api/sales/top-spices');
             setTopSpices(response.data);
         } catch (err) {
             console.error('Error fetching top selling spices:', err);
-            // Remove the error handling that checks for 401 and navigates to login
-            // if (err.response && err.response.status === 401) {
-            //     localStorage.removeItem('token');
-            //     navigate('/login');
-            // } else {
-            //     setError(err);
-            // }
             setError(err); // Keep a generic error handler
         } finally {
             setLoading(false);
@@ -65,8 +51,43 @@ const TopSellingSpicesChart = () => {
 
     // ... (rest of the component is the same) ...
 
+        // NEW IMPLEMENTATION FOR EXPORT
     const handleExportSpices = () => {
-      // ... (no changes needed here) ...
+        if (!topSpices || topSpices.length === 0) {
+            alert("No data to export.");
+            return;
+        }
+
+        // 1. Define the CSV headers
+        const headers = ["Spice Name", "Total Quantity Sold"];
+
+        // 2. Map the data to CSV rows
+        const csvRows = topSpices.map(item => [
+            // Ensure any commas in the spice name are handled (e.g., by wrapping in quotes)
+            `"${item.spiceName.replace(/"/g, '""')}"`, 
+            item.totalQuantity
+        ]);
+
+        // 3. Combine headers and rows into the final CSV content
+        const csvContent = [
+            headers.join(','),
+            ...csvRows.map(row => row.join(','))
+        ].join('\n');
+
+        // 4. Create a Blob and trigger the download
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'top_selling_spices.csv');
+        link.style.display = 'none';
+        
+        // Append to body, click, and clean up
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
     };
 
     if (loading) {

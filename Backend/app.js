@@ -102,6 +102,8 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
 // CORS middleware - allow both frontend ports
 app.use(cors({ 
   origin: ["http://localhost:3000", "http://localhost:3002"], 
+  // MODIFIED: Explicitly allow all common methods, ensuring POST works for email route
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true 
 }));
 
@@ -237,7 +239,8 @@ app.use((req, res, next) => {
         });
     } else {
         // Use regular express.json for non-JSON requests
-        express.json({ limit: '10mb' })(req, res, next);
+        // MODIFIED: Increase limit to 50mb to handle large PDF Base64 data.
+        express.json({ limit: '50mb' })(req, res, next);
     }
 });
 

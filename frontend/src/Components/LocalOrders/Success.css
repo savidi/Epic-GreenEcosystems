@@ -9,6 +9,19 @@
   background-color: #fff;
 }
 
+/* * NEW: Styling for the content that will become the PDF.
+* We give it padding and a distinct look if necessary. 
+*/
+#receipt-content {
+    /* Add internal padding to create margin within the PDF */
+    padding: 20px 30px; 
+    border: 1px solid #ddd; /* A subtle border to contain the receipt */
+    border-radius: 5px;
+    margin-bottom: 20px; /* Space it out from the buttons */
+    background-color: #f9f9f9; /* Slight background for professionalism */
+}
+
+/* Existing styles for a professional look */
 .success-title {
   color: #4CAF50;
   text-align: center;
@@ -36,16 +49,20 @@
   margin-bottom: 10px;
   color: #ec5d0a;
   font-size: 18px;
+  font-weight: 700; /* Make section titles stand out */
 }
 
 .order-detail, .customer-detail {
   margin: 5px 0;
   font-size: 14px;
   color: #555;
+  padding-left: 10px; /* Indent details slightly */
 }
 
 .order-detail strong, .customer-detail strong {
   color: #333;
+  display: inline-block;
+  min-width: 80px; /* Align the detail values */
 }
 
 .spices-list {
@@ -57,8 +74,8 @@
 .spice-item {
   display: flex;
   justify-content: space-between;
-  padding: 5px 0;
-  border-bottom: 1px dotted #eee;
+  padding: 8px 10px; /* Increased padding */
+  border-bottom: 1px dotted #ccc; /* Stronger separator */
   font-size: 14px;
 }
 
@@ -72,12 +89,12 @@
 
 .spice-price {
   color: #333;
-  font-weight: 500;
+  font-weight: 600; /* Stronger price */
 }
 
 .total-section {
   border-top: 2px solid #333;
-  padding-top: 10px;
+  padding: 15px 10px 0; /* Increased padding for total section */
   margin-top: 20px;
 }
 
@@ -85,32 +102,61 @@
   display: flex;
   justify-content: space-between;
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 20px; /* Larger font for total */
+  font-weight: 700;
   color: #333;
 }
 
-.dashboard-button {
-  width: 550px;
+/* Button Group Styling */
+.action-button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    margin-top: 20px;
+}
+
+.action-button {
+  width: 100%; 
   padding: 12px 20px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #b55927;
-  color: white;
   border: none;
   border-radius: 5px;
-  margin-top: 20px;
   transition: background-color 0.3s ease;
   text-decoration: none;
-  display: inline-block;
+  display: block; 
   text-align: center;
+}
+
+.dashboard-button {
+  background-color: #b55927;
+  color: white;
 }
 
 .dashboard-button:hover {
   background-color: #773e0d;
 }
 
-.dashboard-button:focus {
+.download-button {
+  background-color: #2196F3; 
+  color: white;
+}
+
+.download-button:hover {
+  background-color: #0c7cd5;
+}
+
+.email-button {
+  background-color: #FF9800; 
+  color: white;
+}
+
+.email-button:hover {
+  background-color: #fb8c00;
+}
+
+
+.action-button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
@@ -121,18 +167,6 @@
   margin-top: 50px;
 }
 
-.loading-container {
-  color: #666;
-}
-
-.error-container {
-  color: red;
-}
-
-.no-order-container {
-  color: #666;
-}
-
 /* Responsive design */
 @media (max-width: 768px) {
   .success-container {
@@ -140,25 +174,10 @@
     padding: 15px;
   }
   
-  .success-title {
-    font-size: 24px;
-  }
-  
-  .success-message {
-    font-size: 16px;
-  }
-  
-  .section-title {
-    font-size: 16px;
-  }
-  
-  .total-price {
-    font-size: 16px;
-  }
-  
-  .dashboard-button {
-    padding: 10px 16px;
-    font-size: 14px;
+  /* Reset padding for smaller screens if necessary, though 
+     the print-capture relies on it for PDF margins */
+  #receipt-content {
+      padding: 15px 20px; 
   }
 }
 
@@ -166,14 +185,6 @@
   .success-container {
     margin: 10px;
     padding: 10px;
-  }
-  
-  .success-title {
-    font-size: 20px;
-  }
-  
-  .success-message {
-    font-size: 14px;
   }
   
   .spice-item {

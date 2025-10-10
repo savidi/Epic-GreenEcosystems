@@ -7,8 +7,10 @@ const OrderPayments = require('../model/OrderPayments');
 const auth = require('../Middleware/auth');
 
 const { getPaymentHistory } = require('../controllers/PaymentSalesController');
+const { sendOrderReceiptEmail } = require('../controllers/emailController');
 
 router.get('/history', auth, getPaymentHistory);
+router.post('/send-receipt-email', auth, sendOrderReceiptEmail);
 
 router.post('/create-checkout-session', auth, async (req, res) => {
     try {
