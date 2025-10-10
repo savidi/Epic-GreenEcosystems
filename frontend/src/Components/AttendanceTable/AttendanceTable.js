@@ -176,7 +176,7 @@ function AttendanceTable() {
     <>
       <Nav />
       <div className="attendancetable-main-content-area">
-        <h1 className="attendancetable-attendance-title">
+        <h1 className="attendancetable-attendance-titl">
           Attendance Records
         </h1>
 

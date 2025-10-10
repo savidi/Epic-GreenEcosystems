@@ -27,6 +27,7 @@ function UpdateWorker() {
 
   const preloadedWorker = location.state?.worker || null;
 
+  // 🔹 Helper functions
   const timeToMinutes = (timeStr) => {
     const [hours, minutes] = timeStr.split(':').map(Number);
     return hours * 60 + minutes;
@@ -41,6 +42,14 @@ function UpdateWorker() {
 
   const calculateSalary = (hours) => (parseFloat(hours) * 200).toFixed(2);
 
+  const getTodayDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const getCurrentTime = () => {
     const now = new Date();
     const hrs = now.getHours().toString().padStart(2, '0');
@@ -48,6 +57,7 @@ function UpdateWorker() {
     return `${hrs}:${mins}`;
   };
 
+  // 🔹 Fetch worker data
   useEffect(() => {
     const fetchWorker = async () => {
       try {
@@ -59,22 +69,29 @@ function UpdateWorker() {
           workerData = res.data.data || res.data;
         }
 
-        const departureTime = workerData.departuretime || getCurrentTime();
+        const currentDate = getTodayDate();
+        const currentTime = getCurrentTime();
 
         const formattedData = {
           name: workerData.name || '',
           nationalid: workerData.nationalid || '',
           age: workerData.age || '',
           gender: workerData.gender || '',
-          date: workerData.date ? new Date(workerData.date).toISOString().split('T')[0] : '',
-          arrivaltime: workerData.arrivaltime || '',
-          departuretime: departureTime,
-          workedhoures: workerData.arrivaltime
-            ? calculateWorkedHours(workerData.arrivaltime, departureTime)
-            : '0',
-          salary: workerData.arrivaltime
-            ? calculateSalary(calculateWorkedHours(workerData.arrivaltime, departureTime))
-            : '0',
+          date: workerData.date
+            ? new Date(workerData.date).toISOString().split('T')[0]
+            : currentDate,
+          arrivaltime: workerData.arrivaltime || currentTime,
+          departuretime: workerData.departuretime || currentTime,
+          workedhoures:
+            workerData.arrivaltime && (workerData.departuretime || currentTime)
+              ? calculateWorkedHours(workerData.arrivaltime, workerData.departuretime || currentTime)
+              : '0',
+          salary:
+            workerData.arrivaltime && (workerData.departuretime || currentTime)
+              ? calculateSalary(
+                  calculateWorkedHours(workerData.arrivaltime, workerData.departuretime || currentTime)
+                )
+              : '0',
           paymentstatus: workerData.paymentstatus || 'Pending'
         };
 
@@ -92,6 +109,7 @@ function UpdateWorker() {
     if (id) fetchWorker();
   }, [id, preloadedWorker]);
 
+  // 🔹 Update computed fields (optional, currently static since times are disabled)
   useEffect(() => {
     if (!initialLoad && inputs.arrivaltime && inputs.departuretime) {
       const workedHours = calculateWorkedHours(inputs.arrivaltime, inputs.departuretime);
@@ -142,7 +160,7 @@ function UpdateWorker() {
 
   return (
     <div className="updateworker-update-worker-page">
-      <Nav /> {/* Sidebar */}
+      <Nav />
       <div className="updateworker-form-container">
         <h1>UPDATE WORKER</h1>
         <form onSubmit={handleSubmit}>
@@ -162,14 +180,15 @@ function UpdateWorker() {
             <option value="Female">Female</option>
           </select>
 
+          {/* ✅ Non-editable fields */}
           <label>Date</label>
-          <input type="date" name="date" value={inputs.date} onChange={handleChange} required />
+          <input type="date" name="date" value={inputs.date} readOnly disabled />
 
           <label>Arrival Time</label>
-          <input type="time" name="arrivaltime" value={inputs.arrivaltime} onChange={handleChange} required />
+          <input type="time" name="arrivaltime" value={inputs.arrivaltime} readOnly disabled />
 
           <label>Departure Time</label>
-          <input type="time" name="departuretime" value={inputs.departuretime} onChange={handleChange} required />
+          <input type="time" name="departuretime" value={inputs.departuretime} readOnly disabled />
 
           <label>Worked Hours</label>
           <input type="text" value={`${inputs.workedhoures} hours`} readOnly />
@@ -177,8 +196,15 @@ function UpdateWorker() {
           <label>Total Salary</label>
           <input type="text" value={`Rs. ${inputs.salary}`} readOnly />
 
+          {/* ✅ Payment Status: disable if already Paid */}
           <label>Payment Status</label>
-          <select name="paymentstatus" value={inputs.paymentstatus} onChange={handleChange} required>
+          <select
+            name="paymentstatus"
+            value={inputs.paymentstatus}
+            onChange={handleChange}
+            disabled={inputs.paymentstatus === 'Paid'} // ✅ Lock if Paid
+            required
+          >
             <option value="Pending">Pending</option>
             <option value="Paid">Paid</option>
           </select>

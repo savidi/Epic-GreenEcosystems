@@ -192,14 +192,14 @@ function StaffManagement() {
   };
 
   return (
-    <div className="staffmanagement-page">
+    <div className="staffmanagementpage">
       <Nav />
       <div
         className={`staffmanagement-container ${
           sidebarCollapsed ? "sidebar-collapsed" : ""
         }`}
       >
-        <h1 className="fworker-page-title">Staff Management</h1>
+        <h1 className="fworker-page-titl">Staff Management</h1>
         
         
         

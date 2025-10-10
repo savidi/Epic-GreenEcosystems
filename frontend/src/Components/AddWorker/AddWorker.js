@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './AddWorker.css'; 
+import './AddWorker.css';
 import Nav from "../Nav/Nav";
 
 function AddWorker() {
@@ -11,7 +11,7 @@ function AddWorker() {
   const getTodayDate = () => {
     const now = new Date();
     const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months 0-11
+    const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
@@ -29,8 +29,8 @@ function AddWorker() {
     nationalid: "",
     age: "",
     gender: "",
-    date: getTodayDate(),        // ✅ defaults to today in local time
-    arrivaltime: getCurrentTime(),
+    date: getTodayDate(),        // default to current local date
+    arrivaltime: getCurrentTime(), // default to current local time
     paymentstatus: "Pending"
   });
 
@@ -53,7 +53,7 @@ function AddWorker() {
         nationalid: String(inputs.nationalid),
         age: Number(inputs.age),
         gender: String(inputs.gender),
-        date: inputs.date,       // ✅ local date string
+        date: inputs.date,
         arrivaltime: inputs.arrivaltime,
         departuretime: "",
         workedhoures: 0,
@@ -74,16 +74,41 @@ function AddWorker() {
         <h1>Add Worker</h1>
         <form onSubmit={handleSubmit}>
           <label>Name</label>
-          <input type="text" name="name" onChange={handleChange} value={inputs.name} required />
+          <input
+            type="text"
+            name="name"
+            onChange={handleChange}
+            value={inputs.name}
+            required
+          />
 
           <label>National ID</label>
-          <input type="text" name="nationalid" onChange={handleChange} value={inputs.nationalid} required />
+          <input
+            type="text"
+            name="nationalid"
+            onChange={handleChange}
+            value={inputs.nationalid}
+            required
+          />
 
           <label>Age</label>
-          <input type="number" name="age" min="16" max="100" onChange={handleChange} value={inputs.age} required />
+          <input
+            type="number"
+            name="age"
+            min="16"
+            max="100"
+            onChange={handleChange}
+            value={inputs.age}
+            required
+          />
 
           <label>Gender</label>
-          <select name="gender" onChange={handleChange} value={inputs.gender} required>
+          <select
+            name="gender"
+            onChange={handleChange}
+            value={inputs.gender}
+            required
+          >
             <option value="">Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -91,13 +116,30 @@ function AddWorker() {
           </select>
 
           <label>Date</label>
-          <input type="date" name="date" onChange={handleChange} value={inputs.date} required />
+          <input
+            type="date"
+            name="date"
+            value={inputs.date}
+            readOnly
+            disabled   // ✅ user cannot change
+          />
 
           <label>Arrival Time</label>
-          <input type="time" name="arrivaltime" onChange={handleChange} value={inputs.arrivaltime} required />
+          <input
+            type="time"
+            name="arrivaltime"
+            value={inputs.arrivaltime}
+            readOnly
+            disabled   // ✅ user cannot change
+          />
 
           <label>Payment Status</label>
-          <select name="paymentstatus" onChange={handleChange} value={inputs.paymentstatus} required>
+          <select
+            name="paymentstatus"
+            onChange={handleChange}
+            value={inputs.paymentstatus}
+            required
+          >
             <option value="Pending">Pending</option>
             <option value="Paid">Paid</option>
             <option value="Partial">Partial</option>

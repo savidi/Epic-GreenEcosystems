@@ -64,7 +64,7 @@ function AttendanceScanner() {
     <div className="attendancescanner-page">
       <Nav /> {/* Sidebar */}
 
-      <div className="attendancescanner-container">
+      <div className="attendancescanner-containers">
         <h2 className="attendancescanner-header">Attendance Scanner</h2>
         
         <div className="attendancescanner-layout">

@@ -137,7 +137,7 @@ function PaymentPage() {
       {/* Wrap content in nav-content-wrapper to move with sidebar */}
       <div className="nav-content-wrapper">
         <div className="paymentpage-payment-container">
-          <div  className="payment-page-title">
+          <div  className="payment-page-titl">
           <h1>Payment Management</h1>
           </div>
           {/* New filter container */}

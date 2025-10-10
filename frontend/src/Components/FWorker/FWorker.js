@@ -299,7 +299,7 @@ function FWorker() {
         }`}
       >
         <div className="fworker-fworker-content">
-          <h1 className="fworker-page-title">Field Workers</h1>
+          <h1 className="fworker-page-titl">Field Workers</h1>
 
           <div className="fworker-search-section">
             <div className="fworker-search-group">
