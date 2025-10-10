@@ -1,20 +1,18 @@
 /* AttendanceScanner.css */
-.attendance-scanner-container {
+.attendancescanner-container {
   
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  background-color: var(--bg-color, #FFF9F0);
   min-height: 100vh;
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   display: flex;
   flex-direction: column;
-    flex: 1; /* take up remaining space */
+  flex: 1;
   padding: 30px;
-  margin-left: 220px; /* adjust based on Nav width */
-  
+  margin-left: 220px;
   transition: margin-left 0.3s ease;
-  
 }
 
-.sidebar.collapsed ~ .attendancescanner-container {
+.nav-sidebar.collapsed ~ .attendancescanner-container {
   margin-left: 60px; /* collapsed sidebar */
 }
 

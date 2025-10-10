@@ -199,81 +199,114 @@ function StaffManagement() {
           sidebarCollapsed ? "sidebar-collapsed" : ""
         }`}
       >
-
-        
         <h1 className="fworker-page-title">Staff Management</h1>
         
-        {/* New filter container based on the image */}
-        <div className="staffmanagement-filter-container">
-          <div className="staffmanagement-search-container">
-            <label className="staffmanagement-filter-label">
-              Search by National ID:
-            </label>
-            <input
-              type="text"
-              placeholder="Enter National ID"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="staffmanagement-search-input"
-            />
-            {searchQuery && (
-              <button
-                className="staffmanagement-clear-search-btn"
-                onClick={clearSearch}
-              >
-                ×
-              </button>
-            )}
+        
+        
+        {/* Filter container */}
+<div className="staffmanagement-filter-container">
+
+  {/* Left section (filters) */}
+  <div className="staffmanagement-filter-left">
+    <div className="staffmanagement-search-container">
+      <label className="staffmanagement-filter-label">
+        Search by National ID:
+      </label>
+      <input
+        type="text"
+        placeholder="Enter National ID"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="staffmanagement-search-input"
+      />
+      {searchQuery && (
+        <button
+          className="staffmanagement-clear-search-btn"
+          onClick={clearSearch}
+        >
+          ×
+        </button>
+      )}
+    </div>
+
+    <div className="staffmanagement-filter-by-type">
+      <label className="staffmanagement-filter-label">
+        Filter by Staff Type:
+      </label>
+      <select
+        value={staffTypeQuery}
+        onChange={(e) => setStaffTypeQuery(e.target.value)}
+        className="staffmanagement-search-input"
+      >
+        <option value="">All</option>
+        {uniqueStaffTypes.map((type) => (
+          <option key={type} value={type}>
+            {type}
+          </option>
+        ))}
+      </select>
+      {staffTypeQuery && (
+        <button
+          className="staffmanagement-clear-search-btn"
+          onClick={clearStaffType}
+        >
+          ×
+        </button>
+      )}
+    </div>
+  </div>
+
+  {/* Right section (buttons) */}
+  <div className="staffmanagement-action-buttons-group">
+    <button
+      className="staffmanagement-action-btn staffmanagement-view-all-btn"
+      onClick={() => {
+        clearSearch();
+        clearStaffType();
+      }}
+    >
+      View All
+    </button>
+
+    <Link
+      to="/addStaff"
+      className="staffmanagement-action-btn staffmanagement-add-staff-btn"
+    >
+      Add Staff
+    </Link>
+
+    <button
+      className="staffmanagement-action-btn staffmanagement-download-pdf-btn"
+      onClick={generatePDF}
+    >
+      Download PDF
+    </button>
+  </div>
+</div>
+
+
+
+        {/* Summary Cards Section */}
+        <div className="staffmanagement-summary-cards">
+          {/* Total Staff Card */}
+          <div className="staffmanagement-summary-card staffmanagement-total-card">
+            <h3>Total Staff</h3>
+            <div className="amount">{staffList.length}</div>
+            <div className="card-subtitle">All Departments</div>
           </div>
           
-          <div className="staffmanagement-filter-by-type">
-            <label className="staffmanagement-filter-label">
-              Filter by Staff Type:
-            </label>
-            <select
-              value={staffTypeQuery}
-              onChange={(e) => setStaffTypeQuery(e.target.value)}
-              className="staffmanagement-search-input"
-            >
-              <option value="">All</option>
-              {uniqueStaffTypes.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-            {staffTypeQuery && (
-              <button
-                className="staffmanagement-clear-search-btn"
-                onClick={clearStaffType}
-              >
-                ×
-              </button>
-            )}
-          </div>
-
-          
-
-          <div className="staffmanagement-action-buttons-group">
-            <button
-              className="staffmanagement-action-btn staffmanagement-view-all-btn"
-              onClick={() => {
-                clearSearch();
-                clearStaffType();
-              }}
-            >
-              View All
-            </button>
-            <Link to="/addStaff" className="staffmanagement-add-staff-btn">
-              + Add Staff
-            </Link>
-            <button
-              className="staffmanagement-download-pdf-btn"
-              onClick={generatePDF}
-            >
-              Download PDF
-            </button>
-          </div>
+          {/* Department Cards */}
+          {Object.entries(staffTypeCounts)
+            .sort((a, b) => b[1] - a[1]) // Sort by count descending
+            .map(([type, count]) => (
+              <div key={type} className="staffmanagement-summary-card staffmanagement-dept-card">
+                <h3>{type}</h3>
+                <div className="count">{count}</div>
+                <div className="card-subtitle">
+                  {((count / staffList.length) * 100).toFixed(1)}% of total
+                </div>
+              </div>
+            ))}
         </div>
         
         <table className="staffmanagement-staff-table">
@@ -308,7 +341,7 @@ function StaffManagement() {
                     <div className="staffmanagement-action-buttons">
                       <Link
                         to={`/updateStaff/${staff._id}`}
-                        className="staffmanagement-action-btn"
+                        className="staffmanagement-action-btn-update"
                       >
                         Update
                       </Link>

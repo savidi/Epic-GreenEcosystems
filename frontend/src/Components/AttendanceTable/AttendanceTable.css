@@ -6,7 +6,7 @@
   padding: 20px;
   transition: margin-left 0.3s ease;
   min-height: 100vh;
-  background: #f9f9f9;
+  background-color: var(--bg-color, #FFF9F0);
 }
 
 /* Shift content when sidebar is collapsed */
@@ -16,8 +16,8 @@
 
 /* -------------------- Title -------------------- */
 .attendancetable-attendance-title {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
   margin-bottom: 20px;
   color: #E6A76B;
   text-align: center;
@@ -34,10 +34,24 @@
 
 .attendancetable-filter-section {
   display: flex;
+  justify-content: space-between; /* push filters left, buttons right */
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.attendancetable-filters-left {
+  display: flex;
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
 }
+
+.attendancetable-buttons-right {
+  display: flex;
+  gap: 12px;
+}
+
 
 .attendancetable-filter-label {
   font-weight: 500;
@@ -75,7 +89,7 @@
 
 /* Buttons */
 .attendancetable-btn {
-  padding: 6px 12px;
+  padding: 10px 14px;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
@@ -83,15 +97,26 @@
 }
 
 .attendancetable-btn-pdf {
-  background-color: var(--secondary-color);
+  background-color:#E6A76B;
   color: #fff;
   border: none;
 }
 
 .attendancetable-btn-clear {
-  background-color: #ddd;
-  color: #333;
+  background-color: #777777;
+  color: white;
+  height: 40px;
+  border-radius: 6px;
+  padding: 10 16px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: none;
+  cursor: pointer;
 }
 
 .attendancetable-btn:hover {
@@ -107,7 +132,7 @@
 }
 
 .attendancetable-table-header {
-  background-color: var(--secondary-color);
+  background-color: var(--table-header-color, #C68C53);
   color: #fff;
 }
 
@@ -119,7 +144,8 @@
 }
 
 .attendancetable-table-body tr:hover {
-  background-color: #f0f0f0;
+  
+  background-color: var(--accent-color);
 }
 
 /* Status badges */
@@ -156,7 +182,7 @@
 
 /* Summary */
 .attendancetable-attendance-summary {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .attendancetable-summary-title {
@@ -197,6 +223,10 @@
   font-size: 12px;
   color: #555;
   margin-top: 4px;
+}
+
+.attendancetable-stat-card{
+  border-left: 5px solid #ab96ff;
 }
 
 .attendancetable-stat-present {

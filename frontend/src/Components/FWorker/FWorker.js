@@ -302,70 +302,50 @@ function FWorker() {
           <h1 className="fworker-page-title">Field Workers</h1>
 
           <div className="fworker-search-section">
-            <label>Search by National ID:</label>
-            <input
-              type="text"
-              placeholder="Enter National ID"
-              value={searchNid}
-              onChange={(e) => setSearchNid(e.target.value)}
-            />
+            <div className="fworker-search-group">
+              <label>Search by National ID:</label>
+               <input
+                 type="text"
+                 placeholder="Enter National ID"
+                 value={searchNid}
+                 onChange={(e) => setSearchNid(e.target.value)}
+                />
+          </div>
+
+          <div className="fworker-search-group">
             <label>Filter by Date:</label>
             <input
               type="date"
               value={searchDate}
               onChange={(e) => setSearchDate(e.target.value)}
             />
+          </div>
+
 
             <div className="fworker-action-buttons">
               <button
                 onClick={handleViewAll}
-                className="fworker-btn fworker-view-all-btn"
+                className="fworker-view-all-btn"
               >
                 View All
               </button>
               <Link
                 to="/mainAddWorker"
-                className="fworker-btn fworker-add-worker-btn"
+                className="fworker-add-worker-btn"
               >
                 Add Worker
               </Link>
               <button
                 onClick={generatePDF}
-                className="fworker-btn fworker-download-btn"
+                className="fworker-download-btn"
               >
                 Download PDF
               </button>
             </div>
           </div>
 
-          {filteredWorkers.length > 0 ? (
-            <>
-              <div className="fworker-table-container">
-                <table className="fworker-workers-table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>National ID</th>
-                      <th>Age</th>
-                      <th>Gender</th>
-                      <th>Date</th>
-                      <th>Arrival Time</th>
-                      <th>Departure Time</th>
-                      <th>Worked Hours</th>
-                      <th>Salary</th>
-                      <th>Payment Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredWorkers.map((w, i) => (
-                      <WorkerRow key={w._id || i} user={w} onDelete={handleDelete} />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
 
-              <div className="fworker-payment-summary-section">
+          <div className="fworker-payment-summary-section">
                 <h2>
                   {searchDate
                     ? `Payment Summary for ${new Date(
@@ -429,6 +409,42 @@ function FWorker() {
                   </div>
                 </div>
               </div>
+
+
+
+
+
+
+
+          {filteredWorkers.length > 0 ? (
+            <>
+
+              <div className="fworker-table-container">
+                <table className="fworker-workers-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>National ID</th>
+                      <th>Age</th>
+                      <th>Gender</th>
+                      <th>Date</th>
+                      <th>Arrival Time</th>
+                      <th>Departure Time</th>
+                      <th>Worked Hours</th>
+                      <th>Salary</th>
+                      <th>Payment Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredWorkers.map((w, i) => (
+                      <WorkerRow key={w._id || i} user={w} onDelete={handleDelete} />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              
             </>
           ) : (
             <div className="fworker-no-results">

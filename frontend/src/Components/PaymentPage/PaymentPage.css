@@ -58,12 +58,41 @@ button:hover {
   max-width: 1700px;
 }
 
+.paymentpage-filter-section {
+  display: flex;
+  justify-content: space-between; /* Push left and right sections */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.paymentpage-filters-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.paymentpage-buttons-right {
+  display: flex;
+  align-items: center;
+}
+
+
+.payment-page-title{
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #E6A76B;
+  text-align: center;
+}
+
 /* -------------------- Tables -------------------- */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
   font-size: 14px;
+  background-color: #ffffff;
 }
 
 thead {
@@ -83,17 +112,7 @@ tr:hover {
 }
 
 /* -------------------- Buttons -------------------- */
-.add-staff-btn, .add-worker-btn, .download-pdf-btn, .btn {
-  background-color: var(--primary-color);
-  color: white;
-}
 
-.add-staff-btn:hover,
-.add-worker-btn:hover,
-.download-pdf-btn:hover,
-.btn:hover {
-  background-color: var(--btn-hover);
-}
 
 .clear-search-btn {
   background-color: transparent;
@@ -118,11 +137,13 @@ input:focus, select:focus {
 }
 
 /* -------------------- Summary Cards -------------------- */
+/* -------------------- Summary Cards -------------------- */
 .paymentpage-summary-cards {
   display: flex;
   gap: 16px;
   margin-top: 20px;
   flex-wrap: wrap;
+  height: 110px;
 }
 
 .paymentpage-summary-card {
@@ -131,24 +152,57 @@ input:focus, select:focus {
   border-radius: 10px;
   flex: 1 1 200px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  background-color: #ffffff;
+  border-left: 5px solid #ab96ff;
+  transition: all 0.3s ease;
+}
+
+.paymentpage-summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Different colors for each summary card */
+.paymentpage-summary-card.total {
+  border-left: 5px solid #4CAF50; /* Green - OT Pay */
+}
+
+.paymentpage-summary-card.pending {
+  border-left: 5px solid #FF9800; /* Orange - Deductions */
+}
+
+.paymentpage-summary-card.pending:nth-child(3) {
+  border-left: 5px solid #E91E63; /* Pink - Absent Deduction */
+}
+
+.paymentpage-summary-card.paid {
+  border-left: 5px solid #2196F3; /* Blue - Total Payment */
+}
+
+.j{
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--primary-color);
 }
 
 .paymentpage-summary-card h3 {
   margin: 0 0 8px 0;
   font-size: 16px;
+  text-align: center;
 }
 
 .paymentpage-summary-card .paymentpage-amount {
   font-size: 20px;
   font-weight: bold;
   color: var(--secondary-color);
+  text-align: center;
 }
 
 .paymentpage-summary-card .paymentpage-percentage, .paymentpage-summary-card .paymentpage-count {
   font-size: 12px;
   color: #555;
 }
-
 /* -------------------- Status Badges -------------------- */
 .paymentpage-status-badge {
   padding: 4px 8px;
@@ -201,4 +255,19 @@ input:focus, select:focus {
 /* -------------------- Misc -------------------- */
 .page-title, .attendance-title, h2 {
   color: var(--primary-color);
+}
+
+.paymentpage-pdf{
+  
+  background-color:#E6A76B;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
 }

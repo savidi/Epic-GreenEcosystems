@@ -137,15 +137,58 @@ function PaymentPage() {
       {/* Wrap content in nav-content-wrapper to move with sidebar */}
       <div className="nav-content-wrapper">
         <div className="paymentpage-payment-container">
+          <div  className="payment-page-title">
           <h1>Payment Management</h1>
-
+          </div>
           {/* New filter container */}
           <div className="paymentpage-filter-container">
-            <div className="paymentpage-payment-actions">
-              <label>Select Month:</label>
-              <input type="month" value={month} onChange={handleMonthChange} />
+            <div className="paymentpage-filter-section">
+    
+              {/* Filters on the left */}
+              <div className="paymentpage-filters-left">
+                <label>Select Month:</label>
+                  <input 
+                   type="month" 
+                   value={month} 
+                   onChange={handleMonthChange} 
+                  />
+              </div>
 
-              <button onClick={generatePDF} className="paymentpage-pdf-btn">Download PDF</button>
+              {/* Button on the right */}
+              <div className="paymentpage-buttons-right">
+                <button 
+                   onClick={generatePDF} 
+                   className="paymentpage-pdf"
+                >
+                  Download PDF
+                </button>
+              </div>
+    
+            </div>
+          </div>
+
+
+
+
+          <div className="paymentpage-payment-summary-section">
+            <h2 className="j">Monthly Summary</h2>
+            <div className="paymentpage-summary-cards">
+              <div className="paymentpage-summary-card total">
+                <h3>Total OT Pay</h3>
+                <div className="paymentpage-amount">{totalOTPay}</div>
+              </div>
+              <div className="paymentpage-summary-card pending">
+                <h3>Total Late Deduction</h3>
+                <div className="paymentpage-amount">{totalLateDeduction}</div>
+              </div>
+              <div className="paymentpage-summary-card pending">
+                <h3>Total Absent Deduction</h3>
+                <div className="paymentpage-amount">{totalAbsentDeduction}</div>
+              </div>
+              <div className="paymentpage-summary-card paid">
+                <h3>Total Payment</h3>
+                <div className="paymentpage-amount">{totalSalary}</div>
+              </div>
             </div>
           </div>
 
@@ -188,27 +231,7 @@ function PaymentPage() {
             </table>
           )}
 
-          <div className="paymentpage-payment-summary-section">
-            <h2>Monthly Summary</h2>
-            <div className="paymentpage-summary-cards">
-              <div className="paymentpage-summary-card total">
-                <h3>Total OT Pay</h3>
-                <div className="paymentpage-amount">{totalOTPay}</div>
-              </div>
-              <div className="paymentpage-summary-card pending">
-                <h3>Total Late Deduction</h3>
-                <div className="paymentpage-amount">{totalLateDeduction}</div>
-              </div>
-              <div className="paymentpage-summary-card pending">
-                <h3>Total Absent Deduction</h3>
-                <div className="paymentpage-amount">{totalAbsentDeduction}</div>
-              </div>
-              <div className="paymentpage-summary-card paid">
-                <h3>Total Payment</h3>
-                <div className="paymentpage-amount">{totalSalary}</div>
-              </div>
-            </div>
-          </div>
+        
         </div>
       </div>
     </div>
