@@ -27,8 +27,8 @@ function Addproduct({ spice = {}, onDelete }) {
       <td>{quality}</td>
       <td>{price}</td> {/* Use price */}
       <td>
-        <Link to={`/Products/products/${_id}`}>Update</Link>
-        <button onClick={deleteHandler}>Delete</button>
+        <Link to={`/Products/products/${_id}`} className="update-btn">Update</Link>
+        <button onClick={deleteHandler} className="delete-btn">Delete</button>
       </td>
 
       

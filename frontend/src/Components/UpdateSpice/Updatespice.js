@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import '../Products/products.css';
+import './UpdateSpice.css';
 
 function Updatespice() {
   const { id } = useParams();
@@ -94,9 +94,9 @@ function Updatespice() {
   if (loading) return <p>Loading spice details...</p>;
 
   return (
-    <div>
+    <div className="update-spice-container">
       <h1>Update Spice</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="updatespice-form">
         <div className="updatespice-field">
           <label htmlFor="type">Source Type</label>
           <select

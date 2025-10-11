@@ -68,8 +68,71 @@
 }
 
 .inv-spices-table th, .inv-totals-table th {
-  background-color: #fff5e9;
+  background-color: #8B4513; /* Brown color */
+  color: white; /* White text for better contrast */
   font-weight: 600;
+  padding: 15px;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+/* Add hover effect for better interactivity */
+.inv-spices-table th:hover, .inv-totals-table th:hover {
+  background-color: #A0522D; /* Slightly lighter brown on hover */
+}
+
+/* Ensure table header stays on top when scrolling */
+.inv-table-section {
+  overflow-x: auto;
+  position: relative;
+}
+
+.inv-spices-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Action buttons styling */
+.inv-spices-table .update-btn {
+  background-color: #28a745; /* Green color for update */
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-right: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 13px;
+  transition: background-color 0.3s ease;
+}
+
+.inv-spices-table .update-btn:hover {
+  background-color: #218838; /* Darker green on hover */
+  text-decoration: none;
+}
+
+.inv-spices-table .delete-btn {
+  background-color: #dc3545; /* Red color for delete */
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.3s ease;
+}
+
+.inv-spices-table .delete-btn:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+/* Ensure buttons are properly aligned in table cell */
+.inv-spices-table td:last-child {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .inv-no-data {
@@ -109,7 +172,8 @@
 
 .inv-chart-container {
   flex: 1;
-  min-width: 300px;
+  width: 250px;
+  height:250px;
 }
 
 /* -------------------- Responsive -------------------- */

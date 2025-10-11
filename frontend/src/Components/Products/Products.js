@@ -108,8 +108,8 @@ function Products() {
           labels: chartLabels,
           datasets: [{
             data: chartValues,
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40"],
-            hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40"],
+            backgroundColor: ["#FF6384", "#36eb97ff", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40"],
+            hoverBackgroundColor: ["#FF6384", "#36eb97ff", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40"],
           }],
         });
 
