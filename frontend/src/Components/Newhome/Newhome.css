@@ -441,7 +441,7 @@
 
 /* -------------------- Task Section -------------------- */
 .sup-task-section {
-  width: 600px;
+  width: 650px;
   height: 500px;
   background: linear-gradient(135deg, #ffffff 0%, #fefcfa 100%);
   padding: 28px;
@@ -569,7 +569,7 @@
 }
 
 .sup-add-task-btn:hover {
-  background: linear-gradient(135deg, #45a049 0%, #5cb860 100%);
+  background: linear-gradient(135deg, #ccb54e 0%, #5cb860 100%);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
 }
