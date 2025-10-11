@@ -61,25 +61,22 @@ function NavInv() {
         {/* Products Dropdown */}
         <li className="navinv-dropdown">
           <div className="navinv-dropdown-header">
-            <span className="navinv-icon"><FaBox /></span>
-            {!collapsed && <span className="navinv-label">Products</span>}
+           
           </div>
           <div className="navinv-dropdown-content">
-            <Link to="/Products/Products"><FaLeaf /> {!collapsed && "Spices"}</Link>
-            <Link to="/fertilizer"><FaTractor /> {!collapsed && "Fertilizer"}</Link>
+            <Link to="/Products/Products"><span className="navinv-icon"><FaLeaf /></span>{!collapsed && "Spices"}</Link>
+            <Link to="/fertilizer"><span className="navinv-icon"><FaTractor /></span> {!collapsed && "Fertilizer"}</Link>
           </div>
         </li>
 
         {/* Stock Dropdown */}
         <li className="navinv-dropdown">
           <div className="navinv-dropdown-header">
-            <span className="navinv-icon"><FaWarehouse /></span>
-            {!collapsed && <span className="navinv-label">Stock</span>}
           </div>
           <div className="navinv-dropdown-content">
-            <Link to="/Stocks/supplier"><FaBox /> {!collapsed && "Supplier"}</Link>
-            <Link to="/Stocks/plantation"><FaLeaf /> {!collapsed && "Plantation"}</Link>
-            <Link to="/Stocks/order"><FaShoppingCart /> {!collapsed && "Order"}</Link>
+            <Link to="/Stocks/supplier"><span className="navinv-icon"><FaBox /></span> {!collapsed && "Supplier"}</Link>
+            <Link to="/Stocks/plantation"><span className="navinv-icon"><FaLeaf /></span> {!collapsed && "Plantation"}</Link>
+            <Link to="/Stocks/order"><span className="navinv-icon"><FaShoppingCart /></span> {!collapsed && "Order"}</Link>
           </div>
         </li>
       </ul>
