@@ -80,7 +80,8 @@ function AddStaff() {
           </div>
 
           <div className="addstaff-form-group">
-              <label>National ID</label>
+          
+  <label>National ID</label>
   <input
     type="text"
     name="nationalId"
@@ -88,23 +89,25 @@ function AddStaff() {
     value={formData.nationalId}
     onChange={(e) => {
       const value = e.target.value;
-      // Limit input to max 12 characters
-      if (value.length <= 12) {
+      // Limit input to max 16 characters
+      if (value.length <= 16) {
         setFormData({ ...formData, nationalId: value });
       }
     }}
     onBlur={() => {
-      // Validate exact length when input loses focus
-      if (formData.nationalId.length !== 12) {
-        alert("National ID must be exactly 12 characters!");
+      const len = formData.nationalId.length;
+      if (len !== 12 && len !== 16) {
+        alert("National ID must be exactly 12 or 16 characters!");
       }
     }}
     required
-    maxLength={12}
+    maxLength={16}
     onKeyDown={(e) => {
       if (e.key === "-") e.preventDefault();
     }}
   />
+
+
           </div>
 
           <div className="addstaff-form-group">
