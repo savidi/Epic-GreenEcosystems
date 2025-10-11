@@ -71,7 +71,11 @@ function Products() {
     const fetchProductsAndDetails = async () => {
       try {
         const spicesResponse = await axios.get(URL);
-        const fetchedSpices = Array.isArray(spicesResponse.data) ? spicesResponse.data : [];
+        const fetchedSpices = Array.isArray(spicesResponse.data)
+        ? spicesResponse.data
+        : (spicesResponse.data && Array.isArray(spicesResponse.data.spices)
+           ? spicesResponse.data.spices
+           : []);
         setSpices(fetchedSpices);
 
         const gridsResponse = await axios.get("http://localhost:5000/grids");
