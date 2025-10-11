@@ -88,7 +88,11 @@ function AddWorker() {
             name="nationalid"
             onChange={handleChange}
             value={inputs.nationalid}
+            maxLength={12}
             required
+            onKeyDown={(e) => {
+               if (e.key === '-') e.preventDefault(); // prevent typing "-"
+            }}
           />
 
           <label>Age</label>
@@ -100,7 +104,16 @@ function AddWorker() {
             onChange={handleChange}
             value={inputs.age}
             required
-          />
+            onKeyDown={(e) => {
+              if (e.key === '-') e.preventDefault(); // prevent typing "-"
+            }}
+            onInput={(e) => {
+              if (e.target.value.length > 2) {
+                e.target.value = e.target.value.slice(0, 2); // limit to 2 digits
+            }
+            }}
+        />
+
 
           <label>Gender</label>
           <select
