@@ -248,9 +248,9 @@ function Newhome() {
             </div>
             
           ))}
-          <div className="hr-home-chart-column">
-            <TaskPage />
-          </div>
+          <div className="sup-task-section"> 
+          <TaskPage />
+        </div>
         </div>
       </div>
     </div>
