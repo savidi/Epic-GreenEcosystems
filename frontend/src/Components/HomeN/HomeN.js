@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import NavInv from "../NavInv/NavInv";
 import Showspice from "./Showspice";
 import Statscards from "./Statscards";
-import Slider from "../Slider/Slider"; // <-- Import Slider
+import Slider from "../Slider/Slider";
+import TaskPage from "../Home/TaskPage";
 
 import './HomeN.css';
 
@@ -39,32 +40,27 @@ function HomeN() {
     return <div className="inv-loading">Loading...</div>;
   }
 
+  // HomeN.js
+
+// ... (imports and component setup)
+
   return (
-    <div className="inv-layout">
+    <div className="HomeN inv-layout">
       <NavInv />
 
       <main className="inv-main">
         {/* Slider Section */}
         <div className="inv-slider-section">
-          <Slider /> {/* <-- Slider added here at the top */}
+          <Slider />
         </div>
-
-       
 
         {/* Stats Cards */}
         <Statscards spices={spices} />
-        
+
         {/* Show Spice Component */}
         <Showspice />
-
-        {/* Action Buttons */}
-        <div className="inv-actions">
-          <Link to="/Products/products" className="inv-btn inv-btn-primary">
-            Add New Spice
-          </Link>
-          <Link to="/fertilizer" className="inv-btn inv-btn-secondary">
-            Add Fertilizer
-          </Link>
+<div className="inv-task-section"> 
+          <TaskPage />
         </div>
       </main>
     </div>
@@ -72,5 +68,4 @@ function HomeN() {
 }
 
 export default HomeN;
-
 

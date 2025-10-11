@@ -12,6 +12,8 @@ import OrderByTypeChart from './OrderByTypeChart.js';
 import OrderStatusChart from './OrderStatusChart.js';
 import CustomerTable from './CustomerTable.js';
 import { FaDollarSign, FaHourglassHalf, FaUsers, FaSearch, FaCheckCircle } from 'react-icons/fa';
+import TaskPage from "../Home/TaskPage";
+
 
 function SalesManager() {
     const [activeTab, setActiveTab] = useState('dashboard');
@@ -319,6 +321,14 @@ function SalesManager() {
                         />
                     )}
                 </div>
+            );
+        }
+
+        if (activeTab === 'profile') {
+            return (
+                    <div className="hr-home-chart-column">
+                        <TaskPage />
+                    </div>
             );
         }
 
