@@ -100,12 +100,12 @@ function FertilizerRow({ fertilizer }) {
       <td>{formattedDate}</td>
       <td>
         <div className="sup-actions">
-          <Link to={`/updatefertilizers/${_id}`} className="sup-btn sup-btn-sm">
+          <Link to={`/updatefertilizers/${_id}`} className="sup-btn2 sup-btn-sm">
             Update
           </Link>
           <button
             onClick={deleteHandler}
-            className="sup-btn sup-btn-secondary sup-btn-sm"
+            className="sup-btn-secondary2 sup-btn-sm"
           >
             Delete
           </button>

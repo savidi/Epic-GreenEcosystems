@@ -39,7 +39,7 @@
 /* -------------------- Buttons -------------------- */
 .sup-btn1 {
   background-color: #7de66b;
-  color: white;
+  color: rgb(12, 11, 11);
   font-size: 14px;
   font-weight: 500;
   padding: 8px 16px;
@@ -52,16 +52,23 @@
   margin: 3px;
 }
 
-.sup-btn:hover {
-  background-color: #9cd95f;
+.sup-btn1:hover {
+  background-color: #239b27;
 }
+.sup-btn11 {
+  background-color: #c9ea32;
+}
+.sup-btn11:hover{
+  background-color: #687b10;
+}
+
 
 .sup-btn-secondary2 {
-  background-color: #e74c3c;
+  background-color: #dc5242;
 }
 
-.sup-btn-secondary:hover {
-  background-color: #c0392b;
+.sup-btn-secondary2:hover {
+  background-color: #ad3426;
 }
 
 /* -------------------- Table -------------------- */

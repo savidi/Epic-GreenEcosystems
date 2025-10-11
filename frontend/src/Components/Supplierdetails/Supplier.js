@@ -145,7 +145,7 @@ function Supplier() {
                     <td>
                       <div className="sup-actions">
                         <button className="sup-btn1" onClick={() => navigate(`/UpdateSpice/${row._id}`)}><EditOutlined /> Spices</button>
-                        <button className="sup-btn1" onClick={() => navigate(`/Supdet/${row._id}`)}><EditOutlined /> Supplier</button>
+                        <button className="sup-btn11" onClick={() => navigate(`/Supdet/${row._id}`)}><EditOutlined /> Supplier</button>
                         <button className="sup-btn-secondary2" onClick={() => deleteHandler(row._id)}><DeleteOutlined /> Delete</button>
                       </div>
                     </td>

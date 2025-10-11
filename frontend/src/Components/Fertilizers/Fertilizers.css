@@ -49,9 +49,9 @@
 }
 
 /* -------------------- Buttons -------------------- */
-.sup-btn {
-  background: linear-gradient(135deg, #8b5e3c 0%, #c5885a 100%);
-  color: #ffffff;
+.sup-btn2 {
+  background:  #9bd168;
+  color: #100202;
   font-size: 14px;
   font-weight: 600;
   padding: 12px 20px;
@@ -66,24 +66,24 @@
   overflow: hidden;
 }
 
-.sup-btn:hover {
-  background: linear-gradient(135deg, #7a5235 0%, #8f6547 100%);
+.sup-btn2:hover {
+  background: linear-gradient(135deg, #c0e569 0%, #a3ca55 100%);
   transform: translateY(-1px);
   box-shadow: 0 4px 16px rgba(139, 94, 60, 0.35);
 }
 
-.sup-btn:active {
+.sup-btn2:active {
   transform: translateY(0);
 }
 
-.sup-btn-secondary {
-  background: linear-gradient(135deg, #d4a574 0%, #e8c4a0 100%);
-  color: #3d2914;
+.sup-btn-secondary2 {
+  background:  #e35940;
+  color: #050505;
   box-shadow: 0 2px 8px rgba(212, 165, 116, 0.25);
 }
 
-.sup-btn-secondary:hover {
-  background: linear-gradient(135deg, #c69660 0%, #d4a574 100%);
+.sup-btn-secondary2:hover {
+  background: linear-gradient(135deg, #db703b 0%, #cf622c 100%);
   box-shadow: 0 4px 16px rgba(201, 123, 38, 0.35);
 }
 
