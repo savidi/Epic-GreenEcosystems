@@ -1,7 +1,7 @@
- import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './AddSupplier.css'; // styled consistently
+import './AddSupplier.css';
 import NavSup from "../NavSup/NavSup";
 
 function AddSupplier() {
@@ -18,7 +18,10 @@ function AddSupplier() {
   });
 
   const [dateError, setDateError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
+  /* ------------------- VALIDATIONS ------------------- */
   const validateDate = (selectedDate) => {
     if (!selectedDate) {
       setDateError("Date is required");
@@ -37,57 +40,98 @@ function AddSupplier() {
     return true;
   };
 
+  const validatePhone = (phone) => {
+    const phoneRegex = /^(?:\+94|0)?7\d{8}$/; // Sri Lankan mobile format
+    if (!phone) {
+      setPhoneError("Phone number is required");
+      return false;
+    } else if (!phoneRegex.test(phone)) {
+      setPhoneError("Invalid phone number format (e.g. 07XXXXXXXX or +947XXXXXXXX)");
+      return false;
+    }
+    setPhoneError("");
+    return true;
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      setEmailError("Email is required");
+      return false;
+    } else if (!emailRegex.test(email)) {
+      setEmailError("Invalid email format");
+      return false;
+    }
+    setEmailError("");
+    return true;
+  };
+
   const getTodayDate = () => {
     const today = new Date();
     return today.toISOString().split('T')[0];
   };
 
+  /* ------------------- INPUT HANDLERS ------------------- */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInput(prev => ({ ...prev, [name]: value }));
+
     if (name === 'date') validateDate(value);
+    if (name === 'phoneno') validatePhone(value);
+    if (name === 'email') validateEmail(value);
   };
 
-  const handleDateBlur = (e) => {
-    validateDate(e.target.value);
+  const handleDateBlur = (e) => validateDate(e.target.value);
+
+  /* ------------------- EMAIL + REQUEST ------------------- */
+  const sendEmail = async () => {
+    await axios.post("http://localhost:5000/send-email", {
+      to: input.email,
+      subject: "Supplier Registration Confirmation",
+      supplierData: { ...input }
+    });
   };
 
   const sendRequest = async () => {
-    try {
-      await axios.post("http://localhost:5000/suppliers", {
-        name: String(input.name),
-        phoneno: Number(input.phoneno),
-        address: String(input.address),
-        email: String(input.email),
-        date: String(input.date),
-        spicename: String(input.spicename),
-        qty: Number(input.qty),
-        price: Number(input.price)
-      });
-    } catch (err) {
-      console.error(err);
-      alert("Failed to add supplier. Check console for details.");
-    }
+    await axios.post("http://localhost:5000/suppliers", {
+      ...input,
+      phoneno: Number(input.phoneno),
+      qty: Number(input.qty),
+      price: Number(input.price),
+    });
   };
 
-  const handleSubmit = (e) => {
+  /* ------------------- FORM SUBMIT ------------------- */
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const isDateValid = validateDate(input.date);
 
-    if (!isDateValid) {
-      alert("Please fix the date error before submitting");
+    const isDateValid = validateDate(input.date);
+    const isPhoneValid = validatePhone(input.phoneno);
+    const isEmailValid = validateEmail(input.email);
+
+    if (!isDateValid || !isPhoneValid || !isEmailValid) {
+      alert("Please fix the validation errors before submitting.");
       return;
     }
 
-    if (!input.name || !input.phoneno || !input.address || !input.email ||
-        !input.date || !input.spicename || !input.qty || !input.price) {
+    if (!input.name || !input.address || !input.spicename || !input.qty || !input.price) {
       alert("Please fill in all required fields");
       return;
     }
 
-    sendRequest().then(() => navigate("/Supdet"));
+    try {
+      await sendRequest();
+      await sendEmail();
+      alert("Supplier added successfully and confirmation email sent!");
+      navigate("/Supdet");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Supplier added but email failed to send. Please check email configuration.");
+      navigate("/Supdet");
+    }
   };
 
+  /* ------------------- JSX ------------------- */
   return (
     <div className="sup-page">
       <NavSup />
@@ -99,7 +143,7 @@ function AddSupplier() {
 
         <div className="sup-form-card">
           <form onSubmit={handleSubmit} className="sup-form">
-            
+
             <div className="sup-form-group">
               <label htmlFor="supplierName">Supplier Name</label>
               <input 
@@ -121,7 +165,9 @@ function AddSupplier() {
                 value={input.phoneno} 
                 onChange={handleChange} 
                 required 
+                className={phoneError ? 'sup-error-input' : ''}
               />
+              {phoneError && <p className="sup-error-message">{phoneError}</p>}
             </div>
 
             <div className="sup-form-group">
@@ -145,7 +191,9 @@ function AddSupplier() {
                 value={input.email} 
                 onChange={handleChange} 
                 required 
+                className={emailError ? 'sup-error-input' : ''}
               />
+              {emailError && <p className="sup-error-message">{emailError}</p>}
             </div>
 
             <div className="sup-form-group">
@@ -210,7 +258,7 @@ function AddSupplier() {
             </div>
 
             <div className="sup-actions">
-              <button type="submit" className="sup-btn" disabled={dateError !== ""}>
+              <button type="submit" className="sup-btn" disabled={!!(dateError || phoneError || emailError)}>
                 Add Supplier
               </button>
             </div>

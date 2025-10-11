@@ -26,6 +26,7 @@ const orderRouter = require('./Routes/OrderRouter');
 const paymentRouter = require('./Routes/PaymentRouter'); 
 const salesRouter = require('./Routes/SalesRouter');
 const quotationRouter = require('./Routes/QuotationRouter');
+const emailRouter=require("./Routes/SendEmail");
 
 // Models
 // Models and middleware
@@ -258,6 +259,10 @@ app.get("/health", (req, res) => {
         memory: process.memoryUsage()
     });
 });
+
+
+app.use('/', emailRouter);
+console.log("Email routes loaded");
 
 // Public routes
 app.use('/api/sales', salesRouter);

@@ -72,6 +72,7 @@ import UpdateSpice from "./Components/UpdateSupplier/UpdateSpice";
 import Log from "./Components/Log/Log"; // Login page
 import PaymentPage from "./Components/PaymentPage/PaymentPage";
 import Fertilizers from "./Components/Fertilizers/Fertilizers";
+import Notification from "./Components/SupNotification/Notification";
 // ---------------- APP ----------------
 function App() {
   // Suppress ResizeObserver loop error
@@ -229,6 +230,8 @@ function App() {
         <Route path="/pdfdownloadsp" element={<DownloadSPdetails />} />
         <Route path="/payments" element={<Payment />} />
         <Route path="/stock" element={<Stock />} />
+        <Route path="/notification" element={<Notification />} />
+        
 
         <Route path="/staff-login" element={<StaffLogin />} />
       </Routes>

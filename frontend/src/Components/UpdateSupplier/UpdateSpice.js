@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import "./UpdateSupplier.css";
+import "./UpdateSpice.css";
 import NavSup from "../NavSup/NavSup";
 
 function UpdateSpice() {
@@ -186,82 +186,158 @@ function UpdateSpice() {
     }
   };
 
-  if (loading) return <p>Loading supplier details... Supplier ID: {id}</p>;
-  if (error) return (
-    <div>
-      <h2 style={{ color: "red" }}>Error</h2>
-      <p>{error}</p>
-      <button onClick={() => navigate("/Supdet")}>Go Back</button>
-    </div>
-  );
+  if (loading) {
+    return (
+      <div className="updatespice-page">
+        <NavSup />
+        <div className="updatespice-content">
+          <p className="updatespice-loading">Loading supplier details... Supplier ID: {id}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="updatespice-page">
+        <NavSup />
+        <div className="updatespice-content">
+          <div className="updatespice-error">
+            <h3>Error</h3>
+            <p>{error}</p>
+            <button onClick={() => navigate("/Supdet")}>Go Back</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
+    <div className="updatespice-page">
+      <NavSup />
+      
+      <div className="updatespice-content">
+        <div className="updatespice-form-container">
+          <h1>Update Supplier Spice Stock</h1>
+          <p style={{ textAlign: 'center', color: "#666", marginBottom: '20px' }}>Supplier ID: {id}</p>
 
-<div className="updatesupplier-nav">
-            <NavSup /> {/* Sidebar */}
+          <form onSubmit={handleSubmit}>
+            <div className="updatespice-form-group">
+              <label>Supplier Name *</label>
+              <input 
+                type="text" 
+                name="name" 
+                value={input.name} 
+                readOnly 
+              />
+            </div>
 
-    <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
-      <h1>Update Supplier</h1>
-      <p style={{ color: "#666" }}>Supplier ID: {id}</p>
+            <div className="updatespice-form-group">
+              <label>Phone Number *</label>
+              <input 
+                type="tel" 
+                name="phoneno" 
+                value={input.phoneno} 
+                readOnly 
+              />
+            </div>
 
-      <form onSubmit={handleSubmit}>
-        <div className="updatesupplier-field">
-          <label htmlFor="supplierName">Supplier Name *</label>
-          <input type="text" id="supplierName" name="name" value={input.name} readOnly />
+            <div className="updatespice-form-group">
+              <label>Address *</label>
+              <textarea 
+                name="address" 
+                rows="3" 
+                value={input.address} 
+                readOnly 
+              />
+            </div>
+
+            <div className="updatespice-form-group">
+              <label>Email *</label>
+              <input 
+                type="email" 
+                name="email" 
+                value={input.email} 
+                readOnly 
+              />
+            </div>
+
+            <div className="updatespice-form-group">
+              <label>Registration Date *</label>
+              <input 
+                type="date" 
+                name="date" 
+                onChange={handleChange} 
+                value={input.date} 
+                min={new Date().toISOString().split("T")[0]} 
+                required 
+              />
+            </div>
+
+            <div className="updatespice-form-group">
+              <label>Spice Type *</label>
+              <select 
+                name="spicename" 
+                onChange={handleChange} 
+                value={input.spicename} 
+                required
+              >
+                <option value="">Select Spice Type</option>
+                <option value="cinnamon">Cinnamon</option>
+                <option value="black-pepper">Black Pepper</option>
+                <option value="cardamom">Cardamom</option>
+                <option value="cloves">Cloves</option>
+                <option value="nutmeg">Nutmeg</option>
+                <option value="turmeric">Turmeric</option>
+              </select>
+            </div>
+
+            <div className="updatespice-form-group">
+              <label>Quantity (kg) *</label>
+              <input 
+                type="number" 
+                name="qty" 
+                onChange={handleChange} 
+                value={input.qty} 
+                min="1" 
+                step="0.01" 
+                required 
+              />
+            </div>
+
+            <div className="updatespice-form-group">
+              <label>Price (LKR) *</label>
+              <input 
+                type="number" 
+                name="price" 
+                onChange={handleChange} 
+                value={input.price} 
+                min="1" 
+                step="0.01" 
+                required 
+              />
+            </div>
+
+            <div className="updatespice-actions">
+              <button 
+                type="button" 
+                onClick={() => navigate("/Supdet")} 
+                className="updatespice-btn updatespice-btn-secondary"
+              >
+                Cancel
+              </button>
+              <button 
+                type="submit" 
+                className="updatespice-btn updatespice-btn-primary"
+              >
+                Update Spice Stock
+              </button>
+            </div>
+          </form>
         </div>
-
-        <div className="updatesupplier-field">
-          <label htmlFor="supplierPhone">Phone Number *</label>
-          <input type="tel" id="supplierPhone" name="phoneno" value={input.phoneno} readOnly />
-        </div>
-
-        <div className="updatesupplier-field">
-          <label htmlFor="supplierAddress">Address *</label>
-          <textarea id="supplierAddress" name="address" rows="3" value={input.address} readOnly />
-        </div>
-
-        <div className="updatesupplier-field">
-          <label htmlFor="supplierEmail">Email *</label>
-          <input type="email" id="supplierEmail" name="email" value={input.email} readOnly />
-        </div>
-
-        <div className="updatesupplier-field">
-          <label htmlFor="supplierDate">Registration Date *</label>
-          <input type="date" id="supplierDate" name="date" onChange={handleChange} value={input.date} min={new Date().toISOString().split("T")[0]} required />
-        </div>
-
-        <div className="updatesupplier-field">
-          <label htmlFor="spiceName">Spice Type *</label>
-          <select id="spiceName" name="spicename" onChange={handleChange} value={input.spicename} required>
-            <option value="">Select Spice Type</option>
-            <option value="cinnamon">Cinnamon</option>
-            <option value="black-pepper">Black Pepper</option>
-            <option value="cardamom">Cardamom</option>
-            <option value="cloves">Cloves</option>
-            <option value="nutmeg">Nutmeg</option>
-            <option value="turmeric">Turmeric</option>
-          </select>
-        </div>
-
-        <div className="updatesupplier-field">
-          <label htmlFor="quantity">Quantity (kg) *</label>
-          <input type="number" id="quantity" name="qty" onChange={handleChange} value={input.qty} min="1" step="0.01" required />
-        </div>
-
-        <div className="updatesupplier-field">
-          <label htmlFor="price">Price (LKR) *</label>
-          <input type="number" id="price" name="price" onChange={handleChange} value={input.price} min="1" step="0.01" required />
-        </div>
-
-        <div className="updatesupplier-modal-actions">
-          <button type="button" onClick={() => navigate("/Supdet")} className="updatesupplier-btn updatesupplier-btn-secondary">Cancel</button>
-          <button type="submit" className="updatesupplier-btn updatesupplier-btn-primary">Update New Spice Stock</button>
-        </div>
-      </form>
+      </div>
     </div>
-  </div>
-);
-
+  );
 }
 
 export default UpdateSpice;

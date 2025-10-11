@@ -1,0 +1,201 @@
+/* -------------------- Page Layout -------------------- */
+.updatespice-page {
+  display: flex;
+  background-color: #FFF9F0;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.updatespice-content {
+  flex: 1;
+  padding: 40px 20px;
+  margin-left: 240px; /* Push content beside sidebar */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* -------------------- Form Container -------------------- */
+.updatespice-form-container {
+  background-color: #fff;
+  max-width: 600px;
+  width: 100%;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.updatespice-form-container h1 {
+  text-align: center;
+  color: #E6A76B;
+  margin-bottom: 25px;
+  font-size: 24px;
+}
+
+/* -------------------- Form Fields -------------------- */
+.updatespice-form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.updatespice-form-group label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.updatespice-form-group input,
+.updatespice-form-group textarea,
+.updatespice-form-group select {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  resize: none;
+}
+
+.updatespice-form-group input:focus,
+.updatespice-form-group textarea:focus,
+.updatespice-form-group select:focus {
+  outline: none;
+  border-color: #E6A76B;
+}
+
+/* Read-only fields styling */
+.updatespice-form-group input[readonly],
+.updatespice-form-group textarea[readonly] {
+  background-color: #f9f9f9;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* -------------------- Buttons -------------------- */
+.updatespice-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.updatespice-btn {
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.updatespice-btn-primary {
+  background-color: #E6A76B;
+  color: white;
+}
+
+.updatespice-btn-primary:hover {
+  background-color: #d99a5f;
+}
+
+.updatespice-btn-secondary {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.updatespice-btn-secondary:hover {
+  background-color: #e0e0e0;
+}
+
+/* -------------------- Loading & Error -------------------- */
+.updatespice-loading,
+.updatespice-error {
+  text-align: center;
+  font-size: 16px;
+  margin: 50px auto;
+  color: #E74C3C;
+}
+
+.updatespice-error button {
+  margin-top: 20px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  background-color: #E6A76B;
+  color: white;
+  cursor: pointer;
+}
+
+/* -------------------- Field Layout -------------------- */
+.updatespice-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.updatespice-field label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.updatespice-field input,
+.updatespice-field textarea,
+.updatespice-field select {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  resize: none;
+}
+
+.updatespice-field input:focus,
+.updatespice-field textarea:focus,
+.updatespice-field select:focus {
+  outline: none;
+  border-color: #E6A76B;
+}
+
+/* Read-only fields styling */
+.updatespice-field input[readonly],
+.updatespice-field textarea[readonly] {
+  background-color: #f9f9f9;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* -------------------- Modal Actions -------------------- */
+.updatespice-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 768px) {
+  .updatespice-content {
+    margin-left: 0; /* Remove sidebar offset on small screens */
+    padding: 20px;
+  }
+
+  .updatespice-form-container {
+    margin: 0 10px;
+    padding: 20px;
+  }
+
+  .updatespice-actions,
+  .updatespice-modal-actions {
+    flex-direction: column;
+  }
+
+  .updatespice-btn {
+    width: 100%;
+  }
+}

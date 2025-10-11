@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import "./UpdateSupplier.css";
@@ -18,7 +18,38 @@ function UpdateSupplier() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch supplier details
+  // Validation error states
+  const [phoneError, setPhoneError] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  /* ------------------- VALIDATION FUNCTIONS ------------------- */
+  const validatePhone = (phone) => {
+    const phoneRegex = /^(?:\+94|0)?7\d{8}$/; // Sri Lankan mobile number
+    if (!phone) {
+      setPhoneError("Phone number is required");
+      return false;
+    } else if (!phoneRegex.test(phone)) {
+      setPhoneError("Invalid phone number (e.g. 07XXXXXXXX or +947XXXXXXXX)");
+      return false;
+    }
+    setPhoneError("");
+    return true;
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      setEmailError("Email is required");
+      return false;
+    } else if (!emailRegex.test(email)) {
+      setEmailError("Invalid email format");
+      return false;
+    }
+    setEmailError("");
+    return true;
+  };
+
+  /* ------------------- FETCH SUPPLIER DATA ------------------- */
   useEffect(() => {
     const fetchSupplier = async () => {
       try {
@@ -43,7 +74,7 @@ function UpdateSupplier() {
     fetchSupplier();
   }, [id]);
 
-  // Update supplier
+  /* ------------------- UPDATE SUPPLIER ------------------- */
   const sendRequest = async () => {
     return await axios.put(`http://localhost:5000/suppliers/${id}`, {
       name: String(input.name),
@@ -53,19 +84,32 @@ function UpdateSupplier() {
     });
   };
 
+  /* ------------------- HANDLE INPUT CHANGES ------------------- */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInput((prev) => ({
       ...prev,
       [name]: value
     }));
+
+    if (name === "phoneno") validatePhone(value);
+    if (name === "email") validateEmail(value);
   };
 
+  /* ------------------- FORM SUBMIT ------------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!input.name || !input.phoneno || !input.address || !input.email) {
+    const isPhoneValid = validatePhone(input.phoneno);
+    const isEmailValid = validateEmail(input.email);
+
+    if (!input.name || !input.address) {
       alert("Please fill in all required fields.");
+      return;
+    }
+
+    if (!isPhoneValid || !isEmailValid) {
+      alert("Please fix validation errors before submitting.");
       return;
     }
 
@@ -78,6 +122,7 @@ function UpdateSupplier() {
     }
   };
 
+  /* ------------------- LOADING / ERROR UI ------------------- */
   if (loading) {
     return <p className="sup-loading">Loading supplier details...</p>;
   }
@@ -91,6 +136,7 @@ function UpdateSupplier() {
     );
   }
 
+  /* ------------------- FORM UI ------------------- */
   return (
     <div className="sup-page">
       <NavSup /> {/* Sidebar */}
@@ -99,6 +145,7 @@ function UpdateSupplier() {
         <div className="sup-form-container">
           <h1>Update Supplier</h1>
           <form onSubmit={handleSubmit}>
+            
             <div className="sup-form-group">
               <label>Supplier Name *</label>
               <input
@@ -120,7 +167,9 @@ function UpdateSupplier() {
                 onChange={handleChange}
                 placeholder="Enter phone number"
                 required
+                className={phoneError ? "sup-error-input" : ""}
               />
+              {phoneError && <p className="sup-error-message">{phoneError}</p>}
             </div>
 
             <div className="sup-form-group">
@@ -144,7 +193,9 @@ function UpdateSupplier() {
                 onChange={handleChange}
                 placeholder="Enter email address"
                 required
+                className={emailError ? "sup-error-input" : ""}
               />
+              {emailError && <p className="sup-error-message">{emailError}</p>}
             </div>
 
             <div className="sup-actions">
@@ -158,6 +209,7 @@ function UpdateSupplier() {
               <button
                 type="submit"
                 className="sup-btn sup-btn-primary"
+                disabled={!!(phoneError || emailError)}
               >
                 Update Supplier
               </button>
@@ -170,4 +222,5 @@ function UpdateSupplier() {
 }
 
 export default UpdateSupplier;
+
 
