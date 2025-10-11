@@ -1,8 +1,8 @@
- import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import NavSup from "../NavSup/NavSup";
-import "./UpdateFertilizers.css"; // ✅ Linked CSS
+import "./UpdateFertilizers.css";
 
 function UpdateFertilizer() {
   const navigate = useNavigate();
@@ -17,75 +17,208 @@ function UpdateFertilizer() {
   });
 
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Fetch fertilizer details
   useEffect(() => {
     const fetchHandler = async () => {
+      if (!id) {
+        setError("No fertilizer ID provided");
+        setLoading(false);
+        return;
+      }
+
       try {
-        const res = await axios.get(`http://localhost:5000/fertilizers/${id}`);
-        if (res.data && res.data.fertilizer) {
+        let fertilizer = null;
+        const possibleEndpoints = [
+          `http://localhost:5000/fertilizers/${id}`,
+          `http://localhost:5000/fertilizer/${id}`,
+          `http://localhost:5000/fertilizers/get/${id}`
+        ];
+
+        // Try different endpoints
+        for (let endpoint of possibleEndpoints) {
+          try {
+            const res = await axios.get(endpoint);
+            if (res.data) {
+              if (res.data.fertilizer) {
+                fertilizer = res.data.fertilizer;
+                break;
+              } else if (res.data.data) {
+                fertilizer = res.data.data;
+                break;
+              } else if (res.data.fertilizerName || res.data._id || res.data.id) {
+                fertilizer = res.data;
+                break;
+              } else if (Array.isArray(res.data) && res.data.length > 0) {
+                fertilizer = res.data[0];
+                break;
+              }
+            }
+          } catch {
+            continue;
+          }
+        }
+
+        // If not found, try to get from all fertilizers list
+        if (!fertilizer) {
+          const allFertilizersRes = await axios.get("http://localhost:5000/fertilizers");
+          let allFertilizers = [];
+
+          if (allFertilizersRes.data.fertilizers) {
+            allFertilizers = allFertilizersRes.data.fertilizers;
+          } else if (Array.isArray(allFertilizersRes.data)) {
+            allFertilizers = allFertilizersRes.data;
+          } else if (allFertilizersRes.data.data) {
+            allFertilizers = Array.isArray(allFertilizersRes.data.data)
+              ? allFertilizersRes.data.data
+              : [allFertilizersRes.data.data];
+          }
+
+          fertilizer = allFertilizers.find(
+            (f) =>
+              f._id === id ||
+              f.id === id ||
+              String(f._id) === String(id) ||
+              String(f.id) === String(id)
+          );
+        }
+
+        if (fertilizer) {
+          const formattedDate = fertilizer.date
+            ? new Date(fertilizer.date).toISOString().split("T")[0]
+            : "";
+
           setInput({
-            fertilizerName: res.data.fertilizer.fertilizerName || "",
-            fType: res.data.fertilizer.fType || "",
-            quantity: res.data.fertilizer.quantity || "",
-            price: res.data.fertilizer.price || "",
-            date: res.data.fertilizer.date
-              ? res.data.fertilizer.date.substring(0, 10)
-              : ""
+            fertilizerName: fertilizer.fertilizerName || "",
+            fType: fertilizer.fType || fertilizer.type || "",
+            quantity: fertilizer.quantity || fertilizer.qty || "",
+            price: fertilizer.price || "",
+            date: formattedDate
           });
+          setError(null);
+        } else {
+          setError(`Fertilizer with ID "${id}" not found. Please check the ID.`);
         }
       } catch (err) {
-        console.error("Failed to fetch fertilizer:", err);
+        setError(`Failed to fetch fertilizer: ${err.response?.data?.message || err.message}`);
       } finally {
         setLoading(false);
       }
     };
+
     fetchHandler();
   }, [id]);
 
+  // Update fertilizer
   const sendRequest = async () => {
-    return await axios.put(`http://localhost:5000/fertilizers/${id}`, {
-      fertilizerName: String(input.fertilizerName),
-      fType: String(input.fType),
-      quantity: Number(input.quantity),
-      price: Number(input.price),
-      date: String(input.date)
-    });
+    try {
+      const possibleEndpoints = [
+        `http://localhost:5000/fertilizers/${id}`,
+        `http://localhost:5000/fertilizer/${id}`,
+        `http://localhost:5000/fertilizers/update/${id}`
+      ];
+
+      let response = null;
+      for (let endpoint of possibleEndpoints) {
+        try {
+          response = await axios.put(endpoint, {
+            fertilizerName: String(input.fertilizerName),
+            fType: String(input.fType),
+            quantity: Number(input.quantity),
+            price: Number(input.price),
+            date: String(input.date)
+          });
+          break;
+        } catch {
+          continue;
+        }
+      }
+
+      if (!response) throw new Error("All update endpoints failed");
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   };
 
   const handleChange = (e) => {
-    setInput((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    const { name, value } = e.target;
+    setInput((prev) => ({ ...prev, [name]: value }));
   };
 
   const validateDate = () => {
-    const today = new Date().toISOString().split("T")[0];
-    if (input.date < today) {
-      alert("Date cannot be in the past. Please select a valid date.");
+    const today = new Date();
+    const selectedDate = new Date(input.date);
+    today.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
+
+    if (selectedDate < today) {
+      alert("Date cannot be in the past. Please select today or a future date.");
       return false;
     }
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!input.fertilizerName || !input.fType || !input.quantity || !input.price || !input.date) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
     if (!validateDate()) return;
-    sendRequest().then(() => navigate("/fertilizers"));
+
+    try {
+      await sendRequest();
+      alert("Fertilizer updated successfully!");
+      navigate("/fertilizers");
+    } catch (error) {
+      alert(`Failed to update fertilizer: ${error.response?.data?.message || error.message}`);
+    }
   };
 
-  if (loading) return <p className="sup-loading">Loading fertilizer details...</p>;
+  if (loading) {
+    return (
+      <div className="sup-page">
+        <NavSup />
+        <div className="sup-form-container">
+          <p className="sup-loading">Loading fertilizer details... Fertilizer ID: {id}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="sup-page">
+        <NavSup />
+        <div className="sup-form-container">
+          <div className="sup-error">
+            <h3>Error</h3>
+            <p>{error}</p>
+            <button onClick={() => navigate("/fertilizers")}>Go Back</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="sup-page">
-      <NavSup /> {/* ✅ Sidebar fixed */}
+      <NavSup />
+      
       <div className="sup-form-container">
         <h1>Update Fertilizer</h1>
+        <p style={{ textAlign: 'center', color: "#666", marginBottom: '20px' }}>
+          Fertilizer ID: {id}
+        </p>
+
         <form onSubmit={handleSubmit}>
           <div className="sup-form-group">
-            <label htmlFor="fertilizerName">Fertilizer Name</label>
+            <label>Fertilizer Name *</label>
             <select
-              id="fertilizerName"
               name="fertilizerName"
               value={input.fertilizerName}
               onChange={handleChange}
@@ -109,9 +242,8 @@ function UpdateFertilizer() {
           </div>
 
           <div className="sup-form-group">
-            <label htmlFor="fType">Fertilizer Type</label>
+            <label>Fertilizer Type *</label>
             <select
-              id="fType"
               name="fType"
               value={input.fType}
               onChange={handleChange}
@@ -125,36 +257,35 @@ function UpdateFertilizer() {
           </div>
 
           <div className="sup-form-group">
-            <label htmlFor="quantity">Quantity (kg)</label>
+            <label>Quantity (kg) *</label>
             <input
               type="number"
-              id="quantity"
               name="quantity"
               value={input.quantity}
               onChange={handleChange}
               min="1"
+              step="0.01"
               required
             />
           </div>
 
           <div className="sup-form-group">
-            <label htmlFor="price">Price (LKR)</label>
+            <label>Price (LKR) *</label>
             <input
               type="number"
-              id="price"
               name="price"
               value={input.price}
               onChange={handleChange}
               min="1"
+              step="0.01"
               required
             />
           </div>
 
           <div className="sup-form-group">
-            <label htmlFor="date">Manufacture / Entry Date</label>
+            <label>Manufacture / Entry Date *</label>
             <input
               type="date"
-              id="date"
               name="date"
               value={input.date}
               onChange={handleChange}
@@ -164,7 +295,17 @@ function UpdateFertilizer() {
           </div>
 
           <div className="sup-actions">
-            <button type="submit" className="sup-btn">
+            <button
+              type="button"
+              onClick={() => navigate("/fertilizers")}
+              className="sup-btn sup-btn-secondary"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="sup-btn sup-btn-primary"
+            >
               Update Fertilizer
             </button>
           </div>
@@ -175,4 +316,3 @@ function UpdateFertilizer() {
 }
 
 export default UpdateFertilizer;
-

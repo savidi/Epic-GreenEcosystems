@@ -6,6 +6,7 @@ import NavSup from "../NavSup/NavSup";
 import Slider from "../Slider/Slider";
 import "../Slider/slider.css";
 import { BarChart3, Building } from "lucide-react";
+import TaskPage from "../Home/TaskPage";
 
 const API = {
   SUPPLIERS: "http://localhost:5000/suppliers",
@@ -243,8 +244,13 @@ function Newhome() {
                   </button>
                 ))}
               </div>
+               
             </div>
+            
           ))}
+          <div className="hr-home-chart-column">
+            <TaskPage />
+          </div>
         </div>
       </div>
     </div>

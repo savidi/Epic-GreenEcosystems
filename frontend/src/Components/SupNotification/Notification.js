@@ -165,7 +165,7 @@ const Notification = () => {
             </Card>
           </Col>
         </Row>
-
+                
         <Divider />
 
         {/* Alerts List */}

@@ -162,6 +162,7 @@ function AddSupplier() {
                 type="tel" 
                 id="supplierPhone" 
                 name="phoneno" 
+                maxLength={12}
                 value={input.phoneno} 
                 onChange={handleChange} 
                 required 
