@@ -285,10 +285,10 @@ L.Icon.Default.mergeOptions({
 
              <Navfield />
             <div className="dash-content">
-                {/* Slider Section */}
-                <section className="dash-slider-section">
-                    <Slider />
-                </section>
+                {/* Top slider section */}
+        <section className="hr-home-slider-section">
+          <Slider />
+        </section>
                  {/* Stats Section */}
                  <section className="dash-section dash-stats-section">
                     <h2>Farm Overview</h2>

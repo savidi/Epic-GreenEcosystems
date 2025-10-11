@@ -176,6 +176,10 @@ function SalesManager() {
                     <header className="dashboard-header">
                         <h1>Dashboard</h1>
                     </header>
+                    {/* Top slider section */}
+        <section className="hr-home-slider-section">
+          <Slider />
+        </section>
                     <div className="stats-grid">
                         <div className="stat-block sales">
                             <div className="icon-container">
