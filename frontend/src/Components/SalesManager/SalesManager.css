@@ -7,6 +7,10 @@
     --card-background: #ffffff;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
+.sales-home-chart-column{
+     width:1120px;
+
+}
 
 body {
     margin: 0;

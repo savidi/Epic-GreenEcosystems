@@ -13,6 +13,8 @@ import OrderStatusChart from './OrderStatusChart.js';
 import CustomerTable from './CustomerTable.js';
 import { FaDollarSign, FaHourglassHalf, FaUsers, FaSearch, FaCheckCircle } from 'react-icons/fa';
 import Profile from "./Profile.js"; 
+// Import the new component
+import TaskPage from "../Home/TaskPage";
 
 
 function SalesManager() {
@@ -262,6 +264,11 @@ function SalesManager() {
                         <div className="chart-wrapper">
                             <OrderStatusChart />
                         </div>
+                        {/* New section added here */}
+                        <div className="sales-home-chart-column">
+                            <TaskPage />
+                        </div>
+                        {/* End of new section */}
                     </div>
                 </>
             );
