@@ -144,8 +144,8 @@ function Supplier() {
                     <td>{row.address || "-"}</td>
                     <td>
                       <div className="sup-actions">
-                        <button className="sup-btn1" onClick={() => navigate(`/UpdateSpice/${row._id}`)}><EditOutlined /> Update Spices</button>
-                        <button className="sup-btn1" onClick={() => navigate(`/Supdet/${row._id}`)}><EditOutlined /> Update Details</button>
+                        <button className="sup-btn1" onClick={() => navigate(`/UpdateSpice/${row._id}`)}><EditOutlined /> Spices</button>
+                        <button className="sup-btn1" onClick={() => navigate(`/Supdet/${row._id}`)}><EditOutlined /> Supplier</button>
                         <button className="sup-btn-secondary2" onClick={() => deleteHandler(row._id)}><DeleteOutlined /> Delete</button>
                       </div>
                     </td>

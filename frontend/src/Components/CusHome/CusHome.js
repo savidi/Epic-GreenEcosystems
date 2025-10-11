@@ -212,7 +212,7 @@ function Home() {
                                             <div className="d-flex">
                                                 <h6>
                                                     {item.name}
-                                                    {item.featured && <span className="badge ms-3">Recommend</span>}
+                                                    
                                                 </h6>
                                                 <span className="underline"></span>
                                                 <strong className="ms-auto">{item.price}</strong>
