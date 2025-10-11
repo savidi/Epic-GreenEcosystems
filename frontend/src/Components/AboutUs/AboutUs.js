@@ -1,5 +1,5 @@
 import React from 'react';
-//import './AboutUs.css';
+import './AboutUs.css';
 import teamMember1 from './savi2.jpg';
 import teamMember2 from './Gemini_Generated_Image_p00nf7p00nf7p00n.png';
 import teamMember3 from './nithya.jpg';
