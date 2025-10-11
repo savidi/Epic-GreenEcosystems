@@ -35,8 +35,8 @@ body {
 
 /* New CSS for the logo image */
 .navcus-elogo {
-  width: 40px; /* Adjust the width as needed */
-  height: auto; /* Maintain aspect ratio */
+  width: 100px; /* Adjust the width as needed */
+  height: 55px; /* Maintain aspect ratio */
 }
 
 /* Navigation Links Container */

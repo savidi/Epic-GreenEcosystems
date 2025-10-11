@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import userIcon from './profile.png';
 import cartIcon from './cart.png';
 import arrowIcon from './arrow.png';
-import Elogo from '../Images/Elogo.png';// Logo
+import Elogo from './Elogo.png';// Logo
 import axios from 'axios';
 
 function Nav({ cartUpdateTrigger }) {
