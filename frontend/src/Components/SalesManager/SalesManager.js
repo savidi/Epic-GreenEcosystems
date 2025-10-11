@@ -12,7 +12,7 @@ import OrderByTypeChart from './OrderByTypeChart.js';
 import OrderStatusChart from './OrderStatusChart.js';
 import CustomerTable from './CustomerTable.js';
 import { FaDollarSign, FaHourglassHalf, FaUsers, FaSearch, FaCheckCircle } from 'react-icons/fa';
-import TaskPage from "../Home/TaskPage";
+import Profile from "./Profile.js"; 
 
 
 function SalesManager() {
@@ -324,11 +324,11 @@ function SalesManager() {
             );
         }
 
-        if (activeTab === 'profile') {
+        if (activeTab === 'Account') {
             return (
-                    <div className="hr-home-chart-column">
-                        <TaskPage />
-                    </div>
+                <div className="profile-wrapper-container">
+                    <Profile />
+                </div>
             );
         }
 

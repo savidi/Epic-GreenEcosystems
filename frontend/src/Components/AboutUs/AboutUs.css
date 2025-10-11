@@ -21,7 +21,7 @@ body {
   height: 40vh;
   min-height: 300px;
   background: linear-gradient(135deg, #ffcc80 0%, #d84315 100%);
-  background-image: url('/Users/test/Desktop/Final Project/Epic-GreenEcosystems/frontend/src/Components/Images/Cbackground.png');
+  background-image: url('../Images/Cbackground.png');
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,7 +86,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('/Users/test/Desktop/Final Project/Epic-GreenEcosystems/frontend/src/Components/Images/WhatsApp Image 2025-09-20 at 21.31.17.jpg');
+  background-image: url('../Images/WhatsApp Image 2025-09-20 at 21.31.17.jpg');
   background-size: cover;
   background-position: center;
 }

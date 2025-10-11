@@ -107,7 +107,7 @@ body {
 /* Main Content Styling */
 .main-content {
     flex-grow: 1;
-    padding: 40px;
+    padding: 20px;
     background-color: var(--background-color);
 }
 

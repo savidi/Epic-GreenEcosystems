@@ -1,7 +1,8 @@
- import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import NavInv from "../NavInv/NavInv";
 import './order.css';
+import { FaSync } from 'react-icons/fa';
 
 const API_URL = "http://localhost:5000/spices/with-details";
 
@@ -9,42 +10,68 @@ function Order() {
   const [spices, setSpices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState(new Date());
 
-  useEffect(() => {
-    const fetchSpicesWithDetails = async () => {
-      try {
-        const response = await axios.get(API_URL);
-        const aggregatedSpices = response.data.reduce((acc, spice) => {
-          const existingSpice = acc.find(item => item.name === spice.name);
-          if (existingSpice) {
-            existingSpice.currentStock += spice.currentStock;
-            if (!existingSpice.price || existingSpice.price === 0) {
-              existingSpice.price = spice.price;
-            }
-          } else {
-            acc.push({ ...spice });
+  const fetchSpicesWithDetails = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(API_URL);
+      const aggregatedSpices = response.data.reduce((acc, spice) => {
+        const existingSpice = acc.find(item => item.name === spice.name);
+        if (existingSpice) {
+          existingSpice.currentStock += spice.currentStock;
+          if (!existingSpice.price || existingSpice.price === 0) {
+            existingSpice.price = spice.price;
           }
-          return acc;
-        }, []);
+        } else {
+          acc.push({ ...spice });
+        }
+        return acc;
+      }, []);
 
-        setSpices(aggregatedSpices);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSpicesWithDetails();
+      setSpices(aggregatedSpices);
+      setLastUpdated(new Date());
+      setError(null);
+    } catch (err) {
+      setError(err);
+      console.error("Error fetching spices:", err);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  // Initial fetch
+  useEffect(() => {
+    fetchSpicesWithDetails();
+    
+    // Set up auto-refresh every 30 seconds
+    const intervalId = setInterval(fetchSpicesWithDetails, 30000);
+    
+    // Clean up interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [fetchSpicesWithDetails]);
 
   return (
     <div className="inv-layout">
       <NavInv />
       <main className="inv-main-content">
         <div className="inv-header">
-          <h1>Order Spices</h1>
-          <p>Manage and place orders for your spice inventory</p>
+          <div>
+            <h1>Order Spices</h1>
+            <p>Manage and place orders for your spice inventory</p>
+            <div className="last-updated">
+              Last updated: {lastUpdated.toLocaleTimeString()}
+              <button 
+                onClick={fetchSpicesWithDetails} 
+                className="refresh-button"
+                disabled={loading}
+                title="Refresh stock levels"
+              >
+                <FaSync className={loading ? 'spinning' : ''} />
+                {loading ? 'Refreshing...' : 'Refresh'}
+              </button>
+            </div>
+          </div>
         </div>
 
         {loading && <p className="inv-info">Loading spices...</p>}

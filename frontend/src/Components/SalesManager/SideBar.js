@@ -36,6 +36,7 @@ const Sidebar = ({ active, onTabClick }) => {
                             <FaUsers className="sidebar-icon" /> Customers
                         </a>
                     </li>
+                    {/* >>> Change is confirmed here: onTabClick('Account') is used */}
                     <li className={active === 'Account' ? 'active' : ''}>
                         <a href="#Account" onClick={() => onTabClick('Account')}>
                             <FaUserCircle className="sidebar-icon" /> Profile
