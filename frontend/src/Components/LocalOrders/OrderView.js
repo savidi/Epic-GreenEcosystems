@@ -5,6 +5,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../Footer/Footer';
 
+
+const getSpiceImagePath = (spiceName) => {
+    if (!spiceName) return '';
+    // Use the lowercase, underscore-separated name for the actual file path.
+    const imageName = spiceName.toLowerCase().replace(/\s/g, '_');
+    return `/images/${imageName}.jpg`; 
+};
+
 function OrderView() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -67,7 +75,7 @@ function OrderView() {
     };
 
     const handleQuantityIncrement = (value) => {
-      setQuantity(prevQuantity => Math.max(1, prevQuantity + value));
+        setQuantity(prevQuantity => Math.max(1, prevQuantity + value));
     };
 
     const handleAddToCart = async () => {
@@ -99,13 +107,14 @@ function OrderView() {
     };
 
     if (loading) {
-        // You can use a more professional-looking loader here if you wish
         return <div>Loading...</div>; 
     }
 
     if (!spice) {
         return <div>Spice not found.</div>;
     }
+
+    const imagePath = getSpiceImagePath(spice.name);
 
     return (
         <div>
@@ -120,7 +129,14 @@ function OrderView() {
                 <div className="order-view-container">
                     <div className="product-details-card">
                         <div className="image-section">
-                            <img src={spice.imageUrl} alt={spice.name} className="product-image" />
+                            {/* UPDATED: Use the constructed imagePath from the public folder */}
+                            <img 
+                                src={imagePath} 
+                                alt={spice.name} 
+                                className="product-image" 
+                                // Optional: Fallback to the backend URL if the local path fails
+                                onError={(e) => { e.target.onError = null; e.target.src = spice.imageUrl; }}
+                            />
                         </div>
                         <div className="details-section">
                             <h1 className="product-name">{spice.name}</h1>

@@ -1,11 +1,11 @@
 
 .order-view-background {
-    /* Set the background image and make it cover the entire viewport height */
-    min-height: calc(100vh - 80px); /* Adjust height to account for Nav and Footer */
-    background-image: url('./spice_market_background.jpg'); /* <<<< REPLACE WITH YOUR IMAGE PATH >>>> */
+   
+    min-height: calc(100vh - 80px); 
+    background-image: url('./spice_market_background.jpg'); 
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Optional: Makes the background scroll-independent */
+    background-attachment: fixed; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,7 +13,7 @@
     position: relative;
 }
 
-/* Optional: Add a subtle overlay to help the product card pop out against the busy background image */
+
 .order-view-background::before {
     content: '';
     position: absolute;
@@ -21,7 +21,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(62, 39, 35, 0.7);  /* Light, semi-transparent overlay (f8f0e3 is the light background color from LocalOrders) */
+    background: rgba(103, 74, 68, 0.7);  /* Light, semi-transparent overlay (f8f0e3 is the light background color from LocalOrders) */
     z-index: 0;
 }
 
@@ -40,7 +40,6 @@
     flex-direction: column;
     background-color: white;
     border-radius: 12px;
-    /* Increased shadow for better contrast against the background */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); 
     overflow: hidden;
     max-width: 1000px;
@@ -53,23 +52,34 @@
     .product-details-card {
         flex-direction: row;
     }
+  
+    .image-section {
+        padding: 0; 
+        min-height: 400px; 
+        
+    }
 }
 
-/* Image section on the left */
+
 .image-section {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
+    padding: 0;
     background-color: #ece7e0; 
+    /* For mobile/default: use padding but ensure image fills it */
 }
 
 .product-image {
+    /* **UPDATED CSS** */
     width: 100%;
-    max-width: 400px;
-    height: auto;
-    object-fit: contain;
+    /* Remove max-width here, let the container control the size */
+    /* max-width: 400px; */ 
+    /* **NEW: Set a defined height to match the container, or use a large relative height** */
+    height: 100%; 
+    /* **UPDATED: Use cover to ensure the image fills the entire bounding box** */
+    object-fit: cover; 
     border-radius: 8px;
     transition: transform 0.3s ease;
 }
