@@ -7,7 +7,7 @@ import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 
 // Initialize stripePromise once at the top of the file
-const stripePromise = loadStripe('pk_test_51S1kRlHmpoPu0yMN0FAJEu3pxIxiJ8w5GHVZcUL9s6082ADkl7pvSQfZXPtrhkDwVLBeE2zNo5cy7FHR5X2zcvf900YVGJ0r72');
+const stripePromise = loadStripe('pk_test_51SGyvqPWOvica3UhurJIwVZp7ycGf9LwMkMeNAv55uaSzAobYFzIoTy9yZrKxCWvrAyfMlYJvkMLsjenCkli8pBS003qDTE5zT');
 
 function CartItems() {
   const [cart, setCart] = useState(null);
