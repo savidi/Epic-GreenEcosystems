@@ -37,8 +37,8 @@
 }
 
 /* -------------------- Buttons -------------------- */
-.sup-btn {
-  background-color: #e6a76b;
+.sup-btn1 {
+  background-color: #7de66b;
   color: white;
   font-size: 14px;
   font-weight: 500;
@@ -53,10 +53,10 @@
 }
 
 .sup-btn:hover {
-  background-color: #d99a5f;
+  background-color: #9cd95f;
 }
 
-.sup-btn-secondary {
+.sup-btn-secondary2 {
   background-color: #e74c3c;
 }
 
