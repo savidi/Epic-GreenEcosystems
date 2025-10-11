@@ -21,7 +21,7 @@ import SalesManager from './Components/SalesManager/SalesManager';
 import QuotationForm from './Components/SalesManager/QuotationForm';
 import OrderStatus from './Components/Customer/OrderStatusModal';
 
-
+import ProtectedStaffRoute from './Components/ProtectedStaffRoute';
 
 import HomeN from "./Components/HomeN/HomeN.js";
 import Addproduct from "./Components/Products/Addproduct";
@@ -234,6 +234,27 @@ function App() {
         
 
         <Route path="/staff-login" element={<StaffLogin />} />
+
+          <Route 
+  path="/Home" 
+  element={
+    <ProtectedStaffRoute allowedStaffTypes={['HR']}>
+      <Home />
+    </ProtectedStaffRoute>
+  } 
+/>
+
+<Route 
+  path="/staffManagement" 
+  element={
+    <ProtectedStaffRoute allowedStaffTypes={['HR']}>
+      <StaffManagement />
+    </ProtectedStaffRoute>
+  } 
+/>
+
+
+
       </Routes>
     </React.Fragment>
   );

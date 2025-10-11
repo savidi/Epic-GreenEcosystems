@@ -1,4 +1,4 @@
- :root {
+:root {
   --primary: #8D4E2A;
   --secondary: #A0522D;
   --accent1: #CD853F;
@@ -150,60 +150,50 @@
   color: var(--white);
 }
 
-/* Logout */
+/* Logout Button */
 .navinv-logout {
-  padding: 12px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 15px 20px;
+  margin-top: auto; /* push logout to bottom */
+  width: 100%;
 }
 
-.navinv-logout a {
+.navinv-logout-btn {
+  width: 100%;
   display: flex;
   align-items: center;
-  color: var(--white);
-  text-decoration: none;
-  transition: all 0.3s ease;
-  padding: 10px 0;
+  justify-content: flex-start;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--light);
+  background-color: var(--primary);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.navinv-logout a:hover {
-  background: var(--secondary);
-  color: var(--white);
-  padding-left: 10px;
-  border-radius: 4px;
-}
-
-.navinv-logout .navinv-icon {
-  font-size: 1.2rem;
-  margin-right: 12px;
-  width: 20px;
+.navinv-logout-btn .navinv-icon {
+  font-size: 1.3rem;
+  margin-right: 10px;
   display: flex;
+  align-items: center;
   justify-content: center;
-  color: var(--white);
+  color: var(--light);
 }
 
-/* Collapsed state */
-.navinv-sidebar.collapsed .navinv-header h2,
-.navinv-sidebar.collapsed .navinv-profile-name,
-.navinv-sidebar.collapsed .navinv-profile-role,
-.navinv-sidebar.collapsed .navinv-label {
-  display: none;
+.navinv-logout-btn:hover {
+  background-color: var(--accent1);
+  color: var(--light);
+  transform: translateX(2px);
 }
 
-.navinv-sidebar.collapsed .navinv-links li a {
+.navinv-sidebar.collapsed .navinv-logout-btn {
   justify-content: center;
-  padding: 15px;
+  padding: 12px 0;
 }
 
-.navinv-sidebar.collapsed .navinv-icon {
-  margin: 0;
-}
-
-.navinv-sidebar.collapsed .navinv-logout a {
-  justify-content: center;
-  padding: 12px;
-}
-
-.navinv-sidebar.collapsed .navinv-logout .navinv-icon {
+.navinv-sidebar.collapsed .navinv-logout-btn .navinv-icon {
   margin: 0;
 }
 
@@ -317,7 +307,7 @@
 
 .supnav-links li a:hover {
   background: var(--accent1);
-  color: var(--white);
+  color: var(--light);
 }
 
 .supnav-links li.active {
@@ -327,7 +317,7 @@
 
 .supnav-links li.active a {
   font-weight: bold;
-  color: var(--white);
+  color: var(--light);
 }
 
 .supnav-icon {
@@ -336,46 +326,66 @@
   width: 20px;
   display: flex;
   justify-content: center;
-  color: var(--white);
+  color: var(--light);
 }
 
 .supnav-label {
   font-size: 15px;
-  color: var(--white);
+  color: var(--light);
 }
 
-/* Logout */
+/* Logout Button */
 .supnav-logout {
-  padding: 12px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 15px 20px;
+  margin-top: auto; /* push logout to bottom */
+  width: 100%;
 }
 
-.supnav-logout a {
+.supnav-logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;       /* icon + text same line */
+  justify-content: flex-start;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--light);        /* text/icon color */
+  background-color: var(--primary); /* match sidebar */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.supnav-logout-btn .supnav-icon {
+  font-size: 1.3rem;
+  margin-right: 10px;
   display: flex;
   align-items: center;
-  color: var(--white);
-  text-decoration: none;
-  transition: all 0.3s ease;
-  padding: 10px 0;
-}
-
-.supnav-logout a:hover {
-  background: var(--secondary);
-  color: var(--white);
-  padding-left: 10px;
-  border-radius: 4px;
-}
-
-.supnav-logout .supnav-icon {
-  font-size: 1.2rem;
-  margin-right: 12px;
-  width: 20px;
-  display: flex;
   justify-content: center;
-  color: var(--white);
+  color: var(--light);
 }
 
-/* Collapsed */
+.supnav-logout-btn:hover {
+  background-color: var(--accent1);
+  color: var(--light);
+  transform: translateX(2px);
+}
+
+.supnav-sidebar.collapsed .supnav-logout-btn {
+  justify-content: center; /* center icon */
+  padding: 12px 0;
+}
+
+.supnav-sidebar.collapsed .supnav-logout-btn .supnav-icon {
+  margin: 0;
+}
+
+/* ==================== COLLAPSED HIDE LABELS ==================== */
+.navinv-sidebar.collapsed .navinv-header h2,
+.navinv-sidebar.collapsed .navinv-profile-name,
+.navinv-sidebar.collapsed .navinv-profile-role,
+.navinv-sidebar.collapsed .navinv-label,
 .supnav-sidebar.collapsed .supnav-sidebar-header h2,
 .supnav-sidebar.collapsed .supnav-profile-name,
 .supnav-sidebar.collapsed .supnav-profile-role,
@@ -383,25 +393,18 @@
   display: none;
 }
 
+.navinv-sidebar.collapsed .navinv-links li a,
 .supnav-sidebar.collapsed .supnav-links li a {
   justify-content: center;
-  padding: 14px 12px;
+  padding: 15px;
 }
 
+.navinv-sidebar.collapsed .navinv-icon,
 .supnav-sidebar.collapsed .supnav-icon {
   margin: 0;
 }
 
-.supnav-sidebar.collapsed .supnav-logout a {
-  justify-content: center;
-  padding: 12px;
-}
-
-.supnav-sidebar.collapsed .supnav-logout .supnav-icon {
-  margin: 0;
-}
-
-/* ==================== RESPONSIVE DESIGN ==================== */
+/* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
   .navinv-sidebar,
   .supnav-sidebar {

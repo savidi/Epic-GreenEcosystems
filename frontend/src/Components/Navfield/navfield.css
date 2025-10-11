@@ -326,3 +326,41 @@
 .navfield-social-links a:hover {
   color: #d2691e; /* lighter cinnamon on hover */
 }
+/* Logout button container */
+.navfield-sidebar-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center content horizontally */
+  padding: 12px 20px;
+  margin-top: auto; /* push to bottom */
+  cursor: pointer;
+  background: var(--secondary);
+  border-top: 1px solid var(--accent1);
+  transition: background 0.3s ease, color 0.3s ease;
+  border-radius: 6px;
+}
+
+.navfield-sidebar-logout:hover {
+  background: var(--accent3);
+  color: var(--dark);
+}
+
+/* Icon inside logout */
+.navfield-sidebar-logout svg {
+  font-size: 1.2rem;
+  margin-right: 8px;
+  transition: transform 0.2s ease;
+}
+
+.navfield-sidebar-logout:hover svg {
+  transform: scale(1.1);
+}
+
+/* Hide text when sidebar is collapsed */
+.navfield-sidebar.collapsed .navfield-sidebar-logout span {
+  display: none;
+}
+
+.navfield-sidebar.collapsed .navfield-sidebar-logout svg {
+  margin-right: 0;
+}

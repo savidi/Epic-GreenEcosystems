@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import './navfield.css';
-import { FaHome, FaLeaf, FaChartBar, FaUserCog, FaBars, FaInstagram, FaFacebook } from 'react-icons/fa';
+import { FaHome, FaLeaf, FaChartBar, FaUserCog, FaBars, FaInstagram, FaFacebook, FaSignOutAlt } from 'react-icons/fa';
 import Elogo from '../Images/Elogo.png';
 
 function Nav() {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const [collapsed, setCollapsed] = useState(
     () => JSON.parse(localStorage.getItem("sidebar-collapsed")) || false
   );
@@ -16,14 +18,28 @@ function Nav() {
     setCollapsed((prev) => {
       const newState = !prev;
       localStorage.setItem("sidebar-collapsed", JSON.stringify(newState));
-      
+
       // Dispatch custom event to notify other components
       window.dispatchEvent(new CustomEvent('sidebarStateChanged', {
         detail: { collapsed: newState }
       }));
-      
+
       return newState;
     });
+  };
+
+  const handleLogout = () => {
+    // Clear session data
+    localStorage.removeItem("staffToken");
+    localStorage.removeItem("staffType");
+    localStorage.removeItem("staffName");
+    localStorage.removeItem("staffId");
+    localStorage.removeItem("staffEmail");
+    sessionStorage.clear();
+
+    // Redirect to login page and reload to prevent back navigation
+    navigate("/staff-login", { replace: true });
+    
   };
 
   const links = [
@@ -45,11 +61,7 @@ function Nav() {
         <button className="navfield-toggle-btn" onClick={toggleSidebar}>
           <FaBars />
         </button>
-        
       </div>
-
-
-      
 
       <ul className="navfield-sidebar-links">
         {links.map((link) => (
@@ -61,7 +73,13 @@ function Nav() {
           </li>
         ))}
       </ul>
-      
+
+      {/* Logout button */}
+      <div className="navfield-sidebar-logout" onClick={handleLogout} style={{ cursor: 'pointer', marginTop: 'auto', padding: '1rem', display: 'flex', alignItems: 'center' }}>
+        <FaSignOutAlt style={{ marginRight: !collapsed ? '0.5rem' : '0' }} />
+        {!collapsed && <span>Logout</span>}
+      </div>
+
       <div className="navfield-sidebar-footer">
         <div className="navfield-social-links">
           {socialLinks.map((social) => (

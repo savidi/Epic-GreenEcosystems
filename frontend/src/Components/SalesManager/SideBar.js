@@ -1,10 +1,28 @@
 // Sidebar.js
 import React from 'react';
-import './SalesManager.css'; // You'll need to create this CSS file
-import salesManagerProfile from './salesmanager.png'; // Make sure the image path is correct
-import { FaChartLine, FaShoppingCart, FaFileInvoiceDollar, FaUserCircle, FaUsers } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import './SalesManager.css'; // Ensure this CSS exists
+import salesManagerProfile from './salesmanager.png';
+import { FaChartLine, FaShoppingCart, FaFileInvoiceDollar, FaUserCircle, FaUsers, FaSignOutAlt } from 'react-icons/fa';
 
 const Sidebar = ({ active, onTabClick }) => {
+    const navigate = useNavigate();
+
+    // Logout function
+    const handleLogout = () => {
+        // Clear all staff/session data
+        localStorage.removeItem("staffToken");
+        localStorage.removeItem("staffType");
+        localStorage.removeItem("staffName");
+        localStorage.removeItem("staffId");
+        localStorage.removeItem("staffEmail");
+        sessionStorage.clear();
+
+        // Redirect to login page and prevent going back
+        navigate("/staff-login", { replace: true });
+        
+    };
+
     return (
         <div className="sidebar">
             <div className="sidebar-header">
@@ -14,6 +32,7 @@ const Sidebar = ({ active, onTabClick }) => {
                     <p>Sales Manager</p>
                 </div>
             </div>
+
             <nav className="sidebar-nav">
                 <ul>
                     <li className={active === 'dashboard' ? 'active' : ''}>
@@ -36,11 +55,17 @@ const Sidebar = ({ active, onTabClick }) => {
                             <FaUsers className="sidebar-icon" /> Customers
                         </a>
                     </li>
-                    {/* >>> Change is confirmed here: onTabClick('Account') is used */}
                     <li className={active === 'Account' ? 'active' : ''}>
                         <a href="#Account" onClick={() => onTabClick('Account')}>
                             <FaUserCircle className="sidebar-icon" /> Profile
                         </a>
+                    </li>
+
+                    {/* Logout button */}
+                    <li className="sidebar-logout" style={{ marginTop: 'auto' }}>
+                        <button className="logout-btn" onClick={handleLogout}>
+                            <FaSignOutAlt className="sidebar-icon" /> Logout
+                        </button>
                     </li>
                 </ul>
             </nav>

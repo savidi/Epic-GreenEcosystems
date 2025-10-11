@@ -100,6 +100,17 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
     res.status(200).json({ received: true });
 });
 
+
+
+// Prevent browser caching for all routes
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  next();
+});
+
+
 // CORS middleware - allow both frontend ports
 app.use(cors({ 
   origin: ["http://localhost:3000", "http://localhost:3002"], 

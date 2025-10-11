@@ -96,6 +96,10 @@ exports.deleteStaff = async (req, res) => {
 
 
 // Staff login (for Managers only)
+// controllers/StaffController.js - UPDATE staffLogin function only
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+
 exports.staffLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -116,13 +120,27 @@ exports.staffLogin = async (req, res) => {
       return res.status(401).json({ status: "fail", message: "Invalid credentials" });
     }
 
-    // ✅ Return staffType so frontend can redirect
+    // Generate JWT token
+    const token = jwt.sign(
+      { 
+        staffId: staff._id,
+        staffType: staff.staffType,
+        position: staff.position,
+        email: staff.email
+      },
+      JWT_SECRET,
+      { expiresIn: '8h' } // Token expires in 8 hours
+    );
+
+    // Return success with token
     res.status(200).json({
       status: "success",
+      token,
       staffType: staff.staffType,
       id: staff._id,
       name: staff.name,
-      email: staff.email
+      email: staff.email,
+      position: staff.position
     });
 
   } catch (err) {
@@ -130,5 +148,3 @@ exports.staffLogin = async (req, res) => {
     res.status(500).json({ status: "fail", message: "Server error" });
   }
 };
-
-

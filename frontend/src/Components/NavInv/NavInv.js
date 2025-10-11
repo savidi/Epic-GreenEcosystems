@@ -1,6 +1,5 @@
- import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-//import "./navInv.css";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaBox,
@@ -9,10 +8,14 @@ import {
   FaTractor,
   FaShoppingCart,
   FaBars,
+  FaSignOutAlt,
 } from "react-icons/fa";
+// import "./navInv.css";
 
 function NavInv() {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const [collapsed, setCollapsed] = useState(
     () => JSON.parse(localStorage.getItem("navinv-collapsed")) || false
   );
@@ -24,6 +27,24 @@ function NavInv() {
       localStorage.setItem("navinv-collapsed", JSON.stringify(!prev));
       return !prev;
     });
+  };
+
+  // ✅ Logout function with full session clear + reload protection
+  const handleLogout = () => {
+    // Remove all supplier-related session data
+    localStorage.removeItem("staffToken");
+    localStorage.removeItem("staffType");
+    localStorage.removeItem("staffName");
+    localStorage.removeItem("staffId");
+    localStorage.removeItem("staffEmail");
+    localStorage.removeItem("supplierName");
+    localStorage.removeItem("supnav-collapsed");
+
+    // Redirect to login page
+    navigate("/staff-login", { replace: true });
+
+    // Force full reload to prevent showing cached protected page
+    
   };
 
   return (
@@ -53,36 +74,67 @@ function NavInv() {
       <ul className="navinv-links">
         <li className={isActive("/HomeN") ? "active" : ""}>
           <Link to="/HomeN">
-            <span className="navinv-icon"><FaHome /></span>
+            <span className="navinv-icon">
+              <FaHome />
+            </span>
             {!collapsed && <span className="navinv-label">Dashboard</span>}
           </Link>
         </li>
 
-        {/* Products Dropdown */}
+        {/* Products */}
         <li className="navinv-dropdown">
-          <div className="navinv-dropdown-header">
-           
-          </div>
           <div className="navinv-dropdown-content">
-            <Link to="/Products/Products"><span className="navinv-icon"><FaLeaf /></span>{!collapsed && "Spices"}</Link>
-            <Link to="/fertilizer"><span className="navinv-icon"><FaTractor /></span> {!collapsed && "Fertilizer"}</Link>
+            <Link to="/Products/Products">
+              <span className="navinv-icon">
+                <FaLeaf />
+              </span>
+              {!collapsed && "Spices"}
+            </Link>
+            <Link to="/fertilizer">
+              <span className="navinv-icon">
+                <FaTractor />
+              </span>
+              {!collapsed && "Fertilizer"}
+            </Link>
           </div>
         </li>
 
-        {/* Stock Dropdown */}
+        {/* Stock */}
         <li className="navinv-dropdown">
-          <div className="navinv-dropdown-header">
-          </div>
           <div className="navinv-dropdown-content">
-            <Link to="/Stocks/supplier"><span className="navinv-icon"><FaBox /></span> {!collapsed && "Supplier"}</Link>
-            <Link to="/Stocks/plantation"><span className="navinv-icon"><FaLeaf /></span> {!collapsed && "Plantation"}</Link>
-            <Link to="/Stocks/order"><span className="navinv-icon"><FaShoppingCart /></span> {!collapsed && "Order"}</Link>
+            <Link to="/Stocks/supplier">
+              <span className="navinv-icon">
+                <FaBox />
+              </span>
+              {!collapsed && "Supplier"}
+            </Link>
+            <Link to="/Stocks/plantation">
+              <span className="navinv-icon">
+                <FaLeaf />
+              </span>
+              {!collapsed && "Plantation"}
+            </Link>
+            <Link to="/Stocks/order">
+              <span className="navinv-icon">
+                <FaShoppingCart />
+              </span>
+              {!collapsed && "Order"}
+            </Link>
           </div>
         </li>
       </ul>
+
+      {/* ✅ Logout Button */}
+            <div className="supnav-logout">
+              <button onClick={handleLogout} className="supnav-logout-btn">
+                <span className="supnav-icon">
+                  <FaSignOutAlt />
+                </span>
+                {!collapsed && <span className="supnav-label">Logout</span>}
+              </button>
+            </div>
     </aside>
   );
 }
 
 export default NavInv;
-

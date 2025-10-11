@@ -756,3 +756,100 @@ body {
     margin: 0;
 }
 
+/* ==================== SIDEBAR ==================== */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background-color: #8D4E2A; /* primary color */
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebar-nav li {
+  margin-bottom: 5px;
+}
+
+.sidebar-nav li a {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-nav li a:hover {
+  background-color: #CD853F; /* accent color */
+  color: #fff;
+}
+
+.sidebar-nav li.active a {
+  background-color: #F4A460; /* active color */
+  font-weight: bold;
+  color: #fff;
+}
+
+.sidebar-icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==================== LOGOUT BUTTON ==================== */
+.sidebar-logout {
+  margin-top: auto; /* push logout to bottom */
+}
+
+.logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #A0522D; /* secondary color */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #CD853F; /* accent color on hover */
+  color: #fff;
+  transform: translateX(2px);
+}
+
+.logout-btn .sidebar-icon {
+  margin-right: 10px;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==================== COLLAPSED SIDEBAR (if needed) ==================== */
+.sidebar.collapsed .logout-btn {
+  justify-content: center;
+}
+
+.sidebar.collapsed .logout-btn .sidebar-icon {
+  margin: 0;
+}
