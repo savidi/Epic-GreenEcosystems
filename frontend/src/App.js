@@ -37,7 +37,7 @@ import Updatespice from "./Components/UpdateSpice/Updatespice.js";
 import Nav from "./Components/NavInv/NavInv.js";
 import Showspice from "./Components/HomeN/Showspice.js";
 import Statscards from "./Components/HomeN/Statscards.js";
-
+import ProfileInv from "./Components/ProfileInv/ProfileInv.js";
 
 
 
@@ -190,6 +190,7 @@ function App() {
           <Route path ="/Products/products/:id" element={<Updatespice/>}/>
           <Route path="/HomeN/Showspice" element={<Showspice />} />
           <Route path="/HomeN/Statscards" element={<Statscards />} />
+          <Route path="/ProfileInv" element={<ProfileInv />} />
 
 
 

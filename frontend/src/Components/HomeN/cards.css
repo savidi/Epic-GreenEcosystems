@@ -1,18 +1,18 @@
-/* General Page Layout & Typography */
+/* -------------------- General Layout & Typography -------------------- */
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
   background-color: #f0f4f8;
 }
 
-/* --- Main Content Area --- */
+/* -------------------- Main Content Area -------------------- */
 .homen-main-content {
-  margin-left: 260px; /* This is the key change */
+  margin-left: 260px;
   padding: 20px;
-  overflow-y: auto; /* Enable scrolling for the main content */
+  overflow-y: auto;
 }
 
-/* --- Header for HomeN.js --- */
+/* -------------------- Header (HomeN.js) -------------------- */
 .homen-page-header {
   text-align: center;
   padding: 30px 0;
@@ -29,7 +29,7 @@ body {
   letter-spacing: 1.5px;
 }
 
-/* --- Spice Gallery Section (Showspice.js) --- */
+/* -------------------- Spice Gallery (Showspice.js) -------------------- */
 .homen-spice-gallery {
   padding: 20px;
   max-width: 1200px;
@@ -57,8 +57,8 @@ body {
   padding: 15px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
   text-align: center;
+  overflow: hidden;
 }
 
 .homen-spice-card:hover {
@@ -82,7 +82,7 @@ body {
 .homen-spice-card h3 {
   font-size: 1.4rem;
   color: #2c3e50;
-  margin: 0 0 10px;
+  margin-bottom: 10px;
 }
 
 .homen-spice-card p {
@@ -91,127 +91,127 @@ body {
   line-height: 1.6;
 }
 
-/* --- Stats Cards Section (StatsCard.js) --- */
-.homen-stats-cards-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-  margin: 0 auto 40px;
-  padding: 0 20px;
-  width: 200px;
-  margin-left:550px;
+/* -------------------- Stats Cards (StatsCard.js) -------------------- */
+.stats-cards-wrapper {
+  margin-left: 30px;
 }
 
-.homen-stat-card {
+.stat-card {
   display: flex;
   align-items: center;
   background: #ffffff;
   border-radius: 14px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 15px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
   transition: all 0.25s ease;
   cursor: pointer;
   flex: 1;
-  min-width: 250px;
+  min-width: 200px;
 }
 
-.homen-stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
 }
 
-.homen-lowstock-card {
-  border-left: 6px solid #e74c3c;
+/* Top border accent */
+.stat-card-top-border {
+  border-top: 4px solid #d27725;
 }
 
-.homen-stat-icon {
-  font-size: 30px;
+/* Low stock variant */
+.lowstock-card .stat-value {
   color: #e74c3c;
-  margin-right: 18px;
 }
 
-.homen-stat-text {
+.stat-icon {
+  font-size: 24px;
+  color: #e74c3c;
+  margin-right: 12px;
+}
+
+.stat-text {
   display: flex;
   flex-direction: column;
 }
 
-.homen-stat-label {
-  font-size: 1rem;
+.stat-label {
+  font-size: 0.9rem;
   color: #666;
   font-weight: 500;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
 }
 
-.homen-stat-value {
-  font-size: 2rem;
+.stat-value {
+  font-size: 1.8rem;
   font-weight: 700;
   color: #222;
 }
 
-/* --- Low Stock List --- */
-.homen-low-stock-list-container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 25px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-  animation: fadeIn 0.4s ease-in-out;
+/* -------------------- Low Stock List -------------------- */
+.low-stock-list-container {
+  width: 85%;
+  max-width: 700px;
+  margin: 1.5rem auto;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #ef4444;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.homen-list-title {
-  font-size: 1.5rem;
+.list-title {
+  font-size: 1.3rem;
   font-weight: 600;
   color: #c0392b;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 8px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
   text-align: center;
 }
 
-.homen-low-stock-list {
-  list-style: none;
+.low-stock-list {
+  list-style-type: none;
   padding: 0;
-  margin: 0;
 }
 
-.homen-low-stock-item {
+.low-stock-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 15px;
-  margin-bottom: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
   background: #fafafa;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  transition: background 0.2s ease;
   border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: background 0.2s ease;
 }
 
-.homen-low-stock-item:hover {
+.low-stock-item:hover {
   background: #f1f1f1;
 }
 
-.homen-item-name {
+.item-name {
   font-weight: 600;
   color: #444;
 }
 
-.homen-item-stock {
+.item-stock {
   font-weight: 600;
   color: #e74c3c;
 }
 
-.homen-no-low-stock {
-  font-size: 1rem;
+.no-low-stock {
+  font-size: 0.9rem;
   color: #777;
   text-align: center;
-  margin-top: 15px;
+  margin-top: 12px;
   font-style: italic;
 }
 
-/* --- Dashboard Buttons --- */
+/* -------------------- Dashboard Buttons -------------------- */
 .homen-dashboard-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -229,46 +229,57 @@ body {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  text-decoration: none;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   font-size: 1.1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .homen-add-button:hover {
   background-color: #27ae60;
   transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Animations */
+/* -------------------- Animations -------------------- */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Responsive adjustments */
+/* -------------------- Responsive Design -------------------- */
 @media (max-width: 768px) {
   .homen-page-header h1 {
     font-size: 2rem;
   }
+
   .homen-main-content {
-    margin-left: 0; /* Sidebar will be on top */
+    margin-left: 0;
     padding: 20px;
   }
+
   .homen-spice-gallery {
     padding: 10px;
   }
+
   .homen-spice-grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }
+
   .homen-stats-cards-wrapper {
     flex-direction: column;
     align-items: center;
   }
-  .homen-stat-card {
+
+  .stat-card {
     width: 100%;
     margin-bottom: 15px;
   }

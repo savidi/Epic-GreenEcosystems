@@ -163,4 +163,3 @@ function Supplier() {
 }
 
 export default Supplier;
-

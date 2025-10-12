@@ -1,4 +1,4 @@
- import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import NavInv from "../NavInv/NavInv";
 import Addspice from "./Addspice";
@@ -12,6 +12,7 @@ import './products.css';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const URL = "http://localhost:5000/spices";
+const SUPPLIER_URL = "http://localhost:5000/suppliers";
 
 const fetchHandler = async () => {
   try {
@@ -31,7 +32,33 @@ function Products() {
   const [filteredSpices, setFilteredSpices] = useState([]);
   const [selectedSpiceDetails, setSelectedSpiceDetails] = useState(null);
   const [updateTrigger, setUpdateTrigger] = useState(0);
+  const [lastSupplierItem, setLastSupplierItem] = useState(null); 
   const reportRef = useRef();
+
+  const fetchLastSupplierItem = async () => {
+    try {
+      const res = await axios.get(SUPPLIER_URL);
+      const suppliers = res.data.suppliers || [];
+
+      if (suppliers.length === 0) {
+        setLastSupplierItem(null);
+        return;
+      }
+
+      // Find the most recent supplier entry based on the 'date' field
+      const latestSupplier = suppliers.reduce((latest, current) => {
+        // Use a more robust check for date comparison (assuming date represents supply time)
+        const latestDate = latest.date ? new Date(latest.date).getTime() : 0;
+        const currentDate = current.date ? new Date(current.date).getTime() : 0;
+        return currentDate > latestDate ? current : latest;
+      }, suppliers[0]); 
+
+      setLastSupplierItem(latestSupplier);
+    } catch (error) {
+      console.error("Error fetching last supplier item:", error);
+      setLastSupplierItem(null);
+    }
+  };
 
   const generatePdfReport = async () => {
     const input = reportRef.current;
@@ -49,10 +76,10 @@ function Products() {
     const today = new Date();
     const dateString = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     pdf.setFontSize(10);
+    
     pdf.text(`Report Generated: ${dateString}`, 10, 10);
     const overallTotalStock = totals.reduce((sum, item) => sum + item.totalQuantity, 0);
     pdf.text(`Overall Total Stock: ${overallTotalStock} kg`, 10, 15);
-
     position = 25;
     pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
     heightLeft -= pageHeight;
@@ -67,7 +94,20 @@ function Products() {
     pdf.save('spice_stock_report.pdf');
   };
 
+  // 🔑 NEW useEffect: Checks for supplier addition and triggers refresh
   useEffect(() => {
+    // Check if the flag is set after returning from the Add Supplier page
+    if (localStorage.getItem('supplier_updated') === 'true') {
+      setUpdateTrigger(prev => prev + 1); // Force a refresh of all dependent effects
+      localStorage.removeItem('supplier_updated'); // Clear the flag
+    }
+    // This runs only on mount.
+  }, []); 
+
+  // Existing useEffect for all data fetching (now depends on updateTrigger)
+  useEffect(() => {
+    fetchLastSupplierItem(); 
+    
     const fetchProductsAndDetails = async () => {
       try {
         const spicesResponse = await axios.get(URL);
@@ -120,6 +160,7 @@ function Products() {
 
     fetchProductsAndDetails();
   }, [updateTrigger, searchTerm]);
+  
 
   const handleSpiceAdded = () => setUpdateTrigger(prev => prev + 1);
 
@@ -147,6 +188,18 @@ function Products() {
   return (
     <div className="inv-layout">
       <NavInv />
+      
+      {/* LAST SUPPLIED ITEM MESSAGE */}
+      <div className="inv-last-supplier-message">
+        {lastSupplierItem ? (
+          <p>
+            🔔 Supplied **{lastSupplierItem.qty || 'N/A'} kg** of **{lastSupplierItem.spicename || 'N/A'}** on {lastSupplierItem.date ? new Date(lastSupplierItem.date).toLocaleDateString() : 'N/A'}.
+          </p>
+        ) : (
+          <p>No recent supplier data available.</p>
+        )}
+      </div>
+
       <Addspice onSpiceAdded={handleSpiceAdded} />
 
       <div className="inv-search-container">
@@ -232,4 +285,3 @@ function Products() {
 }
 
 export default Products;
-
