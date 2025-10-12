@@ -1,8 +1,15 @@
+// src/Components/AddStaff/AddStaff.js
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./AddStaff.css";
 import Nav from "../Nav/Nav";
+
+// ✅ ADD THIS HELPER FUNCTION
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('staffToken');
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
 
 function AddStaff() {
   const navigate = useNavigate();
@@ -31,6 +38,7 @@ function AddStaff() {
     return emailRegex.test(email);
   };
 
+  // ✅ UPDATED - Added auth headers and better error handling
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -41,10 +49,16 @@ function AddStaff() {
     }
 
     try {
-      await axios.post("http://localhost:5000/staff", formData);
+      await axios.post("http://localhost:5000/staff", formData, {
+        headers: getAuthHeaders()
+      });
       navigate("/staffManagement");
     } catch (err) {
-      if (err.response && err.response.status === 400) {
+      if (err.response?.status === 401) {
+        setErrorMsg("You must be logged in as HR Manager to add staff.");
+      } else if (err.response?.status === 403) {
+        setErrorMsg("Access denied. Only HR Managers can add staff.");
+      } else if (err.response && err.response.status === 400) {
         const message = err.response.data.message;
         if (message.includes("exists")) {
           setErrorMsg("Email or National ID already exists!");
@@ -80,34 +94,31 @@ function AddStaff() {
           </div>
 
           <div className="addstaff-form-group">
-          
-  <label>National ID</label>
-  <input
-    type="text"
-    name="nationalId"
-    placeholder="National ID"
-    value={formData.nationalId}
-    onChange={(e) => {
-      const value = e.target.value;
-      // Limit input to max 16 characters
-      if (value.length <= 16) {
-        setFormData({ ...formData, nationalId: value });
-      }
-    }}
-    onBlur={() => {
-      const len = formData.nationalId.length;
-      if (len !== 12 && len !== 16) {
-        alert("National ID must be exactly 12 or 16 characters!");
-      }
-    }}
-    required
-    maxLength={16}
-    onKeyDown={(e) => {
-      if (e.key === "-") e.preventDefault();
-    }}
-  />
-
-
+            <label>National ID</label>
+            <input
+              type="text"
+              name="nationalId"
+              placeholder="National ID"
+              value={formData.nationalId}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Limit input to max 16 characters
+                if (value.length <= 16) {
+                  setFormData({ ...formData, nationalId: value });
+                }
+              }}
+              onBlur={() => {
+                const len = formData.nationalId.length;
+                if (len !== 12 && len !== 16) {
+                  alert("National ID must be exactly 12 or 16 characters!");
+                }
+              }}
+              required
+              maxLength={16}
+              onKeyDown={(e) => {
+                if (e.key === "-") e.preventDefault();
+              }}
+            />
           </div>
 
           <div className="addstaff-form-group">
@@ -169,32 +180,31 @@ function AddStaff() {
           </div>
 
           <div className="addstaff-form-group">
-  <label>Account No</label>
-  <input
-    type="number"
-    name="accountNo"
-    placeholder="Account No"
-    value={formData.accountNo}
-    onChange={(e) => {
-      const value = e.target.value;
-      // Limit input to digits only and max length 16
-      if (value.length <= 16) {
-        setFormData({ ...formData, accountNo: value });
-      }
-    }}
-    onBlur={() => {
-      // Validate exact length when input loses focus
-      if (formData.accountNo.length !== 16) {
-        alert("Account Number must be exactly 16 digits!");
-      }
-    }}
-    required
-    onKeyDown={(e) => {
-      if (e.key === "-") e.preventDefault();
-    }}
-  />
-</div>
-
+            <label>Account No</label>
+            <input
+              type="number"
+              name="accountNo"
+              placeholder="Account No"
+              value={formData.accountNo}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Limit input to digits only and max length 16
+                if (value.length <= 16) {
+                  setFormData({ ...formData, accountNo: value });
+                }
+              }}
+              onBlur={() => {
+                // Validate exact length when input loses focus
+                if (formData.accountNo.length !== 16) {
+                  alert("Account Number must be exactly 16 digits!");
+                }
+              }}
+              required
+              onKeyDown={(e) => {
+                if (e.key === "-") e.preventDefault();
+              }}
+            />
+          </div>
 
           <div className="addstaff-form-group">
             <label>Department</label>

@@ -28,19 +28,28 @@ function Nav() {
     });
   };
 
-  const handleLogout = () => {
-    // Clear session data
+// In your Nav.js - Update the handleLogout function
+const handleLogout = () => {
+  // Confirm logout
+  if (window.confirm('Are you sure you want to logout?')) {
+    // Clear all staff-related data from localStorage
     localStorage.removeItem("staffToken");
     localStorage.removeItem("staffType");
     localStorage.removeItem("staffName");
     localStorage.removeItem("staffId");
     localStorage.removeItem("staffEmail");
-    sessionStorage.clear();
-
-    // Redirect to login page and reload to prevent back navigation
+    
+    // Redirect to staff login page
     navigate("/staff-login", { replace: true });
     
-  };
+    // Prevent going back
+    window.history.pushState(null, '', '/staff-login');
+    window.onpopstate = function() {
+      window.history.pushState(null, '', '/staff-login');
+    };
+  }
+};
+
 
   const links = [
     { path: "/Dashboard", label: "Dashboard", icon: <FaHome /> },

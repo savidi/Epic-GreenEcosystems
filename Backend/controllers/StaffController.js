@@ -1,9 +1,19 @@
 const Staff = require("../model/StaffModel");
 const QRCode = require("qrcode");
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 // Add/register a new staff
 exports.addStaff = async (req, res) => {
   try {
+    // Check authentication
+    if (!req.isAuthenticated) {
+      return res.status(401).json({ 
+        status: "fail", 
+        message: "You must be logged in to add staff" 
+      });
+    }
+
     const { name, nationalId, age, gender, email, password, accountNo, staffType, position } = req.body;
 
     const existingStaff = await Staff.findOne({ $or: [{ email }, { nationalId }] });
@@ -11,8 +21,7 @@ exports.addStaff = async (req, res) => {
       return res.status(400).json({ status: "fail", message: "Staff already exists" });
     }
 
-    // Generate QR code (can encode the staff's email or ID)
-    const qrCode = await QRCode.toDataURL(email); // or `${name}-${nationalId}`
+    const qrCode = await QRCode.toDataURL(email);
 
     const newStaff = await Staff.create({
       name,
@@ -24,10 +33,10 @@ exports.addStaff = async (req, res) => {
       accountNo,
       staffType,
       position,
-      qrCode, // store the generated QR code
+      qrCode,
     });
 
-    newStaff.password = undefined; // hide password
+    newStaff.password = undefined;
     res.status(201).json({ status: "success", data: newStaff });
   } catch (err) {
     console.error(err);
@@ -63,6 +72,14 @@ exports.getStaffById = async (req, res) => {
 // Update staff by ID
 exports.updateStaff = async (req, res) => {
     try {
+        // Check authentication
+        if (!req.isAuthenticated) {
+            return res.status(401).json({ 
+                status: "fail", 
+                message: "You must be logged in to update staff" 
+            });
+        }
+
         const updatedStaff = await Staff.findByIdAndUpdate(
             req.params.id,
             req.body,
@@ -83,6 +100,14 @@ exports.updateStaff = async (req, res) => {
 // Delete staff by ID
 exports.deleteStaff = async (req, res) => {
     try {
+        // Check authentication
+        if (!req.isAuthenticated) {
+            return res.status(401).json({ 
+                status: "fail", 
+                message: "You must be logged in to delete staff" 
+            });
+        }
+
         const deletedStaff = await Staff.findByIdAndDelete(req.params.id);
         if (!deletedStaff) {
             return res.status(404).json({ status: "fail", message: "Staff not found" });
@@ -94,12 +119,7 @@ exports.deleteStaff = async (req, res) => {
     }
 };
 
-
 // Staff login (for Managers only)
-// controllers/StaffController.js - UPDATE staffLogin function only
-const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
-
 exports.staffLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -109,18 +129,15 @@ exports.staffLogin = async (req, res) => {
       return res.status(404).json({ status: "fail", message: "Staff not found" });
     }
 
-    // Check if Manager
     if (staff.position !== "Manager") {
       return res.status(403).json({ status: "fail", message: "Access denied. Not a manager." });
     }
 
-    // Validate password
     const isMatch = await staff.correctPassword(password, staff.password);
     if (!isMatch) {
       return res.status(401).json({ status: "fail", message: "Invalid credentials" });
     }
 
-    // Generate JWT token
     const token = jwt.sign(
       { 
         staffId: staff._id,
@@ -129,10 +146,9 @@ exports.staffLogin = async (req, res) => {
         email: staff.email
       },
       JWT_SECRET,
-      { expiresIn: '8h' } // Token expires in 8 hours
+      { expiresIn: '8h' }
     );
 
-    // Return success with token
     res.status(200).json({
       status: "success",
       token,

@@ -2,9 +2,9 @@
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
+// Required authentication - throws error if no token
 const staffAuth = (req, res, next) => {
     try {
-        // Get token from header
         const authHeader = req.headers.authorization;
         
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -15,14 +15,12 @@ const staffAuth = (req, res, next) => {
         }
 
         const token = authHeader.split(' ')[1];
-        
-        // Verify token
         const decodedToken = jwt.verify(token, JWT_SECRET);
         
-        // Add staff info to request
         req.staffId = decodedToken.staffId;
         req.staffType = decodedToken.staffType;
         req.position = decodedToken.position;
+        req.isAuthenticated = true;
         
         next();
     } catch (error) {
@@ -39,20 +37,60 @@ const staffAuth = (req, res, next) => {
     }
 };
 
-// Middleware to check if user is a manager
+// Optional authentication - doesn't throw error if no token
+const optionalStaffAuth = (req, res, next) => {
+    try {
+        const authHeader = req.headers.authorization;
+        
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            req.isAuthenticated = false;
+            return next();
+        }
+
+        const token = authHeader.split(' ')[1];
+        const decodedToken = jwt.verify(token, JWT_SECRET);
+        
+        req.staffId = decodedToken.staffId;
+        req.staffType = decodedToken.staffType;
+        req.position = decodedToken.position;
+        req.isAuthenticated = true;
+        
+        next();
+    } catch (error) {
+        req.isAuthenticated = false;
+        next();
+    }
+};
+
+// Check if user is a manager
 const isManager = (req, res, next) => {
+    if (!req.isAuthenticated) {
+        return res.status(401).json({
+            status: 'fail',
+            message: 'Authentication required for this operation'
+        });
+    }
+    
     if (req.position !== 'Manager') {
         return res.status(403).json({
             status: 'fail',
             message: 'Access denied: Manager privileges required'
         });
     }
+    
     next();
 };
 
-// Middleware to check specific staff type
+// Check specific staff type
 const checkStaffType = (...allowedTypes) => {
     return (req, res, next) => {
+        if (!req.isAuthenticated) {
+            return res.status(401).json({
+                status: 'fail',
+                message: 'Authentication required'
+            });
+        }
+        
         if (!allowedTypes.includes(req.staffType)) {
             return res.status(403).json({
                 status: 'fail',
@@ -63,4 +101,4 @@ const checkStaffType = (...allowedTypes) => {
     };
 };
 
-module.exports = { staffAuth, isManager, checkStaffType };
+module.exports = { staffAuth, optionalStaffAuth, isManager, checkStaffType };

@@ -1,7 +1,9 @@
+import './utils/axiosConfig'; 
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 
+import ProtectedStaffRoute from './Components/ProtectedStaffRoute';
 import StaffLogin from "./Components/Log/StaffLogin";
 import ContactUs from "./Components/ContactUs/ContactUs"
 import CusHome from './Components/CusHome/CusHome';
@@ -21,7 +23,7 @@ import SalesManager from './Components/SalesManager/SalesManager';
 import QuotationForm from './Components/SalesManager/QuotationForm';
 import OrderStatus from './Components/Customer/OrderStatusModal';
 
-import ProtectedStaffRoute from './Components/ProtectedStaffRoute';
+
 
 import HomeN from "./Components/HomeN/HomeN.js";
 import Addproduct from "./Components/Products/Addproduct";
@@ -208,9 +210,13 @@ function App() {
         <Route path="/mainFWorker/:id" element={<UpdateWorker />} />
 
         {/* Staff Management */}
-        <Route path="/staffManagement" element={<StaffManagement />} />
+        
         <Route path="/addStaff" element={<AddStaff />} />
         <Route path="/updateStaff/:id" element={<UpdateStaff />} />
+        <Route path="/staffManagement" element={<StaffManagement />} />
+
+
+
 
         {/* Attendance */}
         <Route path="/attendanceScanner" element={<AttendanceScanner />} />
@@ -234,27 +240,6 @@ function App() {
         
 
         <Route path="/staff-login" element={<StaffLogin />} />
-
-          <Route 
-  path="/Home" 
-  element={
-    <ProtectedStaffRoute allowedStaffTypes={['HR']}>
-      <Home />
-    </ProtectedStaffRoute>
-  } 
-/>
-
-<Route 
-  path="/staffManagement" 
-  element={
-    <ProtectedStaffRoute allowedStaffTypes={['HR']}>
-      <StaffManagement />
-    </ProtectedStaffRoute>
-  } 
-/>
-
-
-
       </Routes>
     </React.Fragment>
   );

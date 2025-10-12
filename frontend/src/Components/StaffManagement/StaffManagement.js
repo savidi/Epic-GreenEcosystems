@@ -9,6 +9,12 @@ import IDCard from "../IDcard/IDcard";
 import "./StaffManagement.css";
 import Nav from "../Nav/Nav";
 
+// ✅ ADD THIS HELPER FUNCTION
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('staffToken');
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
 function StaffManagement() {
   const [staffList, setStaffList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -50,9 +56,12 @@ function StaffManagement() {
     };
   }, [sidebarCollapsed]);
 
+  // ✅ UPDATED - Added auth headers
   const fetchStaff = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/staff");
+      const res = await axios.get("http://localhost:5000/staff", {
+        headers: getAuthHeaders()
+      });
       setStaffList(res.data.data);
       setFilteredStaff(res.data.data);
     } catch (err) {
@@ -80,14 +89,24 @@ function StaffManagement() {
     setFilteredStaff(filtered);
   };
 
+  // ✅ UPDATED - Added auth headers and better error handling
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this staff member?"))
       return;
     try {
-      await axios.delete(`http://localhost:5000/staff/${id}`);
+      await axios.delete(`http://localhost:5000/staff/${id}`, {
+        headers: getAuthHeaders()
+      });
       fetchStaff();
     } catch (err) {
       console.error(err);
+      if (err.response?.status === 401) {
+        alert("You must be logged in as HR Manager to delete staff.");
+      } else if (err.response?.status === 403) {
+        alert("Access denied. Only HR Managers can delete staff.");
+      } else {
+        alert(err.response?.data?.message || "Failed to delete staff.");
+      }
     }
   };
 
@@ -201,90 +220,85 @@ function StaffManagement() {
       >
         <h1 className="fworker-page-titl">Staff Management</h1>
         
-        
-        
         {/* Filter container */}
-<div className="staffmanagement-filter-container">
+        <div className="staffmanagement-filter-container">
+          {/* Left section (filters) */}
+          <div className="staffmanagement-filter-left">
+            <div className="staffmanagement-search-container">
+              <label className="staffmanagement-filter-label">
+                Search by National ID:
+              </label>
+              <input
+                type="text"
+                placeholder="Enter National ID"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="staffmanagement-search-input"
+              />
+              {searchQuery && (
+                <button
+                  className="staffmanagement-clear-search-btn"
+                  onClick={clearSearch}
+                >
+                  ×
+                </button>
+              )}
+            </div>
 
-  {/* Left section (filters) */}
-  <div className="staffmanagement-filter-left">
-    <div className="staffmanagement-search-container">
-      <label className="staffmanagement-filter-label">
-        Search by National ID:
-      </label>
-      <input
-        type="text"
-        placeholder="Enter National ID"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="staffmanagement-search-input"
-      />
-      {searchQuery && (
-        <button
-          className="staffmanagement-clear-search-btn"
-          onClick={clearSearch}
-        >
-          ×
-        </button>
-      )}
-    </div>
+            <div className="staffmanagement-filter-by-type">
+              <label className="staffmanagement-filter-label">
+                Filter by Staff Type:
+              </label>
+              <select
+                value={staffTypeQuery}
+                onChange={(e) => setStaffTypeQuery(e.target.value)}
+                className="staffmanagement-search-input"
+              >
+                <option value="">All</option>
+                {uniqueStaffTypes.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+              {staffTypeQuery && (
+                <button
+                  className="staffmanagement-clear-search-btn"
+                  onClick={clearStaffType}
+                >
+                  ×
+                </button>
+              )}
+            </div>
+          </div>
 
-    <div className="staffmanagement-filter-by-type">
-      <label className="staffmanagement-filter-label">
-        Filter by Staff Type:
-      </label>
-      <select
-        value={staffTypeQuery}
-        onChange={(e) => setStaffTypeQuery(e.target.value)}
-        className="staffmanagement-search-input"
-      >
-        <option value="">All</option>
-        {uniqueStaffTypes.map((type) => (
-          <option key={type} value={type}>
-            {type}
-          </option>
-        ))}
-      </select>
-      {staffTypeQuery && (
-        <button
-          className="staffmanagement-clear-search-btn"
-          onClick={clearStaffType}
-        >
-          ×
-        </button>
-      )}
-    </div>
-  </div>
+          {/* Right section (buttons) */}
+          <div className="staffmanagement-action-buttons-group">
+            <button
+              className="staffmanagement-action-btn staffmanagement-view-all-btn"
+              onClick={() => {
+                clearSearch();
+                clearStaffType();
+              }}
+            >
+              View All
+            </button>
 
-  {/* Right section (buttons) */}
-  <div className="staffmanagement-action-buttons-group">
-    <button
-      className="staffmanagement-action-btn staffmanagement-view-all-btn"
-      onClick={() => {
-        clearSearch();
-        clearStaffType();
-      }}
-    >
-      View All
-    </button>
+            <Link
+              to="/addStaff"
+              className="staffmanagement-action-btn staffmanagement-add-staff-btn"
+            >
+              Add Staff
+            </Link>
 
-    <Link
-      to="/addStaff"
-      className="staffmanagement-action-btn staffmanagement-add-staff-btn"
-    >
-      Add Staff
-    </Link>
-
-    <button
-      className="staffmanagement-action-btn staffmanagement-download-pdf-btn"
-      onClick={generatePDF}
-    >
-      Download PDF
-    </button>
-  </div>
-</div>
-
-
+            <button
+              className="staffmanagement-action-btn staffmanagement-download-pdf-btn"
+              onClick={generatePDF}
+            >
+              Download PDF
+            </button>
+          </div>
+        </div>
 
         {/* Summary Cards Section */}
         <div className="staffmanagement-summary-cards">
@@ -297,7 +311,7 @@ function StaffManagement() {
           
           {/* Department Cards */}
           {Object.entries(staffTypeCounts)
-            .sort((a, b) => b[1] - a[1]) // Sort by count descending
+            .sort((a, b) => b[1] - a[1])
             .map(([type, count]) => (
               <div key={type} className="staffmanagement-summary-card staffmanagement-dept-card">
                 <h3>{type}</h3>
