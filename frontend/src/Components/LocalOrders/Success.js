@@ -6,6 +6,16 @@ import jsPDF from 'jspdf'; // Import jsPDF
 import html2canvas from 'html2canvas'; // Import html2canvas
 import './Success.css';
 
+// New component for the success icon (checkmark in a circle)
+const SuccessIcon = () => (
+  <div className="success-icon-container">
+    <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+      <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+      <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+    </svg>
+  </div>
+);
+
 export default function Success() {
   const navigate = useNavigate(); // Reserved for future use
   const [orderDetails, setOrderDetails] = useState(null);
@@ -13,7 +23,7 @@ export default function Success() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   // FIX: Declare the state for email sending to resolve the no-undef error
-  const [isEmailSending, setIsEmailSending] = useState(false); 
+  const [isEmailSending, setIsEmailSending] = useState(false);
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
@@ -70,19 +80,19 @@ export default function Success() {
 
     // Temporary adjustments for capture
     const originalWidth = input.style.width;
-    input.style.width = '550px'; 
-    const buttons = document.querySelectorAll('.action-button-group');
-    buttons.forEach(btn => btn.style.display = 'none');
+    input.style.width = '550px';
+    const buttons = document.querySelectorAll('.action-button-group, .success-icon-container');
+    buttons.forEach(el => el.style.display = 'none'); // Hide icon as well
 
     try {
       const canvas = await html2canvas(input, { scale: 2, logging: true, useCORS: true });
       const imgData = canvas.toDataURL('image/jpeg', 1.0);
-      const pdf = new jsPDF('p', 'mm', 'a4'); 
-      
+      const pdf = new jsPDF('p', 'mm', 'a4');
+
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imgHeight = canvas.height * pdfWidth / canvas.width;
-      
+
       let heightLeft = imgHeight;
       let position = 0;
 
@@ -95,13 +105,13 @@ export default function Success() {
           pdf.addPage();
         }
       }
-      
+
       // Return the Base64 data string (remove the initial 'data:application/pdf;base64,' part)
       return pdf.output('datauristring').split(',')[1];
     } finally {
       // Restore original state
       input.style.width = originalWidth;
-      buttons.forEach(btn => btn.style.display = 'block');
+      buttons.forEach(el => el.style.display = 'block');
     }
   };
 
@@ -109,7 +119,7 @@ export default function Success() {
   const handleDownloadReceipt = async () => {
     try {
       const pdfBase64 = await generatePdfBase64();
-      
+
       // Create a temporary link element to trigger the download
       const link = document.createElement('a');
       link.href = `data:application/pdf;base64,${pdfBase64}`;
@@ -117,7 +127,7 @@ export default function Success() {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      
+
     } catch (err) {
       console.error("Error downloading PDF:", err);
       alert('Failed to generate PDF receipt for download.');
@@ -150,7 +160,7 @@ export default function Success() {
       const message = response.data.sentToTest
         ? `Success! Email was sent to the test recipient (${response.data.message.split('to ')[1]}). Check your test inbox.`
         : response.data.message;
-      
+
       alert(message);
     } catch (err) {
       console.error('Error sending email:', err);
@@ -174,12 +184,20 @@ export default function Success() {
 
   return (
     <div className="success-container">
+      <SuccessIcon />
+      <h1 className="success-title">Order Confirmed!</h1>
+      <p className="success-message">Your payment was successful and your order has been placed.</p>
+      <div className="success-divider-line"></div> {/* New divider line */}
+
       {/* Content to be included in the PDF is wrapped in this div */}
       <div id="receipt-content">
-        <h1 className="success-title">Payment Successful!</h1>
-        <p className="success-message">Your order has been placed successfully.</p>
-        {/* ... (rest of the receipt details remain the same) ... */}
-        <hr className="success-divider" />
+        {/* The icon and title/message are moved above the receipt-content div for better aesthetics, 
+            but we'll keep the old title in case it's styled for the receipt printout, 
+            or we can simply remove it and rely on the new one. 
+            I'll remove the old title/message from here to avoid duplication. */}
+        {/* <h1 className="success-title">Payment Successful!</h1> */}
+        {/* <p className="success-message">Your order has been placed successfully.</p> */}
+
         <div className="order-section">
           <h2 className="section-title">Order Confirmation</h2>
           <p className="order-detail">
@@ -227,7 +245,7 @@ export default function Success() {
           </h3>
         </div>
       </div>
-      
+
       {/* Buttons for actions */}
       <div className="action-button-group">
         <Link to="/customer" className="dashboard-button action-button">

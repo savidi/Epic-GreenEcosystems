@@ -1,68 +1,145 @@
-/* Success.css */
+body {
+    background-image: url('./spices.jpg'); 
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from tiling */
+    background-attachment: fixed; /* Keeps the background image fixed when scrolling */
+    min-height: 100vh; /* Ensures the background covers the full viewport height */
+    margin: 0; /* Remove default body margin */
+}
+
 .success-container {
-  padding: 20px;
+  padding: 30px; /* Increased padding */
   max-width: 600px;
   margin: 50px auto;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  background-color: #fff;
+  border: 1px solid #e0e0e0; /* Lighter border */
+  border-radius: 12px; /* More rounded corners */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05); /* Softer shadow */
+  background-color: rgba(255, 255, 255, 0.95);
+  text-align: center; /* Center content like icon, title, message */
 }
 
-/* * NEW: Styling for the content that will become the PDF.
-* We give it padding and a distinct look if necessary. 
-*/
-#receipt-content {
-    /* Add internal padding to create margin within the PDF */
-    padding: 20px 30px; 
-    border: 1px solid #ddd; /* A subtle border to contain the receipt */
-    border-radius: 5px;
-    margin-bottom: 20px; /* Space it out from the buttons */
-    background-color: #f9f9f9; /* Slight background for professionalism */
+/* Success Icon Styling */
+.success-icon-container {
+  margin: 0 auto 20px auto;
+  width: 80px;
+  height: 80px;
 }
 
-/* Existing styles for a professional look */
+.checkmark {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: #ffffff;
+  stroke-miterlimit: 10;
+  box-shadow: inset 0px 0px 0px #4CAF50;
+  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: #4CAF50;
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 50px #4CAF50;
+  }
+}
+
+/* Header Text Styling */
 .success-title {
-  color: #4CAF50;
-  text-align: center;
-  margin-bottom: 10px;
+  color: #333; /* Darker, more professional title */
+  font-size: 28px;
+  margin-bottom: 5px;
+  font-weight: 700;
 }
 
 .success-message {
-  text-align: center;
-  font-size: 18px;
-  margin-bottom: 20px;
-  color:#40250b;
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #777; /* Subtle message color */
 }
 
-.success-divider {
+.success-divider-line {
+    width: 100%;
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px auto;
+}
+
+/* Receipt Content Styling */
+#receipt-content {
+    /* Use a simple, clean background for the receipt itself */
+    padding: 20px 30px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    background-color: #fcfcfc;
+    text-align: left; /* Reset text align for receipt details */
+}
+
+
+.success-divider { /* Keeping the old divider for compatibility inside receipt-content if needed */
   margin: 20px 0;
   border: none;
   border-top: 1px solid #ccc;
 }
 
 .order-section, .customer-section, .spices-section {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .section-title {
-  margin-bottom: 10px;
-  color: #ec5d0a;
+  margin-bottom: 12px;
+  color: #7c3915; /* Matching the dashboard button color */
   font-size: 18px;
-  font-weight: 700; /* Make section titles stand out */
+  font-weight: 700;
+  border-bottom: 2px solid #eee; /* Subtle underline for section titles */
+  padding-bottom: 5px;
 }
 
 .order-detail, .customer-detail {
-  margin: 5px 0;
-  font-size: 14px;
+  margin: 6px 0;
+  font-size: 15px;
   color: #555;
-  padding-left: 10px; /* Indent details slightly */
+  padding-left: 10px;
 }
 
 .order-detail strong, .customer-detail strong {
   color: #333;
   display: inline-block;
-  min-width: 80px; /* Align the detail values */
+  min-width: 100px; /* Increased width for better alignment */
+  font-weight: 600;
 }
 
 .spices-list {
@@ -74,9 +151,9 @@
 .spice-item {
   display: flex;
   justify-content: space-between;
-  padding: 8px 10px; /* Increased padding */
-  border-bottom: 1px dotted #ccc; /* Stronger separator */
-  font-size: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee; /* Lighter separator */
+  font-size: 15px;
 }
 
 .spice-item:last-child {
@@ -89,12 +166,12 @@
 
 .spice-price {
   color: #333;
-  font-weight: 600; /* Stronger price */
+  font-weight: 700; /* Stronger price */
 }
 
 .total-section {
-  border-top: 2px solid #333;
-  padding: 15px 10px 0; /* Increased padding for total section */
+  border-top: 2px solid #7c3915; /* Use a color that matches the brand for the total line */
+  padding: 15px 0 0;
   margin-top: 20px;
 }
 
@@ -102,82 +179,92 @@
   display: flex;
   justify-content: space-between;
   margin: 0;
-  font-size: 20px; /* Larger font for total */
-  font-weight: 700;
-  color: #333;
+  font-size: 22px;
+  font-weight: 800;
+  color: #7c3915;
 }
 
 /* Button Group Styling */
 .action-button-group {
     display: flex;
     flex-direction: column;
-    gap: 10px; 
-    margin-top: 20px;
+    gap: 12px; /* Increased gap */
+    margin-top: 30px;
 }
 
 .action-button {
-  width: 100%; 
-  padding: 12px 20px;
+  width: 100%;
+  padding: 14px 20px; /* Slightly larger buttons */
   font-size: 16px;
   cursor: pointer;
   border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  border-radius: 8px; /* Slightly more rounded buttons */
+  transition: background-color 0.3s ease, transform 0.1s ease;
   text-decoration: none;
-  display: block; 
+  display: block;
   text-align: center;
+  font-weight: 600;
 }
 
 .dashboard-button {
-  background-color: #b55927;
+  background-color: #7c3915;
   color: white;
 }
 
 .dashboard-button:hover {
-  background-color: #773e0d;
+  background-color: #4f2908;
+  transform: translateY(-1px);
 }
 
 .download-button {
-  background-color: #2196F3; 
+  background-color: #b55927;
   color: white;
 }
 
 .download-button:hover {
-  background-color: #0c7cd5;
+  background-color: #87421d;
+  transform: translateY(-1px);
 }
 
 .email-button {
-  background-color: #FF9800; 
+  background-color: #cb991a;
   color: white;
 }
 
 .email-button:hover {
-  background-color: #fb8c00;
+  background-color: #825c1a;
+  transform: translateY(-1px);
 }
 
 
 .action-button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 3px rgba(124, 57, 21, 0.5); /* Brand colored focus ring */
+}
+
+.action-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Loading and error states */
 .loading-container, .error-container, .no-order-container {
   text-align: center;
   margin-top: 50px;
+  font-size: 18px;
+  color: #333;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
   .success-container {
     margin: 20px;
-    padding: 15px;
+    padding: 20px;
   }
-  
-  /* Reset padding for smaller screens if necessary, though 
-     the print-capture relies on it for PDF margins */
+
   #receipt-content {
-      padding: 15px 20px; 
+      padding: 15px 20px;
   }
 }
 
@@ -186,13 +273,13 @@
     margin: 10px;
     padding: 10px;
   }
-  
+
   .spice-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
   }
-  
+
   .spice-price {
     align-self: flex-end;
   }
