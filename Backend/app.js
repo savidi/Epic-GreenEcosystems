@@ -27,6 +27,7 @@ const paymentRouter = require('./Routes/PaymentRouter');
 const salesRouter = require('./Routes/SalesRouter');
 const quotationRouter = require('./Routes/QuotationRouter');
 const emailRouter=require("./Routes/SendEmail");
+const contactRouter = require("./Routes/ContactUsRoutes");
 
 // Models
 // Models and middleware
@@ -255,6 +256,10 @@ app.use((req, res, next) => {
         express.json({ limit: '50mb' })(req, res, next);
     }
 });
+
+app.use('/contact', contactRouter);
+console.log("✅ Contact routes loaded successfully");
+
 
 // Default route
 app.get("/", (req, res) => {

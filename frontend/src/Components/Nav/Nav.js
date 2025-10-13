@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import './nav.css';
-import { FaHome, FaUsers, FaUserTie, FaClock, FaTable, FaBars, FaMoneyBillWave, FaSignOutAlt, FaUser } from "react-icons/fa";
+import { FaHome, FaUsers, FaUserTie, FaClock, FaTable, FaBars, FaMoneyBillWave, FaSignOutAlt, FaUser, FaComment } from "react-icons/fa";
 
 function Nav() {
   const location = useLocation();
@@ -58,6 +58,7 @@ const handleLogout = () => {
     { path: "/attendanceScanner", label: "Attendance Scanner", icon: <FaClock /> },
     { path: "/attendanceTable", label: "Attendance Table", icon: <FaTable /> },
     { path: "/paymentPage", label: "Payments", icon: <FaMoneyBillWave /> },
+    { path: "/ViewContactUsMessage", label: "Feedbacks", icon: <FaComment /> },
   ];
 
   return (

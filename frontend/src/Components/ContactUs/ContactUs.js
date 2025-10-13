@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import './ContactUs.css';
 import Footer from '../Footer/Footer';
 import Nav from '../NavCus/NavCus';
+import axios from 'axios'; // ✅ Added for backend connection
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -24,26 +25,34 @@ const ContactUs = () => {
     }));
   };
 
+  // ✅ Updated: send data to backend (MongoDB)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      setSubmitMessage("Thank you for your message! We'll get back to you soon.");
-      setFormData({
-        name: '',
-        company: '',
-        phone: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
-      setIsSubmitting(false);
+    try {
+      const response = await axios.post('http://localhost:5000/contact', formData);
 
-      // Clear success message after 5 seconds
+      if (response.data.success) {
+        setSubmitMessage(response.data.message);
+        setFormData({
+          name: '',
+          company: '',
+          phone: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        setSubmitMessage('Failed to submit your message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      setSubmitMessage('Something went wrong. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
       setTimeout(() => setSubmitMessage(''), 5000);
-    }, 1000);
+    }
   };
 
   return (
@@ -203,19 +212,19 @@ const ContactUs = () => {
 
       {/* Map Section */}
       <section className="contactus-map-section">
-  <div className="contactus-map-container">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.116731236711!2d80.6283942!3d7.6078914!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae34d6d13fc725b%3A0xd42b48bc31e4af0!2sEpic%20Green%2C%20Madawala%20Ulpotha!5e0!3m2!1sen!2slk!4v1726905600000!5m2!1sen!2slk"
-      width="100%"
-      height="400"
-      style={{ border: 0 }}
-      allowFullScreen
-      loading="lazy"
-      referrerPolicy="no-referrer-when-downgrade"
-    ></iframe>
-  </div>
-</section>
-<Footer />
+        <div className="contactus-map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.116731236711!2d80.6283942!3d7.6078914!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae34d6d13fc725b%3A0xd42b48bc31e4af0!2sEpic%20Green%2C%20Madawala%20Ulpotha!5e0!3m2!1sen!2slk!4v1726905600000!5m2!1sen!2slk"
+            width="100%"
+            height="400"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </section>
+      <Footer />
     </div>
   );
 };

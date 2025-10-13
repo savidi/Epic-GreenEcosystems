@@ -11,6 +11,7 @@ import {
   FaBars,
   FaSignOutAlt,
   FaUser,
+  FaComment,
 } from "react-icons/fa";
 
 function NavSup() {
@@ -66,6 +67,7 @@ const handleLogout = () => {
     { path: "/payments", label: "Payments", icon: <FaMoneyBillWave /> },
     { path: "/stock", label: "Stock", icon: <FaBox /> },
     { path: "/pdfdownloadsp", label: "Reviews", icon: <FaStar /> },
+    { path: "/notification", label: "Low Stocks", icon: <FaComment /> },
   ];
 
   return (
