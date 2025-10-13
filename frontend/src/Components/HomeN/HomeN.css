@@ -1,65 +1,111 @@
+/*
+|--------------------------------------------------------------------------
+| HomeN.css - Professional Inventory Dashboard Styles
+|--------------------------------------------------------------------------
+| Focuses on clean layout, clear hierarchy, and modern aesthetics.
+|
+*/
+
+/* ================== Global & Layout ================== */
 
 /* -------- Layout -------- */
 .inv-layout {
   display: flex;
-  background-color: #fff9f0;
+  /* Soft, neutral background for a clean look */
+  background-color: #f8f9fa; /* Light grey/off-white */
   min-height: 100vh;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #212529; /* Darker text for better readability */
 }
 
 .inv-main {
   flex: 1;
   padding: 30px;
-  margin-left: 220px; /* ensures sidebar doesn't overlap */
+  /* Margin to accommodate a fixed sidebar (NavInv) */
+  margin-left: 220px; 
   box-sizing: border-box;
 }
 
-/* -------- Header -------- */
+/* New: Main content grid for better organization */
+.inv-main-grid {
+  display: grid;
+  /* Two main columns: Showspice (larger) and TaskPage (smaller) */
+  grid-template-columns: 2.5fr 1fr; 
+  gap: 30px; /* Space between the grid items */
+  margin-top: 30px; /* Space below the Statscards */
+}
+
+/* New: Styles for the sections within the grid (e.g., Showspice container) */
+.inv-showspice-section {
+  /* No specific styles needed here, but kept for future targeting */
+}
+
+/* ================== Components & Sections ================== */
+
+/* -------- Header (If needed, though NavInv handles most of the header role) -------- */
 .inv-header {
-  background: #fff;
+  background: #ffffff;
   padding: 20px 25px;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  /* Subtler shadow for professionalism */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
   margin-bottom: 25px;
   text-align: center;
 }
 
 .inv-header h1 {
-  font-size: 24px;
-  color: #e6a76b;
+  font-size: 28px; /* Slightly larger */
+  color: #9c734b; /* A richer brown/gold */
   margin-bottom: 8px;
+  font-weight: 700;
 }
 
 .inv-header p {
-  font-size: 14px;
-  color: #555;
+  font-size: 15px;
+  color: #6c757d;
+}
+
+/* -------- Slider Section (Carousel/Banner) -------- */
+.inv-slider-section {
+  width: 100%;
+  /* Fixed height for consistency */
+  height: 350px; 
+  margin-bottom: 30px;
+  overflow: hidden; /* Ensure content doesn't spill */
+  border-radius: 12px; /* Consistent corner radius */
+  /* Stronger but still subtle shadow */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); 
 }
 
 /* -------- Buttons -------- */
 .inv-btn {
-  background-color: #e6a76b;
+  /* Using a primary color (rich brown/gold) for main actions */
+  background-color: #9c734b;
   color: #fff;
   font-size: 14px;
-  font-weight: 500;
-  padding: 10px 18px;
-  border-radius: 6px;
+  font-weight: 600; /* Bolder text for buttons */
+  padding: 10px 20px;
+  border-radius: 8px; /* Slightly more rounded */
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   text-decoration: none;
-  display: inline-block;
-  margin: 5px;
+  display: inline-flex; /* Use flex for potential icon alignment */
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0; /* Adjust margin for cleaner spacing */
 }
 
 .inv-btn:hover {
-  background-color: #d99a5f;
+  background-color: #83603d; /* Darken on hover */
+  transform: translateY(-1px); /* Subtle lift effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* -------- Actions -------- */
+/* -------- Actions (General button/link container) -------- */
 .inv-actions {
   display: flex;
-  gap: 12px;
+  gap: 15px; /* Increase gap slightly */
   margin-top: 20px;
 }
 
@@ -67,58 +113,39 @@
 .inv-loading {
   text-align: center;
   padding: 40px;
-  font-size: 16px;
-  color: #777;
+  font-size: 18px;
+  color: #495057;
+  font-weight: 500;
 }
 
-/* -------- Responsive -------- */
-@media (max-width: 768px) {
-  .inv-main {
-    margin-left: 0;
-    padding: 20px;
-  }
+/* ================== Task Section (Standalone Component Styling) ================== */
 
-  .inv-header {
-    padding: 15px;
-  }
-
-  .inv-btn {
-    padding: 8px 14px;
-    font-size: 13px;
-  }
-}
-.inv-slider-section {
-  width: 100%;
-  height: 450px; /* or any height that fits your slider */
-  margin-bottom: 20px;
-}
-
-/* -------------------- Task Section -------------------- */
 .inv-task-section {
-  width: 650px;
-  height: 500px;
-  background: linear-gradient(135deg, #ffffff 0%, #fefcfa 100%);
-  padding: 28px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(101, 67, 33, 0.08);
-  margin-bottom: 30px;
-  border: 1px solid rgba(139, 94, 60, 0.1);
+  /* Removed fixed width/height to make it flexible in the grid */
+  /* width: 650px; 
+  height: 500px; */ 
+  background: #ffffff; /* Clean white background */
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Professional, subtle shadow */
+  /* margin-bottom: 30px; -- Removed as it's now in a grid */
+  border: 1px solid #e9ecef; /* Very light border for definition */
   position: relative;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .inv-task-section:hover {
-  box-shadow: 0 6px 25px rgba(101, 67, 33, 0.12);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Task Section Header */
 .inv-task-section h2,
 .inv-task-section h3 {
   font-size: 20px;
-  font-weight: 600;
-  color: #3d2914;
-  margin-bottom: 12px;
+  font-weight: 700;
+  color: #343a40; /* Darker, more professional color */
+  margin-bottom: 15px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -128,12 +155,13 @@
 .inv-task-section h3::before {
   content: '📋';
   font-size: 22px;
+  /* Use an emoji, or for a *very* professional look, replace with an icon font/SVG */
 }
 
 /* Task Date Display */
 .inv-task-date {
-  font-size: 13px;
-  color: #5d4037;
+  font-size: 14px;
+  color: #6c757d;
   margin-bottom: 16px;
   font-weight: 500;
 }
@@ -149,69 +177,58 @@
 
 /* Task Date Input */
 .inv-task-controls input[type="date"] {
-  padding: 10px 14px;
-  border: 1px solid rgba(139, 94, 60, 0.2);
-  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
   font-size: 14px;
-  color: #3d2914;
+  color: #495057;
   background: #ffffff;
   transition: all 0.3s ease;
-  min-width: 160px;
+  min-width: 140px;
 }
 
 .inv-task-controls input[type="date"]:focus {
   outline: none;
-  border-color: #8b5e3c;
-  box-shadow: 0 0 0 3px rgba(139, 94, 60, 0.1);
+  border-color: #9c734b;
+  box-shadow: 0 0 0 3px rgba(156, 115, 75, 0.2); /* Use the primary color's shadow */
 }
 
 /* Task Control Buttons */
 .inv-task-control-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 18px; /* Slightly larger for clear icons */
   font-weight: bold;
   transition: all 0.3s ease;
   color: white;
-}
-
-.inv-task-control-btn.prev {
-  background: linear-gradient(135deg, #8b5e3c 0%, #a0724e 100%);
-}
-
-.inv-task-control-btn.next {
-  background: linear-gradient(135deg, #8b5e3c 0%, #a0724e 100%);
+  background: #9c734b; /* Simplified background */
 }
 
 .inv-task-control-btn.today {
-  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+  background: #28a745; /* Green for "Today" (Success color) */
   width: auto;
   padding: 0 16px;
   font-size: 14px;
 }
 
 .inv-task-control-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(139, 94, 60, 0.3);
-}
-
-.inv-task-control-btn:active {
-  transform: translateY(0);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Add Task Button */
 .inv-add-task-btn {
-  background: linear-gradient(135deg, #dfa548 0%, #d7b651 100%);
+  background: #17a2b8; /* A professional blue for "Add" */
   color: white;
   padding: 10px 18px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -223,18 +240,18 @@
 }
 
 .inv-add-task-btn:hover {
-  background: linear-gradient(135deg, #ccb54e 0%, #5cb860 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  background: #138496;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
 }
 
 /* Task Form Container */
 .inv-task-form {
-  background: linear-gradient(135deg, #f5f0eb 0%, #ede4db 100%);
+  background: #f1f3f5; /* Very light grey for contrast */
   padding: 20px;
-  border-radius: 12px;
-  border: 1px solid rgba(139, 94, 60, 0.1);
-  margin-top: 16px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  margin-top: 20px;
 }
 
 
@@ -247,7 +264,7 @@
   display: block;
   font-size: 13px;
   font-weight: 600;
-  color: #3d2914;
+  color: #495057;
   margin-bottom: 6px;
 }
 
@@ -255,11 +272,11 @@
 .inv-task-form-group textarea,
 .inv-task-form-group input[type="date"] {
   width: 100%;
-  padding: 10px 14px;
-  border: 1px solid rgba(139, 94, 60, 0.2);
-  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
   font-size: 14px;
-  color: #3d2914;
+  color: #495057;
   background: #ffffff;
   transition: all 0.3s ease;
   font-family: inherit;
@@ -273,8 +290,8 @@
 .inv-task-form-group input:focus,
 .inv-task-form-group textarea:focus {
   outline: none;
-  border-color: #8b5e3c;
-  box-shadow: 0 0 0 3px rgba(139, 94, 60, 0.1);
+  border-color: #9c734b;
+  box-shadow: 0 0 0 3px rgba(156, 115, 75, 0.2);
 }
 
 /* Task Form Actions */
@@ -286,39 +303,31 @@
 }
 
 .inv-task-form-actions .sup-btn-save {
-  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+  background: #28a745; /* Success Green */
   color: white;
   padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: 6px;
   font-weight: 600;
-  cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .inv-task-form-actions .sup-btn-cancel {
-  background: linear-gradient(135deg, #f44336 0%, #e57373 100%);
+  background: #dc3545; /* Danger Red */
   color: white;
   padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: 6px;
   font-weight: 600;
-  cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .inv-task-form-actions .sup-btn-save:hover {
-  background: linear-gradient(135deg, #45a049 0%, #5cb860 100%);
+  background: #218838;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
 }
 
 .inv-task-form-actions .sup-btn-cancel:hover {
-  background: linear-gradient(135deg, #e53935 0%, #ef5350 100%);
+  background: #c82333;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
 }
 
 /* Task List */
@@ -327,17 +336,17 @@
 }
 
 .inv-task-item {
-  background: linear-gradient(135deg, #f5f0eb 0%, #ede4db 100%);
-  padding: 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(139, 94, 60, 0.1);
-  margin-bottom: 12px;
-  transition: all 0.3s ease;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  margin-bottom: 10px;
+  transition: all 0.2s ease;
 }
 
 .inv-task-item:hover {
-  transform: translateX(4px);
-  box-shadow: 0 2px 8px rgba(139, 94, 60, 0.1);
+  transform: translateX(2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .inv-task-item-header {
@@ -348,89 +357,119 @@
 }
 
 .inv-task-item-title {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  color: #3d2914;
+  color: #343a40;
 }
 
 .sup-task-item-description {
-  font-size: 13px;
-  color: #5d4037;
+  font-size: 14px;
+  color: #6c757d;
   line-height: 1.5;
   margin-bottom: 10px;
 }
 
 .inv-task-item-date {
   font-size: 12px;
-  color: #8b5e3c;
+  color: #9c734b;
   font-weight: 500;
 }
 
 .inv-task-item-actions {
   display: flex;
   gap: 8px;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .inv-task-item-actions button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
+  padding: 5px 10px;
+  border-radius: 5px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
+  color: white;
+  border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .inv-task-item-actions .edit-btn {
-  background: linear-gradient(135deg, #2196f3 0%, #64b5f6 100%);
-  color: white;
+  background: #007bff; /* Primary Blue */
 }
 
 .inv-task-item-actions .delete-btn {
-  background: linear-gradient(135deg, #f44336 0%, #e57373 100%);
-  color: white;
+  background: #dc3545; /* Danger Red */
 }
 
 .inv-task-item-actions button:hover {
+  opacity: 0.9;
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Empty State */
 .inv-task-empty {
   text-align: center;
   padding: 40px 20px;
-  color: #8b5e3c;
-  font-size: 14px;
+  color: #6c757d;
+  font-size: 15px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* ================== Responsive Design ================== */
+
+@media (max-width: 1200px) {
+  .inv-main-grid {
+    /* Stack the content vertically on medium screens */
+    grid-template-columns: 1fr; 
+  }
+  
   .inv-task-section {
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 24px;
+    /* Full width when stacked */
     max-width: 100%;
   }
+}
 
+@media (max-width: 768px) {
+  .inv-main {
+    margin-left: 0;
+    padding: 20px;
+  }
+  
+  .inv-slider-section {
+    height: 250px;
+    margin-bottom: 20px;
+  }
+
+  .inv-header {
+    padding: 15px;
+  }
+
+  .inv-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .inv-task-section {
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  /* Task Controls adjustments for mobile */
   .inv-task-controls {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row; /* Keep row for controls if space allows */
+    justify-content: space-between;
   }
 
   .inv-task-controls input[type="date"] {
-    width: 100%;
+    flex-grow: 1;
+    min-width: unset;
   }
 
   .inv-add-task-btn {
     width: 100%;
     justify-content: center;
+    order: 3; /* Move to the next line */
     margin-left: 0;
-  }
-
-  .inv-task-form {
-    padding: 16px;
+    margin-top: 10px;
   }
 
   .inv-task-form-actions {
@@ -442,17 +481,18 @@
   }
 
   .inv-task-item-actions {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: flex-end; /* Align actions to the right */
   }
 
   .inv-task-item-actions button {
-    width: 100%;
+    width: auto;
   }
 }
 
 @media (max-width: 480px) {
   .inv-task-section {
-    padding: 16px;
+    padding: 15px;
   }
 
   .inv-task-section h2,
@@ -463,7 +503,6 @@
   .inv-task-control-btn {
     width: 32px;
     height: 32px;
-    font-size: 14px;
+    font-size: 16px;
   }
 }
-
