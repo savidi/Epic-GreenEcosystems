@@ -80,13 +80,7 @@ const handleLogout = () => {
         </button>
       </div>
 
-      {/* Profile Section */}
-      {!collapsed && supplierName && (
-        <div className="supnav-user-info">
-          <FaUser className="supnav-user-icon" />
-          <span className="supnav-user-name">{supplierName}</span>
-        </div>
-      )}
+
 
       {/* Links */}
       <ul className="supnav-links">

@@ -68,13 +68,7 @@ const handleLogout = () => {
         <button className="nav-toggle-btn" onClick={toggleSidebar}><FaBars /></button>
       </div>
       
-      {/* User Info Section */}
-      {!collapsed && staffName && (
-        <div className="nav-user-info">
-          <FaUser className="user-icon" />
-          <span className="user-name">{staffName}</span>
-        </div>
-      )}
+
       
       <ul className="nav-sidebar-links">
         {links.map((link) => (
