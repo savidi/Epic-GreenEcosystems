@@ -23,14 +23,7 @@ function Profile() {
         localStorage.setItem('theme', newTheme ? 'dark' : 'light');
     };
     
-    const handleLogout = () => {
-        // Implement logout logic here
-        console.log('Logging out...');
-        // Clear localStorage/sessionStorage
-        localStorage.clear();
-        // Redirect to login page
-        window.location.href = '/login';
-    };
+
     
     return (
         // Renamed component class to profile-page
@@ -169,10 +162,7 @@ function Profile() {
                 <div className="account-footer">
                     <div className="account-footer-content">
                         <p>Need to leave? Your session will be securely terminated.</p>
-                        <button className="account-logout-btn" onClick={handleLogout}>
-                            <FaSignOutAlt className="account-logout-icon" />
-                            Secure Logout
-                        </button>
+                        
                     </div>
                 </div>
             </div>

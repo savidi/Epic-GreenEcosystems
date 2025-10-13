@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ContactMessagesList.css';
-//import Nav from '../NavCus/NavCus';
+import Nav from "../Nav/Nav";
 //import Footer from '../Footer/Footer';
 
 const ContactMessagesList = () => {
@@ -90,7 +90,7 @@ const ContactMessagesList = () => {
 
   return (
     <div className="messages-page">
-       
+       <Nav />
       
       <div className="messages-container">
         <div className="messages-header">

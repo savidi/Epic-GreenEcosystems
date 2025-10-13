@@ -24,14 +24,7 @@ function ProfileInv() {
         }
     }, []);
     
-    const handleLogout = () => {
-        // Implement logout logic here
-        console.log('Logging out...');
-        // Clear localStorage/sessionStorage
-        localStorage.clear();
-        // Redirect to login page
-        window.location.href = '/login';
-    };
+
     
     return (
         <div className={`profileinv-page ${darkTheme ? 'profileinv-dark-theme' : 'profileinv-light-theme'}`}>
@@ -167,10 +160,7 @@ function ProfileInv() {
                 <div className="profileinv-footer">
                     <div className="profileinv-footer-content">
                         <p>Need to leave? Your session will be securely terminated.</p>
-                        <button className="profileinv-logout-btn" onClick={handleLogout}>
-                            <FaSignOutAlt className="profileinv-logout-icon" />
-                            Secure Logout
-                        </button>
+                        
                     </div>
                 </div>
             </div>

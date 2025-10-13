@@ -7,8 +7,12 @@
 .messages-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 20px 220px;
   min-height: calc(100vh - 200px);
+}
+
+.nav-sidebar.collapsed ~ .messages-container {
+  margin-left: 60px;
 }
 
 /* Header Section */
