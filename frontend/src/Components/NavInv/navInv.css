@@ -1,0 +1,48 @@
+
+.navinv-links li:hover {
+  background-color: transparent !important; 
+}
+
+.navinv-links li a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+
+.navinv-links li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+.navinv-links li.active a {
+  background-color: #ffc266; 
+  color: #6a402d; 
+  font-weight: 600;
+}
+
+.navinv-links li.active {
+    background-color: transparent;
+}
+
+.navinv-dropdown-content a:hover {
+  background-color: rgba(255, 255, 255, 0.1); 
+  opacity: 1;
+}
+
+.navinv-links li.active .navinv-dropdown-content a[href="/Products/Products"],
+.navinv-links li.active .navinv-dropdown-content a[href="/fertilizer"] {
+
+    background-color: transparent; 
+}
+
+.navinv-dropdown-content a[href="/Products/Products"][class*="active"], 
+.navinv-dropdown-content a[href="/fertilizer"][class*="active"] {
+    background-color: #ffc266; 
+    color: #6a402d; 
+    font-weight: 600;
+}

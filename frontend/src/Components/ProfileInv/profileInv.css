@@ -3,6 +3,7 @@
     background: linear-gradient(135deg, #c08b56 0%, #e8ddd4 100%);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    margin-left: 230px;
     
 }
 
