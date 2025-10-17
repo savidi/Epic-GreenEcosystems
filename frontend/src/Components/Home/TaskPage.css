@@ -3,6 +3,9 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .task-page-card {
@@ -140,7 +143,7 @@
   cursor: not-allowed;
 }
 
-.refresh-btn {
+.re-btn {
   background: #689F38;
   color: white;
   border: none;
@@ -149,6 +152,7 @@
   cursor: pointer;
   font-size: 12px;
   font-weight: 600;
+  height:30px;
   transition: background-color 0.2s ease;
 }
 
@@ -202,6 +206,10 @@
   padding: 16px;
   margin-bottom: 16px;
   border: 1px solid rgba(141, 78, 42, 0.1);
+}
+
+.task-form-container{
+  
 }
 
 .task-form input,
@@ -303,7 +311,7 @@
 }
 
 /* Delete Button */
-.delete-btn {
+.de-btn {
   background: #D32F2F;
   color: white;
   border: none;
@@ -315,6 +323,7 @@
   transition: background-color 0.2s ease;
   margin-left: 12px;
   flex-shrink: 0;
+  height: 30px;
 }
 
 .delete-btn:hover {

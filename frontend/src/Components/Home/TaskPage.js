@@ -128,11 +128,11 @@ function TaskPage() {
             <button className="nav-btn" onClick={handleNextDay}>
               &gt;
             </button>
-            <button className="refresh-btn" onClick={fetchTasks}>
+            <button className="re-btn" onClick={fetchTasks}>
               ↻
             </button>
           </div>
-          <button className="refresh-btn add-task-btn" onClick={() => setShowForm(true)}>
+          <button className="re-btn" onClick={() => setShowForm(true)}>
             Add Task
           </button>
         </div>
@@ -196,10 +196,10 @@ function TaskPage() {
                       <small>Due: {new Date(task.dueDate).toLocaleDateString()}</small>
                     </div>
                     <div className="task-item-buttons">
-                      <button className="refresh-btn" onClick={() => handleEdit(task)}>
+                      <button className="re-btn" onClick={() => handleEdit(task)}>
                         Edit
                       </button>
-                      <button className="delete-btn" onClick={() => handleDelete(task._id)}>
+                      <button className="de-btn" onClick={() => handleDelete(task._id)}>
                         Delete
                       </button>
                     </div>
