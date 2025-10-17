@@ -43,6 +43,8 @@ const auth = require('./Middleware/auth');
 const app = express();
 const JWT_SECRET = process.env.JWT_SECRET; 
 
+const path = require('path');
+
 // Global error handler for uncaught exceptions
 process.on('uncaughtException', (err) => {
     console.error('Uncaught Exception:', err.message);
@@ -119,6 +121,9 @@ app.use(cors({
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true 
 }));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // Static file serving for images
 app.use('/images', express.static('images'));

@@ -1,6 +1,7 @@
 // src/Components/Log/StaffLogin.js
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
+//import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import backgroundImage from "./background.jpeg";
 import Nav from "../NavCus/NavCus";
@@ -138,6 +139,9 @@ function StaffLogin() {
             <button type="submit" style={styles.button} disabled={loading}>
               {loading ? "Logging in..." : "Login"}
             </button>
+            <div className="reg-login-link">
+            <p>Doesn't have an Account? <Link to="/Registermng">Register</Link></p>
+          </div>
           </form>
         </div>
       </div>

@@ -159,11 +159,10 @@ function Nav({ cartUpdateTrigger }) {
               <Link to="/login" className="navcus-dropdown-link">
                 Customer Login
               </Link>
-                      <Link to="/staff-login">
-                <button className="btn btn-secondary" style={{ padding: "10px 20px", fontSize: "16px" }}>
-                  Manager Login
-                </button>
+              <Link to="/staff-login" className="navcus-dropdown-link">
+                Manager Login
               </Link>
+              
             </div>
           </div>
         )}

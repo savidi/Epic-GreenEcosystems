@@ -2,6 +2,8 @@ import './utils/axiosConfig';
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
+import { Toaster } from 'react-hot-toast';
+
 
 import ProtectedStaffRoute from './Components/ProtectedStaffRoute';
 import StaffLogin from "./Components/Log/StaffLogin";
@@ -41,6 +43,7 @@ import Plant from "./Components/Plant/Plant";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Report from "./Components/Report/Report";
 import Account from "./Components/Account/Account";
+import Reminders from "./Components/Reminders/Reminders"
 
 // Existing pages
 import Home from "./Components/Home/Home";
@@ -49,6 +52,7 @@ import AddWorker from "./Components/AddWorker/AddWorker";
 import UpdateWorker from "./Components/UpdateWorker/UpdateWorker";
 import StaffManagement from "./Components/StaffManagement/StaffManagement";
 import AddStaff from "./Components/AddStaff/AddStaff";
+import Registermng from "./Components/AddStaff/Registermng";
 import UpdateStaff from "./Components/UpdateStaff/UpdateStaff";
 import AttendanceScanner from "./Components/AttendanceScanner/AttendanceScanner";
 import AttendanceTable from "./Components/AttendanceTable/AttendanceTable";
@@ -109,6 +113,8 @@ function App() {
 
   return (
     <React.Fragment>
+
+      <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<CusHome/>}/>
@@ -118,6 +124,7 @@ function App() {
         <Route path="/register" element={<Register/>}/>
         <Route path="/login" element={<CustomerLogin/>}/>
         <Route path="/staff-login" element={<StaffLogin />} />
+        <Route path="/Registermng" element={<Registermng />} />
         <Route path="/local-orders" element={<LocalOrders/>}/>
         <Route path="/export-orders" element={<ExportOrders/>}/>
         <Route path="/orderview/:id" element={<OrderView/>}/>
@@ -364,6 +371,14 @@ function App() {
           element={
             <ProtectedStaffRoute allowedStaffTypes={['Field']}>
               <Report />
+            </ProtectedStaffRoute>
+          }
+        />
+        <Route 
+          path="/reminders" 
+          element={
+            <ProtectedStaffRoute allowedStaffTypes={['Field']}>
+              <Reminders />
             </ProtectedStaffRoute>
           }
         />

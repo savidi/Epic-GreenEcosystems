@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import './navfield.css';
-import { FaHome, FaLeaf, FaChartBar, FaUserCog, FaBars, FaInstagram, FaFacebook, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaLeaf, FaChartBar, FaUserCog, FaBars, FaInstagram, FaFacebook, FaSignOutAlt ,FaBell} from 'react-icons/fa';
 import Elogo from '../Images/Elogo.png';
 
 function Nav() {
@@ -55,6 +55,7 @@ const handleLogout = () => {
     { path: "/Dashboard", label: "Dashboard", icon: <FaHome /> },
     { path: "/Plant", label: "Plant", icon: <FaLeaf /> },
     { path: "/Report", label: "Report", icon: <FaChartBar /> },
+    { path: "/Reminders", label: "Reminders", icon: <FaBell /> },
     { path: "/Account", label: "Account", icon: <FaUserCog /> },
   ];
 

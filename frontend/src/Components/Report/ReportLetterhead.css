@@ -1,0 +1,57 @@
+.report-letterhead {
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.letterhead-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.farm-logo h1 {
+  margin: 0;
+  color: #2c7a3e;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.farm-tagline {
+  margin: 5px 0 0 0;
+  color: #666;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.report-title {
+  text-align: right;
+}
+
+.report-title h2 {
+  margin: 0;
+  color: #2c7a3e;
+  font-size: 20px;
+}
+
+.report-date {
+  margin: 5px 0 0 0;
+  color: #666;
+  font-size: 12px;
+}
+
+.divider {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, #2c7a3e, #4caf50);
+  margin: 10px 0;
+}
+
+/* Print styles */
+@media print {
+  .report-letterhead {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

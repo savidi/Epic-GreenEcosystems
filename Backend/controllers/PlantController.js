@@ -1,5 +1,7 @@
 const Plant = require('../model/PlantModel'); // keep singular, no { get }
 const GrowthModel = require('../model/GrowthModel');
+const fs = require('fs');
+const path = require('path');
 
 // get plant
 const getAllPlant = async (req, res) => {
@@ -23,7 +25,7 @@ const getAllPlant = async (req, res) => {
 const addPlant = async (req, res, next) => {
     try {
         let { plantId, name, description, plantingDivision, plantedKg, wateringFrequency, fertilizingFrequency } = req.body;
-
+        const lastWatered = new Date();
         // Normalize name to match enum (uppercase)
         if (typeof name === 'string') {
             name = name.toUpperCase();
@@ -42,7 +44,7 @@ const addPlant = async (req, res, next) => {
             plantingDivision,
             plantedKg,
             wateringFrequency,
-            fertilizingFrequency
+            fertilizingFrequency,
         });
 
         const saved = await plant.save();
@@ -94,6 +96,23 @@ const updatePlant = async (req, res) => {
     }
     return res.status(200).json({ plant });
 }
+// Mark as watered (PATCH)
+
+const markAsWatered = async (req, res) => {
+    const id = req.params.id;
+    let plant;
+    try {
+        plant = await Plant.findByIdAndUpdate(id, { lastWatered: new Date() }, { new: true });
+    } catch (err) {
+        console.log(err);
+    }
+    if (!plant) {
+        return res.status(404).json({ message: "Unable To Update By this ID" });
+    }
+    return res.status(200).json({ plant });
+}
+
+
 
 //delete a plant
 const deletePlant = async (req, res) => {
@@ -110,11 +129,15 @@ const deletePlant = async (req, res) => {
     return res.status(200).json({ message: "Plant Successfully Deleted" });
 }
 
+
+
 exports.getAllPlant = getAllPlant;
 exports.addPlant = addPlant;
 exports.getById = getById;
 exports.updatePlant = updatePlant;
 exports.deletePlant = deletePlant;
+exports.markAsWatered = markAsWatered;
+
 
 // tiny helper to build cards from plants + growth
 const buildPlantCards = (plants, growthDocs) => {
@@ -144,6 +167,7 @@ const getPlantCards = async (req, res) => {
         const { type, status } = req.query; // optional filters
         const query = type ? { name: String(type).toUpperCase() } : {};
 
+        console.log("BLBLBLBLBLBLBL");
         // Fetch plants + growth
         const plants = await Plant.find(query).lean();
         if (!plants.length) return res.json({ cards: [] });
@@ -190,3 +214,88 @@ const getPlantCardSummary = async (req, res) => {
 
 exports.getPlantTypes = getPlantTypes;
 exports.getPlantCardSummary = getPlantCardSummary;
+
+const { sendSMS } = require('../utils/sms');
+
+const testSMS = async (req, res) => {
+    try {
+        const { recipient, message } = req.body;
+
+        if (!recipient || !message) {
+            return res.status(400).json({ error: 'Recipient and message are required' });
+        }
+
+        const result = await sendSMS(recipient, message);
+        return res.status(200).json({ success: true, data: result });
+    } catch (error) {
+        return res.status(500).json({ error: 'Failed to send SMS', details: error.message });
+    }
+};
+
+exports.testSMS = testSMS;
+
+// Controller for photo upload
+
+// Upload photo (store only in folder)
+const uploadPlantPhoto = async (req, res) => {
+    try {
+        const { plantId, reason } = req.body;
+
+        if (!req.file) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
+
+        // Optional: rename file to include plantId and timestamp
+        const ext = path.extname(req.file.originalname);
+        const filename = `${Date.now()}-${plantId}${ext}`;
+        const uploadDir = path.join(__dirname, '..', 'uploads', 'plant_photos');
+
+        // Ensure folder exists
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+
+        const filePath = path.join(uploadDir, filename);
+
+        // Move file from multer temp location to target folder
+        fs.renameSync(req.file.path, filePath);
+
+        res.status(200).json({
+            message: 'Photo uploaded successfully',
+            filename,
+        });
+    } catch (error) {
+        console.error('Error uploading photo:', error);
+        res.status(500).json({ message: 'Server error while uploading photo' });
+    }
+};
+
+exports.uploadPlantPhoto = uploadPlantPhoto;
+
+
+// Fetch all uploaded photos for a plant
+const getPlantPhotos = async (req, res) => {
+    try {
+        const { id } = req.params; // plant ID
+        const dir = path.join(__dirname, '..', 'uploads', 'plant_photos');
+
+        if (!fs.existsSync(dir)) {
+            return res.status(200).json({ photos: [] });
+        }
+
+        // Filter files by plantId in filename
+        const files = fs.readdirSync(dir);
+        const plantPhotos = files.filter(file => file.includes(id));
+
+        const photoUrls = plantPhotos.map(file =>
+            `${req.protocol}://${req.get('host')}/uploads/plant_photos/${file}`
+        );
+
+        res.status(200).json({ photos: photoUrls });
+    } catch (err) {
+        console.error('Error fetching plant photos:', err);
+        res.status(500).json({ error: 'Server Error', message: err.message });
+    }
+};
+
+exports.getPlantPhotos = getPlantPhotos;

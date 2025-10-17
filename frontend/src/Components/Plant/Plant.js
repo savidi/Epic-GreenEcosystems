@@ -8,6 +8,7 @@ import Navfield from "../Navfield/Navfield";
 
 const { Option } = Select;
 
+
 // Helper function to format frequency
 const formatFrequency = (days) => {
   const daysInt = parseInt(days, 10);
@@ -230,7 +231,28 @@ function Plant() {
     const [uploadStatus, setUploadStatus] = useState(null); // 'success', 'error', or null
     const API_BASE = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
 
+    const [plantPhotos, setPlantPhotos] = useState({}); 
 
+    const fetchPlantPhotos = async (plantId) => {
+        try {
+            const res = await fetch(`${API_BASE}/plants/${plantId}/photos`);
+            const data = await res.json();
+            if (data.photos) {
+                setPlantPhotos(prev => ({ ...prev, [plantId]: data.photos }));
+            }
+        } catch (err) {
+            console.error('Error fetching plant photos:', err);
+        }
+    };
+    
+    // Fetch all photos after fetching plants
+    useEffect(() => {
+        plants.forEach(plant => fetchPlantPhotos(plant._id));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [plants]);
+    
+
+    
     // Sidebar state management
     useEffect(() => {
         const updateBodyClass = () => {
@@ -339,6 +361,7 @@ function Plant() {
         setSelectedPlant(plant);
         setPhotoModalVisible(true);
     };
+    
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -414,6 +437,8 @@ function Plant() {
                     notes: plant.notes || []
                 }));
                 setPlants(transformedPlants);
+
+
             } else {
                 setError('No plants found');
             }
@@ -533,11 +558,27 @@ function Plant() {
             dataIndex: 'plantingDivision',
             key: 'plantingDivision',
         },
+        // {
+        //     title: 'Photo',
+        //     key: 'photo',
+        //     render: (_, record) => (
+        //         <div>
+        //             <Button 
+        //                 type="primary" 
+        //                 size="small"
+        //                 icon={<UploadOutlined />}
+        //                 onClick={() => handlePhotoUpload(record)}
+        //             >
+        //                 Upload Photo
+        //             </Button>
+        //         </div>
+        //     ),
+        // },
         {
             title: 'Photo',
             key: 'photo',
             render: (_, record) => (
-                <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <Button 
                         type="primary" 
                         size="small"
@@ -546,9 +587,31 @@ function Plant() {
                     >
                         Upload Photo
                     </Button>
+        
+                    {/* Display thumbnails if exist */}
+                    {plantPhotos[record._id] && plantPhotos[record._id].length > 0 && (
+                        <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                            {plantPhotos[record._id].map((url, idx) => (
+                                 <a 
+                                 key={idx} 
+                                 href={url} 
+                                 target="_blank" 
+                                 rel="noopener noreferrer"
+                             >
+                                <img 
+                                    key={idx} 
+                                    src={url} 
+                                    alt={`plant-${record.name}-${idx}`} 
+                                    style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #ccc' }} 
+                                />
+                                 </a>
+                            ))}
+                        </div>
+                    )}
                 </div>
             ),
-        },
+        }
+        
     ];
 
     useEffect(() => {
@@ -581,11 +644,14 @@ function Plant() {
                 <Title level={2}>Plant Collection</Title>
                 <Button 
                     type="primary" 
-                    icon={<PlusOutlined />}
+                    icon={<PlusOutlined style={{ color: 'white' }} />}
                     onClick={() => setShowForm(!showForm)}
+                    style={{ color: 'white !important' }}
                 >
-                    {showForm ? 'Cancel' : 'Add New Plant'}
+                    <span style={{ color: 'white' }}>{showForm ? 'Cancel' : 'Add New Plant'}</span>
                 </Button>
+
+
             </div>
             
             {showForm && (

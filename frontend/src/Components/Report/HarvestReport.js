@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, Form, Input, DatePicker, Table, Typography, Space, Divider, message } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import axios from 'axios';
 import './Report.css';
+import PDFDocument from './PDFDocument';
+import ReportLetterhead from './ReportLetterhead';
 import Navfield from "../Navfield/Navfield";
 const { Title, Text } = Typography;
 
@@ -96,35 +97,12 @@ const HarvestReport = ({ plant, onClose }) => {
     }
   };
 
-  const handleGeneratePDF = async () => {
+  const handleGeneratePDF = () => {
     setIsGenerating(true);
-    try {
-      const element = document.getElementById('harvest-report-content');
-      if (!element) {
-        throw new Error('Report content element not found');
-      }
-      
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        logging: false
-      });
-      
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = 210;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-      pdf.save(`${plant.name}-Harvest-Report-${new Date().toISOString().split('T')[0]}.pdf`);
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-      alert('Failed to generate PDF. Please try again.');
-    } finally {
-      setIsGenerating(false);
-    }
+  };
+
+  const onDownloadComplete = () => {
+    setIsGenerating(false);
   };
 
   // Load harvest data from database
@@ -192,142 +170,95 @@ const HarvestReport = ({ plant, onClose }) => {
   ];
 
   return (
-
-    <div className="report-report-page">
-                 <Navfield />
-    <div className="report-harvest-report-container">
-      
-      <Card 
-        title={
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Title level={3} style={{ margin: 0 }}>
-              Harvest Report - {plant.name}
-            </Title>
-            <Space>
-              <Button 
-                type="primary" 
-                icon={<DownloadOutlined />}
-                onClick={handleGeneratePDF}
-                loading={isGenerating}
-                disabled={harvestData.length === 0}
-              >
-                Download PDF
-              </Button>
-              <Button onClick={onClose}>Close</Button>
-            </Space>
-          </div>
-        }
-        style={{ width: '100%', marginBottom: '20px' }}
-      >
-        <div id="harvest-report-content">
-          {/* Error Message */}
-          {error && (
-            <div style={{ 
-              backgroundColor: '#fff2f0', 
-              border: '1px solid #ffccc7', 
-              padding: '12px', 
-              marginBottom: '16px', 
-              borderRadius: '6px',
-              color: '#ff4d4f'
-            }}>
-              {error}
-            </div>
-          )}
-          
-          <Divider orientation="left">Add Harvest Data</Divider>
-          <Form
-            form={form}
-            layout="vertical"
-            onFinish={handleAddHarvest}
-            style={{ marginBottom: '20px' }}
-          >
-            <Form.Item
-              label="Plant Date"
-              name="harvestDate"
-              rules={[{ required: true, message: 'Please select harvest date!' }]}
-            >
-              <DatePicker style={{ width: '100%' }} />
-            </Form.Item>
-            
-            <Form.Item
-              label="Amount Planted (kg)"
-              name="plantedKg"
-              rules={[{ required: true, message: 'Please enter planted amount!' }]}
-            >
-              <Input type="number" step="0.1" placeholder="Enter amount planted in kg" />
-            </Form.Item>
-            
-            <Form.Item
-              label="Actual Harvest (kg)"
-              name="actualHarvest"
-              rules={[{ required: true, message: 'Please enter actual harvest!' }]}
-            >
-              <Input type="number" step="0.1" placeholder="Enter actual harvest in kg" />
-            </Form.Item>
-            
-            <Form.Item>
-              <Button 
-                type="primary" 
-                htmlType="submit"
-                loading={loading}
-              >
-                Add Harvest Record
-              </Button>
-            </Form.Item>
-          </Form>
-
-          {harvestData.length > 0 ? (
-            <>
-              <Divider orientation="left">Harvest Summary</Divider>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '20px' }}>
-                <Card>
-                  <Text strong>Total Records:</Text>
-                  <div style={{ fontSize: '24px', color: '#1890ff' }}>{harvestData.length}</div>
-                </Card>
-                <Card>
-                  <Text strong>Total Planted:</Text>
-                  <div style={{ fontSize: '24px', color: '#52c41a' }}>
-                    {harvestData.reduce((sum, h) => sum + h.plantedKg, 0).toFixed(2)} kg
-                  </div>
-                </Card>
-                <Card>
-                  <Text strong>Total Harvested:</Text>
-                  <div style={{ fontSize: '24px', color: '#722ed1' }}>
-                    {harvestData.reduce((sum, h) => sum + h.actualHarvest, 0).toFixed(2)} kg
-                  </div>
-                </Card>
-                <Card>
-                  <Text strong>Average Efficiency:</Text>
-                  <div style={{ fontSize: '24px', color: '#fa8c16' }}>
-                    {(harvestData.reduce((sum, h) => sum + parseFloat(h.efficiency), 0) / harvestData.length).toFixed(2)}%
-                  </div>
-                </Card>
+    <div className="harvest-report-container">
+      <Navfield />
+      <div className="report-content">
+        <div id="harvest-report-content" className="harvest-report-card">
+          <Card 
+            title={
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>Harvest Report</span>
+                <PDFDownloadLink
+                  document={
+                    <PDFDocument 
+                      data={harvestData} 
+                      plantName={plant?.name || 'Harvest'}
+                    />
+                  }
+                  fileName={`${plant?.name || 'harvest'}-report-${new Date().toISOString().split('T')[0]}.pdf`}
+                  onClick={handleGeneratePDF}
+                  onDownloadComplete={onDownloadComplete}
+                >
+                  {({ loading }) => (
+                    <Button 
+                      type="primary" 
+                      icon={<DownloadOutlined />} 
+                      loading={loading || isGenerating}
+                    >
+                      {loading || isGenerating ? 'Generating PDF...' : 'Export PDF'}
+                    </Button>
+                  )}
+                </PDFDownloadLink>
               </div>
-
-              <Divider orientation="left">Harvest Data Table</Divider>
+            }
+          >
+            <ReportLetterhead 
+              title={`${plant?.name || 'Harvest'} Report`} 
+              date={new Date().toLocaleDateString()} 
+            />
+            
+            <Form form={form} onFinish={handleAddHarvest} layout="vertical">
+              <Form.Item
+                name="harvestDate"
+                label="Harvest Date"
+                rules={[{ required: true, message: 'Please select harvest date' }]}
+              >
+                <DatePicker style={{ width: '100%' }} />
+              </Form.Item>
+              
+              <Form.Item
+                name="plantedKg"
+                label="Planted (kg)"
+                rules={[{ required: true, message: 'Please enter planted amount' }]}
+              >
+                <Input type="number" step="0.1" min="0" />
+              </Form.Item>
+              
+              <Form.Item
+                name="actualHarvest"
+                label="Actual Harvest (kg)"
+                rules={[{ required: true, message: 'Please enter actual harvest amount' }]}
+              >
+                <Input type="number" step="0.1" min="0" />
+              </Form.Item>
+              
+              <Form.Item>
+                <Button type="primary" htmlType="submit" loading={loading}>
+                  Add Harvest Record
+                </Button>
+              </Form.Item>
+            </Form>
+            
+            <Divider>Harvest History</Divider>
+            
+            {harvestData.length > 0 ? (
               <Table 
-                dataSource={harvestData} 
                 columns={columns} 
+                dataSource={harvestData} 
                 rowKey="id"
-                pagination={{ pageSize: 10 }}
-                style={{ marginBottom: '20px' }}
+                pagination={{ pageSize: 5 }}
               />
-
-            </>
-          ) : loading ? (
-            <div style={{ textAlign: 'center', padding: '40px' }}>
-              <Text>Loading harvest data...</Text>
-            </div>
-          ) : (
-            <div style={{ textAlign: 'center', padding: '40px', backgroundColor: '#f5f5f5', borderRadius: '6px' }}>
-              <Text type="secondary">No harvest records found. Add your first harvest record above.</Text>
-            </div>
-          )}
+            ) : (
+              <div style={{ textAlign: 'center', padding: '40px', backgroundColor: '#f5f5f5', borderRadius: '6px' }}>
+                <Text type="secondary">No harvest records found. Add your first harvest record above.</Text>
+              </div>
+            )}
+          </Card>
         </div>
-      </Card>
-    </div>
+      </div>
     </div>
   );
 };
 
 export default HarvestReport;
+

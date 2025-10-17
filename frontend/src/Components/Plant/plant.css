@@ -151,7 +151,7 @@ body.sidebar-collapsed .plant-card-detailed {
     max-width: 800px;
     margin: 0 auto;
     padding: var(--spacing-2xl);
-    background: var(--bg-primary);
+    background: rgb(244, 175, 150);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--border-light);
@@ -783,7 +783,7 @@ body.sidebar-collapsed .plant-card-detailed {
 
 .plant-table-header h1,
 .plant-table-header .ant-typography h2 {
-    color: var(--text-dark);
+    color: white !important;
     margin: 0;
     font-weight: 700;
 }
@@ -1175,13 +1175,7 @@ body.sidebar-collapsed .plant-card-detailed {
     animation: bounce 2s infinite;
 }
 
-.plant-form-title {
-    color: var(--text-white);
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 0;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
+
 
 .plant-form-subtitle {
     color: rgba(255, 255, 255, 0.9);

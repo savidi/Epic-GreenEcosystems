@@ -12,6 +12,8 @@ const plantSchema = new Schema({
     wateringFrequency: { type: String, default: '3' },
     fertilizingFrequency: { type: String, default: '14' },
     plantingDate: { type: Date, default: Date.now },
+    lastWatered: { type: Date, default: Date.now },
+
     status: { 
         type: String, 
         enum: ['ACTIVE', 'HARVESTED', 'DORMANT'],

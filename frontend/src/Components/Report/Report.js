@@ -4,7 +4,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import dayjs from 'dayjs';
-import { DownloadOutlined, BarChartOutlined, CalculatorOutlined, BranchesOutlined } from '@ant-design/icons';
+import * as XLSX from 'xlsx';
+import { DownloadOutlined, BarChartOutlined, CalculatorOutlined, BranchesOutlined, FileExcelOutlined } from '@ant-design/icons';
 import HarvestReport from './HarvestReport';
 import './Report.css';
 import Navfield from "../Navfield/Navfield";
@@ -62,39 +63,146 @@ function Report() {
     };
 
     const exportToPDF = async () => {
-        const pdf = new jsPDF('l', 'mm', 'a4'); // landscape orientation
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const today = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        
         const charts = [
-            { id: 'efficiency-chart', title: 'Efficiency by Plant' },
-            { id: 'accuracy-chart', title: 'Quantity Accuracy vs Efficiency' },
-            { id: 'harvest-comparison-chart', title: 'Harvest Comparison' }
+            { id: 'efficiency-chart', title: 'EFFICIENCY ANALYSIS' },
+            { id: 'accuracy-chart', title: 'QUANTITY ACCURACY METRICS' },
+            { id: 'harvest-comparison-chart', title: 'HARVEST COMPARISON REPORT' }
         ];
+
+        // Add header function
+        const addHeader = (pdf, pageNum, totalPages) => {
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const margin = 15;
+            const headerHeight = 45;
+            const startY = 20;
+            
+            // Add background color block
+            pdf.setFillColor(1, 50, 32); // Dark green
+            pdf.rect(0, 0, pageWidth, headerHeight, 'F');
+            
+            // Add logo (using a placeholder - replace with your logo)
+            try {
+
+
+                const logoUrl = './Images/Elogo.png';
+                pdf.addImage(logoUrl, 'PNG', margin, 5, 30, 30);
+            } catch (e) {
+                console.log('Logo not found, using text only');
+            }
+            
+            // Add company info
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(16);
+            pdf.setTextColor(255, 255, 255);
+            pdf.text('Epic Green EcoSystems', pageWidth / 2, 15, { align: 'center' });
+            
+            // Add tagline
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(10);
+            pdf.text('Excellence in Spice Cultivation & Harvest Analytics', pageWidth / 2, 22, { align: 'center' });
+            
+            // Add contact info
+            const contactInfo = 'www.Epicgreen.com | info@epicgreen.com | +94 76 123 4567';
+            pdf.text(contactInfo, pageWidth / 2, 30, { align: 'center' });
+            
+            // Add report title section
+            const reportTitleY = headerHeight + 10;
+            pdf.setFillColor(245, 245, 245);
+            pdf.rect(0, headerHeight, pageWidth, 15, 'F');
+            
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(12);
+            pdf.setTextColor(1, 50, 32); // Dark green
+            pdf.text('HARVEST PERFORMANCE ANALYSIS', pageWidth / 2, reportTitleY + 10, { align: 'center' });
+            
+            // Add report details
+            const detailsY = reportTitleY + 15;
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(9);
+            pdf.setTextColor(0, 0, 0);
+            
+            // Left-aligned details
+            const reportInfo = `Report Generated: ${today}`;
+            pdf.text(reportInfo, margin, detailsY);
+            
+            // Right-aligned page info
+            const pageText = `Page ${pageNum} of ${totalPages}`;
+            pdf.text(pageText, pageWidth - margin - pdf.getTextWidth(pageText), detailsY);
+            
+            // Add a decorative line
+            pdf.setDrawColor(1, 50, 32);
+            pdf.setLineWidth(0.3);
+            pdf.line(margin, detailsY + 3, pageWidth - margin, detailsY + 3);
+            
+            // Add a brief description paragraph
+            const description = "This report provides a comprehensive analysis of harvest performance, efficiency metrics, " +
+                             "and production analytics. The data presented here is generated based on real-time " +
+                             "harvest records and is intended for management review and decision-making purposes.";
+            
+            const descriptionLines = pdf.splitTextToSize(description, pageWidth - (2 * margin));
+            pdf.setFont('helvetica', 'italic');
+            pdf.setFontSize(9);
+            pdf.text(descriptionLines, margin, detailsY + 10);
+            
+            return detailsY + 10 + (descriptionLines.length * 4) + 10; // Return Y position after header and description
+        };
         
         for (let i = 0; i < charts.length; i++) {
             const chart = charts[i];
             const element = document.getElementById(chart.id);
             
             if (element) {
-                const canvas = await html2canvas(element, {
-                    scale: 2,
-                    useCORS: true,
-                    backgroundColor: '#ffffff'
-                });
-                
-                const imgData = canvas.toDataURL('image/png');
-                const imgWidth = 250; // width in mm
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                
+                // Add new page for each chart (except first)
                 if (i > 0) {
                     pdf.addPage();
                 }
                 
-                pdf.setFontSize(16);
-                pdf.text(chart.title, 20, 20);
-                pdf.addImage(imgData, 'PNG', 20, 30, imgWidth, imgHeight);
+                // Add header
+                const startY = addHeader(pdf, i + 1, charts.length);
+                
+                // Add chart title
+                pdf.setFontSize(14);
+                pdf.setFont('helvetica', 'bold');
+                pdf.text(chart.title, 20, startY);
+                
+                // Convert chart to image
+                const canvas = await html2canvas(element, {
+                    scale: 1.5, // Slightly reduced scale for better quality
+                    useCORS: true,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    onclone: (clonedDoc) => {
+                        // Make charts smaller in the PDF
+                        const chartElements = clonedDoc.querySelectorAll('.recharts-wrapper');
+                        chartElements.forEach(el => {
+                            el.style.transform = 'scale(0.7)';
+                            el.style.transformOrigin = 'top left';
+                        });
+                    }
+                });
+                
+                // Calculate image dimensions (smaller than before)
+                const imgData = canvas.toDataURL('image/png');
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const imgWidth = pageWidth - 40; // 20mm margins on each side
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                // Add chart image to PDF
+                pdf.addImage(imgData, 'PNG', 20, startY + 10, imgWidth, imgHeight);
             }
         }
         
-        pdf.save('harvest-report-charts.pdf');
+        // Save the PDF
+        pdf.save(`harvest-report-${today.replace(/\//g, '-')}.pdf`);
     };
 
     
@@ -411,90 +519,6 @@ function Report() {
             actual: r.actualHarvest
         }));
 
-    // Handle sidebar collapse state
-    useEffect(() => {
-        const handleSidebarState = () => {
-            // Multiple ways to detect sidebar state
-            const isCollapsedFromStorage = localStorage.getItem('sidebar-collapsed') === 'true';
-            const sidebarElement = document.querySelector('.navfield-sidebar');
-            const isCollapsedFromDOM = sidebarElement && sidebarElement.classList.contains('collapsed');
-            
-            // Use the most reliable method
-            const isCollapsed = isCollapsedFromDOM || isCollapsedFromStorage;
-            
-            const contentWrappers = document.querySelectorAll('.report-report-content');
-            
-            contentWrappers.forEach(wrapper => {
-                if (isCollapsed) {
-                    // Add collapsed class
-                    wrapper.classList.add('sidebar-collapsed');
-                    
-                    // Set data attribute for CSS targeting
-                    wrapper.setAttribute('data-sidebar-collapsed', 'true');
-                    
-                    // Set CSS custom properties
-                    wrapper.style.setProperty('--sidebar-width', '60px');
-                    
-                    // Fallback inline styles
-                    wrapper.style.marginLeft = '60px';
-                    wrapper.style.width = 'calc(100% - 60px)';
-                } else {
-                    // Remove collapsed class
-                    wrapper.classList.remove('sidebar-collapsed');
-                    
-                    // Remove data attribute
-                    wrapper.setAttribute('data-sidebar-collapsed', 'false');
-                    
-                    // Set CSS custom properties
-                    wrapper.style.setProperty('--sidebar-width', '220px');
-                    
-                    // Fallback inline styles
-                    wrapper.style.marginLeft = '220px';
-                    wrapper.style.width = 'calc(100% - 220px)';
-                }
-            });
-        };
-
-        // Initial setup
-        handleSidebarState();
-
-        // Listen for storage changes (when sidebar is toggled)
-        window.addEventListener('storage', handleSidebarState);
-        
-        // Listen for custom event (more reliable for same-page updates)
-        window.addEventListener('sidebarStateChanged', handleSidebarState);
-        
-        // Also listen for DOM changes as a fallback
-        const observer = new MutationObserver((mutations) => {
-            // Check if any mutation involves the sidebar
-            const hasSidebarChange = mutations.some(mutation => {
-                return Array.from(mutation.addedNodes).some(node => 
-                    node.classList && node.classList.contains('navfield-sidebar')
-                ) || Array.from(mutation.removedNodes).some(node => 
-                    node.classList && node.classList.contains('navfield-sidebar')
-                ) || (mutation.target.classList && mutation.target.classList.contains('navfield-sidebar'));
-            });
-            
-            if (hasSidebarChange) {
-                handleSidebarState();
-            }
-        });
-        
-        observer.observe(document.body, {
-            attributes: true,
-            attributeFilter: ['class'],
-            subtree: true,
-            childList: true
-        });
-
-        // Cleanup
-        return () => {
-            window.removeEventListener('storage', handleSidebarState);
-            window.removeEventListener('sidebarStateChanged', handleSidebarState);
-            observer.disconnect();
-        };
-    }, []);
-
     if (loading) {
         return (
             <div>
@@ -547,7 +571,64 @@ function Report() {
                 <Card 
                     title="Harvest Records" 
                     extra={
-                        <Button icon={<DownloadOutlined />}>
+                        <Button 
+                            icon={<FileExcelOutlined />}
+                            onClick={() => {
+                                try {
+                                    // Prepare data for Excel export
+                                    const dataForExport = harvestRows.map(row => ({
+                                        'Date': row.date || 'N/A',
+                                        'Plant Name': row.plantName || 'N/A',
+                                        'Division': row.division || 'N/A',
+                                        'Planted (kg)': row.plantedKg != null ? Number(row.plantedKg).toFixed(2) : 'N/A',
+                                        'Expected Harvest (kg)': row.expectedHarvest != null ? Number(row.expectedHarvest).toFixed(2) : 'N/A',
+                                        'Actual Harvest (kg)': row.actualHarvest != null ? Number(row.actualHarvest).toFixed(2) : 'N/A',
+                                        'Efficiency (%)': row.efficiency || 'N/A',
+                                        'Quantity Accuracy (%)': row.qtyAccuracy || 'N/A',
+                                        'Expected Harvest Date': row.expectedDate || 'N/A',
+                                        'Actual Harvest Date': row.actualDate || 'N/A',
+                                        'Days Difference': row.dateDeltaDays ? `${row.dateDeltaDays}d` : 'N/A',
+                                        'Status': row.actualHarvest ? 'Harvested' : 'Pending'
+                                    }));
+
+                                    // Create worksheet and workbook
+                                    const worksheet = XLSX.utils.json_to_sheet(dataForExport);
+                                    const workbook = XLSX.utils.book_new();
+                                    XLSX.utils.book_append_sheet(workbook, worksheet, 'Harvest Records');
+
+                                    // Generate Excel file
+                                    const excelBuffer = XLSX.write(workbook, { 
+                                        bookType: 'xlsx', 
+                                        type: 'array',
+                                        bookSST: true 
+                                    });
+                                    
+                                    // Create and trigger download
+                                    const data = new Blob([excelBuffer], { 
+                                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+                                    });
+                                    const url = URL.createObjectURL(data);
+                                    const link = document.createElement('a');
+                                    const today = new Date().toISOString().split('T')[0];
+                                    
+                                    link.href = url;
+                                    link.download = `harvest-records-${today}.xlsx`;
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+                                    
+                                    message.success('Harvest records exported to Excel successfully!');
+                                } catch (error) {
+                                    console.error('Error exporting to Excel:', error);
+                                    message.error('Failed to export harvest records to Excel');
+                                }
+                            }}
+                            style={{ 
+                                backgroundColor: '#1890ff',
+                                color: 'white',
+                                borderColor: '#1890ff'
+                            }}
+                        >
                             Export All Data
                         </Button>
                     }
@@ -564,7 +645,25 @@ function Report() {
                     />
                 </Card>
 
-                {/* Charts Section */}
+                {/* Charts Section */}                <Divider orientation="left">Expected vs Actual Harvest</Divider>
+                <Row gutter={16}>
+                    <Col span={24}>
+                        <Card title="Harvest Comparison (kg)" id="harvest-comparison-chart">
+                            <ResponsiveContainer width="100%" height={300}>
+                                <BarChart data={harvestComparisonData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar dataKey="expected" fill="#8884d8" name="Expected (kg)" />
+                                    <Bar dataKey="actual" fill="#82ca9d" name="Actual (kg)" />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </Card>
+                    </Col>
+                </Row>
+
                 <Divider orientation="left">Harvest Efficiency & Accuracy</Divider>
                 <Row gutter={16}>
                     <Col span={12}>
@@ -598,24 +697,6 @@ function Report() {
                     </Col>
                 </Row>
                 
-                <Divider orientation="left">Expected vs Actual Harvest</Divider>
-                <Row gutter={16}>
-                    <Col span={24}>
-                        <Card title="Harvest Comparison (kg)" id="harvest-comparison-chart">
-                            <ResponsiveContainer width="100%" height={300}>
-                                <BarChart data={harvestComparisonData}>
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Legend />
-                                    <Bar dataKey="expected" fill="#8884d8" name="Expected (kg)" />
-                                    <Bar dataKey="actual" fill="#82ca9d" name="Actual (kg)" />
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </Card>
-                    </Col>
-                </Row>
 
                 {/* PDF Export Button */}
                 <Row style={{ marginTop: '2rem', marginBottom: '2rem' }}>
@@ -625,6 +706,7 @@ function Report() {
                             icon={<DownloadOutlined />} 
                             onClick={exportToPDF}
                             size="large"
+                            
                         >
                             Export Charts as PDF
                         </Button>

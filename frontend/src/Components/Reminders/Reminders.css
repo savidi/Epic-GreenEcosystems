@@ -1,0 +1,63 @@
+.reminders-container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .reminders-title {
+    margin-bottom: 24px;
+    color: #1890ff;
+  }
+  
+  .reminders-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .reminders-card .ant-list-item {
+    padding: 16px 24px;
+    transition: background-color 0.3s;
+  }
+  
+  .reminders-card .ant-list-item:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .reminders-card .ant-list-item-meta-avatar {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    margin-right: 16px;
+  }
+  
+  .reminders-card .ant-tag {
+    margin-right: 0;
+  }
+  
+  
+  .reminders-card .ant-btn {
+    transition: all 0.3s;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .reminders-container {
+      padding: 16px;
+    }
+    
+    .reminders-card .ant-list-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .reminders-card .ant-list-item-action {
+      margin-top: 12px;
+      margin-left: 0;
+      width: 100%;
+    }
+    
+    .reminders-card .ant-btn {
+      width: 100%;
+    }
+  }
+  

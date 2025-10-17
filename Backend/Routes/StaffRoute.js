@@ -6,6 +6,9 @@ const { staffAuth, optionalStaffAuth, isManager } = require("../Middleware/staff
 // Public route - login
 router.post("/login", staffController.staffLogin);
 
+// Public route - registration (no auth required)
+router.post("/", staffController.addStaff);
+
 // Verify token endpoint - MUST be before /:id
 router.get("/verify/token", staffAuth, (req, res) => {
   res.status(200).json({
@@ -21,7 +24,6 @@ router.get("/verify/token", staffAuth, (req, res) => {
 router.get("/", optionalStaffAuth, staffController.getAllStaff);
 
 // Write operations - require authentication + manager
-router.post("/", optionalStaffAuth, isManager, staffController.addStaff);
 router.put("/:id", optionalStaffAuth, isManager, staffController.updateStaff);
 router.delete("/:id", optionalStaffAuth, isManager, staffController.deleteStaff);
 

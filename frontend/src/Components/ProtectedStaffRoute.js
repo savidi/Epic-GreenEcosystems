@@ -1,4 +1,3 @@
-// Components/ProtectedStaffRoute.js
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
@@ -6,6 +5,14 @@ import axios from 'axios';
 const ProtectedStaffRoute = ({ children, allowedStaffTypes = [] }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // 🔒 Prevent browser from navigating back to cached pages after logout
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+      window.history.go(1);
+    };
+  }, []);
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -54,7 +61,7 @@ const ProtectedStaffRoute = ({ children, allowedStaffTypes = [] }) => {
     verifyToken();
   }, [allowedStaffTypes]);
 
-  // Loading state
+  // Loading state (optional nice UI)
   if (loading) {
     return (
       <div

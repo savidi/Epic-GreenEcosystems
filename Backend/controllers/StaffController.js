@@ -7,12 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 exports.addStaff = async (req, res) => {
   try {
     // Check authentication
-    if (!req.isAuthenticated) {
-      return res.status(401).json({ 
-        status: "fail", 
-        message: "You must be logged in to add staff" 
-      });
-    }
+
 
     const { name, nationalId, age, gender, email, password, accountNo, staffType, position } = req.body;
 
